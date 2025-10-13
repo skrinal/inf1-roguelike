@@ -3,12 +3,12 @@ package model;
 import java.util.HashMap;
 
 public abstract class Player extends Character {
-    protected int power;
-    protected int maxPower;
-    protected int gold;
-    protected HashMap<Item, Integer> inventory;
-    protected Item equipedWeapond;
-    protected Item equipedArmor;
+    private int power;
+    private int maxPower;
+    private int gold;
+    private HashMap<Item, Integer> inventory;
+    private Item equippedWeapon;
+    private Item equipedArmor;
 
 
     public Player(String name, int maxHp, int attack, int defence, int maxPower) {
@@ -19,33 +19,58 @@ public abstract class Player extends Character {
         this.inventory = new HashMap<>();
     }
 
-    public int getPower() {return power;}
+    public int getPower() {
+        return this.power;
+    }
 
-    public int getMaxPower() {return maxPower;}
+    public int getMaxPower() {
+        return this.maxPower;
+    }
 
-    public int getGold() {return gold;}
+    public int getGold() {
+        return this.gold;
+    }
 
     public void restorePower(int amount) {
-        power = Math.min(maxPower, power + amount);
+        this.power = Math.min(this.maxPower, this.power + amount);
     }
 
     public boolean usePower(int amount) {
-        if (power >= amount) {
-            power -= amount;
+        if (this.power >= amount) {
+            this.power -= amount;
         } else {
             return false;
         }
         return true;
     }
 
-    public void addGold(int amount) {gold += amount;}
+    public void addGold(int amount) {
+        this.gold += amount;
+    }
 
-    public void addItem(Item item) {inventory.put(item, inventory.getOrDefault(item, 0) + 1);}
+    //TODO: Nastudovat
+    public void addItem(Item item) {
+        this.inventory.put(item, this.inventory.getOrDefault(item, 0) + 1);
+    }
 
     public abstract String getPowerName();
 
+
     @Override
     public int getTotalAttack() {
-        return attack + (equipedWeapond != null ? equipedWeapond.getValue() : 0);
+        return getAttack() + (this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0);
+    }
+
+    @Override
+    public int getTotalDefense() {
+        return getDefence() + (this.equipedArmor != null ? this.equipedArmor.getValue() : 0);
+    }
+
+    public void setEquipedArmor(Item equipedArmor) {
+        this.equipedArmor = equipedArmor;
+    }
+
+    public void setEquippedWeapon(Item equippedWeapon) {
+        this.equippedWeapon = equippedWeapon;
     }
 }

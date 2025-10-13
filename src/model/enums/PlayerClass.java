@@ -1,5 +1,5 @@
 package model.enums;
 
 public enum PlayerClass {
-    MAGE, BERSERKER, HEALER
+    MAGE, WARRIOR, ROGUE
 }

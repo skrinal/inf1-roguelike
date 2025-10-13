@@ -4,7 +4,6 @@ import model.Enemy;
 
 public class SkeletonWarrior extends Enemy {
 
-
     public SkeletonWarrior(String name, int maxHp, int attack, int defence, int goldReward) {
         super(name, maxHp, attack, defence, goldReward);
     }

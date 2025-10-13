@@ -3,9 +3,9 @@ package model;
 import model.enums.ItemType;
 
 public class Item {
-    private String name;
-    private ItemType type;
-    private int value;
+    private final String name;
+    private final ItemType type;
+    private final int value;
 
     public Item(String name, ItemType type, int value) {
         this.name = name;
@@ -13,23 +13,23 @@ public class Item {
         this.value = value;
     }
 
-    public String getName() {return name;}
+    public String getName() {return this.name;}
 
-    public ItemType getType() {return type;}
+    public ItemType getType() {return this.type;}
 
-    public int getValue() {return value;}
+    public int getValue() {return this.value;}
 
     public void displayInfo() {
         String typeStr = "";
         if (type == ItemType.WEAPON) {
-            typeStr = "Weapon (+" + value + " damage)";
+            typeStr = "Weapon (+" + this.value + " damage)";
         } else if (type == ItemType.POTION) {
-            typeStr = "Potion (+" + value + " HP)";
+            typeStr = "Potion (+" + this.value + " HP)";
         } else if (type == ItemType.ARMOR) {
-            typeStr = "Armor (+" + value + " defense)";
+            typeStr = "Armor (+" + this.value + " defense)";
         } else if (type == ItemType.TREASURE) {
-            typeStr = "Treasure (" + value + " gold)";
+            typeStr = "Treasure (" + this.value + " gold)";
         }
-        System.out.println("  " + name + " [" + typeStr + "]");
+        System.out.println("  " + this.name + " [" + typeStr + "]");
     }
 }
