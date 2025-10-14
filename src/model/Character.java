@@ -19,7 +19,7 @@ public abstract class Character {
         this.defence = defence;
         this.level = 1;
         this.experience = 0;
-        this.experienceToNextLevel = 0;
+        this.experienceToNextLevel = calculateExperienceToNextLevel();
     }
 
     public String getName() {return this.name;}
@@ -66,6 +66,7 @@ public abstract class Character {
         this.attack += 2 + this.level;
         this.defence += 1 + (this.level / 2); // FIXME: Defense is int and we doing (level / 2) fix pls
     }
+
 // TODO: Come up with system to lose experience
 // public void loseExperience(int amount) {}
 

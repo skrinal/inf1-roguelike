@@ -1,0 +1,5 @@
+package model.enums;
+
+public enum GameState {
+    MAIN_MENU, SETTINGS, CHARACTER_CREATION, GAME, DUNGEON, LABYRINTH, INVENTORY, STATS, COMBAT, EXIT
+}

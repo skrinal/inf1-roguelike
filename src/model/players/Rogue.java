@@ -1,21 +1,17 @@
 package model.players;
 
 import model.Character;
+import model.Player;
 
-public class Rogue extends Character {
+public class Rogue extends Player {
+
     public Rogue(String name) {
-        //TODO : Fix values
-        super(name, 0, 0, 0);
+        super(name, 100, 5, 5, 100);
     }
 
     @Override
-    public int getTotalAttack() {
-        return 0;
-    }
-
-    @Override
-    public int getTotalDefense() {
-        return 0;
+    public String getPowerName() {
+        return "";
     }
 
     @Override

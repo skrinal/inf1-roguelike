@@ -8,7 +8,7 @@ public abstract class Player extends Character {
     private int gold;
     private HashMap<Item, Integer> inventory;
     private Item equippedWeapon;
-    private Item equipedArmor;
+    private Item equippedArmor;
 
 
     public Player(String name, int maxHp, int attack, int defence, int maxPower) {
@@ -17,6 +17,8 @@ public abstract class Player extends Character {
         this.power = maxPower;
         this.gold = 0;
         this.inventory = new HashMap<>();
+        this.equippedArmor = null;
+        this.equippedWeapon = null;
     }
 
     public int getPower() {
@@ -29,6 +31,10 @@ public abstract class Player extends Character {
 
     public int getGold() {
         return this.gold;
+    }
+
+    public HashMap<Item, Integer> getInventory() {
+        return this.inventory;
     }
 
     public void restorePower(int amount) {
@@ -63,11 +69,18 @@ public abstract class Player extends Character {
 
     @Override
     public int getTotalDefense() {
-        return getDefence() + (this.equipedArmor != null ? this.equipedArmor.getValue() : 0);
+        return getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0);
     }
 
-    public void setEquipedArmor(Item equipedArmor) {
-        this.equipedArmor = equipedArmor;
+    public Item getEquippedWeapon(){
+        return this.equippedWeapon;
+    }
+    public Item getEquippedArmor(){
+        return this.equippedArmor;
+    }
+
+    public void setEquippedArmor(Item equippedArmor) {
+        this.equippedArmor = equippedArmor;
     }
 
     public void setEquippedWeapon(Item equippedWeapon) {
