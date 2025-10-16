@@ -8,18 +8,34 @@
   <br>
 </h2>
 
-## How To Use
+If you're on Linux(dnf), just run the commands below. <br>
+If you're on Windows, you'll need to figure it out (or switch to Linux :P).
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Java](https://www.oracle.com/java/technologies/downloads/) 
-
+## Requirments
+To clone and run this application, you'll need [Git](https://git-scm.com) and [Java 25](https://www.oracle.com/java/technologies/downloads/) 
 ```bash
-# Clone this repository
-$ git clone https://github.com/skrinal/inf1-roguelike
+# Update system packages
+sudo dnf update
 
-# Go into the repository
-$ cd inf1-roguelike/src
+# Install Git
+sudo dnf install git -y
 
-# Run
-$ java Main.java
+# Install Java 25 (OpenJDK)
+sudo dnf install java-25-openjdk-devel.x86_64 -y
 
+# If you have an older Java version installed, switch to JDK 25
+sudo alternatives --config java
 ```
+
+## How To Run
+```bash
+# Clone the repository
+git clone https://github.com/skrinal/inf1-roguelike
+
+# Move into the source directory
+cd inf1-roguelike/src
+
+# Run the game
+java Main.java
+```
+
