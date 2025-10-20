@@ -10,7 +10,6 @@ public abstract class Player extends Character {
     private Item equippedWeapon;
     private Item equippedArmor;
 
-
     public Player(String name, int maxHp, int attack, int defence, int maxPower) {
         super(name, maxHp, attack, defence);
         this.maxPower = maxPower;

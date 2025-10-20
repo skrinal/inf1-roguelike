@@ -1,4 +1,4 @@
-package util;
+package game;
 
 import model.Item;
 import model.enums.PlayerClass;
@@ -7,8 +7,6 @@ import model.players.Rogue;
 import model.players.Warrior;
 
 import java.util.Scanner;
-
-import static util.GameStrings.GAME_TITLE;
 
 public class MenuLogic {
 
@@ -51,12 +49,7 @@ public class MenuLogic {
     }
 
     public static int showMainMenu(Scanner input) {
-        System.out.println(GAME_TITLE);
-        System.out.println("==========================");
-        System.out.println("1. Start Game");
-        System.out.println("2. Settings - Not implemented yet");
-        System.out.println("0. Exit");
-        System.out.print("Select: ");
+
         return handleDecision(input, 0, 2);
     }
 
@@ -309,6 +302,11 @@ public class MenuLogic {
 //        }
 //        System.out.println("Dropped: " + selectedItem.getName());
 //    }
+
+    private static void printGameMenu() {
+
+    }
+
 
     private static model.Player createCharacter(PlayerClass playerClass, String name) {
         return switch (playerClass) {

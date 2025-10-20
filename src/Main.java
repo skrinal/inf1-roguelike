@@ -1,7 +1,7 @@
 import model.Player;
 import model.enums.GameState;
-import util.GameLogic;
-import util.MenuLogic;
+import game.GameLogic;
+import game.MenuLogic;
 
 void main() throws IOException, InterruptedException {
     Scanner input = new Scanner(System.in);
@@ -23,6 +23,9 @@ void main() throws IOException, InterruptedException {
             case SETTINGS -> {
                 //TODO: Implement settings
                 state = GameState.MAIN_MENU;
+            }
+            case DEATH -> {
+                // TODO : PICUS
             }
         }
     }
@@ -52,8 +55,12 @@ private GameState handleGame(Scanner input, model.Player player) {
 
 private GameState handleDungeon(Scanner input, Player player) {
     System.out.println("\n=== DUNGEON ===");
-    GameLogic.showGameMap(input, player);
+    int result = GameLogic.showGameMap(input, player);
 
+    if (result == -2) {
+        System.out.println("\nGAME OVER");
+        return GameState.DEATH; // Or GameState.EXIT to quit entirely
+    }
     return GameState.GAME;
 }
 
