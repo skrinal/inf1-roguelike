@@ -1,5 +1,6 @@
 import model.Player;
 import model.enums.GameState;
+import util.GameLogic;
 import util.MenuLogic;
 
 void main() throws IOException, InterruptedException {
@@ -51,9 +52,8 @@ private GameState handleGame(Scanner input, model.Player player) {
 
 private GameState handleDungeon(Scanner input, Player player) {
     System.out.println("\n=== DUNGEON ===");
-    System.out.println("Dungeon gameplay not implemented yet");
-    System.out.println("Press Enter to return...");
-    input.nextLine();
+    GameLogic.showGameMap(input, player);
+
     return GameState.GAME;
 }
 
@@ -77,3 +77,58 @@ private GameState handleStats(Scanner input, Player player) {
     input.nextLine();
     return GameState.GAME;
 }
+
+//public void displayCombatScreen() {
+//    // Split screen into two columns
+//    String leftColumn = buildPlayerStats();
+//    String rightColumn = buildEnemyDisplay();
+//
+//    // Combine columns side by side
+//    displaySideBySide(leftColumn, rightColumn);
+//    displayCombatOptions();
+//}
+
+//private String buildPlayerStats(model.Player player) {
+//    StringBuilder sb = new StringBuilder();
+//    sb.append("=== YOUR STATS ===\n");
+//    sb.append("HP: ").append(player.getHealth()).append("/").append(player.getMaxHealth()).append("\n");
+//    sb.append("Mana: ").append(player.getMana()).append("/").append(player.getMaxMana()).append("\n");
+//    sb.append("Attack: ").append(player.getAttack()).append("\n");
+//    sb.append("Defense: ").append(player.getDefense()).append("\n");
+//    sb.append("Level: ").append(player.getLevel()).append("\n");
+//    sb.append("XP: ").append(player.getExperience()).append("\n");
+//    sb.append("\n");
+//    sb.append("=== SPELLS ===\n");
+//    for (int i = 0; i < player.getSpells().size(); i++) {
+//        Spell spell = player.getSpells().get(i);
+//        sb.append((i + 1) + ". " + spell.getName() + " (Cost: " + spell.getManaCost() + ")\n");
+//    }
+//    return sb.toString();
+//}
+
+//private String buildEnemyDisplay() {
+//    StringBuilder sb = new StringBuilder();
+//    sb.append("=== ").append(enemy.getName().toUpperCase()).append(" ===\n");
+//    sb.append(enemy.getAsciiArt()).append("\n");
+//    sb.append("HP: ").append(enemy.getHealth()).append("/").append(enemy.getMaxHealth()).append("\n");
+//    sb.append("Attack: ").append(enemy.getAttack()).append("\n");
+//    sb.append("Defense: ").append(enemy.getDefense()).append("\n");
+//    sb.append("Type: ").append(enemy.getType()).append("\n");
+//    return sb.toString();
+//}
+
+//private void displaySideBySide(String left, String right) {
+//    String[] leftLines = left.split("\n");
+//    String[] rightLines = right.split("\n");
+//
+//    int maxLines = Math.max(leftLines.length, rightLines.length);
+//
+//    for (int i = 0; i < maxLines; i++) {
+//        String leftLine = i < leftLines.length ? leftLines[i] : "";
+//        String rightLine = i < rightLines.length ? rightLines[i] : "";
+//
+//        // Format left column (fixed width)
+//        String formattedLeft = String.format("%-40s", leftLine);
+//        System.out.println(formattedLeft + "    " + rightLine);
+//    }
+//}

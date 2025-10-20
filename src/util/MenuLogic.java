@@ -22,24 +22,28 @@ public class MenuLogic {
     }
 
     public static int showGameMenu(Scanner input, model.Player player) {
-        while (true) {
-            System.out.println("\n=== GAME MENU ===");
-            System.out.println("1. Dungeon");
-            System.out.println("2. Random Labyrinth - X");
-            System.out.println("3. Inventory - X");
-            System.out.println("4. Stats");
-            System.out.println("0. Back");
-            System.out.print("Select: ");
+        System.out.println("\n=== GAME MENU ===");
+        System.out.println("1. Dungeon");
+        System.out.println("2. Random Labyrinth - X");
+        System.out.println("3. Inventory - X");
+        System.out.println("4. Stats");
+        System.out.println("0. Back");
+        System.out.print("Select: ");
 
+        return handleDecision(input, 0, 4);
+    }
+
+    public static int handleDecision(Scanner input, int minChoice, int maxChoice) {
+        while (true) {
             if (!input.hasNextInt()) {
                 System.out.println("Invalid selection. Try again");
-                input.next();
+                input.nextLine();
                 continue;
             }
             int choice = input.nextInt();
             input.nextLine();
 
-            if (choice >= 0 && choice <= 4) {
+            if (choice >= minChoice && choice <= maxChoice) {
                 return choice;
             }
             System.out.println("Invalid selection. Try again");
@@ -47,18 +51,13 @@ public class MenuLogic {
     }
 
     public static int showMainMenu(Scanner input) {
-        while (true) {
-            printGameMenu();
-            if (!input.hasNextInt()) {
-                IO.println("Invalid selection. Try again");
-                input.next();
-                continue;
-            }
-            int choice = input.nextInt();
-            input.nextLine();
-            if (choice >= 0 && choice <= 2) return choice;
-            IO.println("Invalid selection");
-        }
+        System.out.println(GAME_TITLE);
+        System.out.println("==========================");
+        System.out.println("1. Start Game");
+        System.out.println("2. Settings - Not implemented yet");
+        System.out.println("0. Exit");
+        System.out.print("Select: ");
+        return handleDecision(input, 0, 2);
     }
 
     public static int showInventoryMenu(Scanner input, model.Player player) {
@@ -118,6 +117,7 @@ public class MenuLogic {
         }
     }
 
+    //TODO : REMAKE
     private static void handleItemDetail(Scanner input, model.Player player, Item item) {
         while (true) {
             IO.println("\n=== ITEM DETAILS ===");
@@ -176,6 +176,7 @@ public class MenuLogic {
         }
     }
 
+    // TODO : REMAKE
     private static boolean dropItem(model.Player player, Item item) {
         int count = player.getInventory().get(item);
 
@@ -309,21 +310,6 @@ public class MenuLogic {
 //        System.out.println("Dropped: " + selectedItem.getName());
 //    }
 
-    private static void printGameMenu() {
-        System.out.println(GAME_TITLE);
-        System.out.println("==========================");
-        System.out.println("1. Start Game");
-        System.out.println("2. Settings - Not implemented yet");
-        System.out.println("3. Exit");
-        System.out.print("Select: ");
-    }
-
-    private static void clearConsole() {
-        for (int i = 0; i < 15; i++) {
-            System.out.println();
-        }
-    }
-
     private static model.Player createCharacter(PlayerClass playerClass, String name) {
         return switch (playerClass) {
             case WARRIOR -> new Warrior(name);
@@ -339,13 +325,7 @@ public class MenuLogic {
             System.out.println("3. Rogue");
             System.out.print("Choose a class: ");
 
-            if (!input.hasNextInt()) {
-                System.out.println("Invalid selection. Try again");
-                input.next();
-                continue;
-            }
-            int choice = input.nextInt();
-            input.nextLine();
+            int choice = handleDecision(input, 1, 3);
 
             switch (choice) {
                 case 1 -> {
