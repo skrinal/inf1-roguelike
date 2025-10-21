@@ -8,6 +8,8 @@ import model.players.Warrior;
 
 import java.util.Scanner;
 
+import static game.strings.MenuStrings.*;
+
 public class MenuLogic {
 
     public static model.Player handleCharacterCreation(Scanner input) throws InterruptedException {
@@ -19,14 +21,8 @@ public class MenuLogic {
         return createCharacter(playerClass, name);
     }
 
-    public static int showGameMenu(Scanner input, model.Player player) {
-        System.out.println("\n=== GAME MENU ===");
-        System.out.println("1. Dungeon");
-        System.out.println("2. Random Labyrinth - X");
-        System.out.println("3. Inventory - X");
-        System.out.println("4. Stats");
-        System.out.println("0. Back");
-        System.out.print("Select: ");
+    public static int showGameMenu(Scanner input) {
+        System.out.println(GAME_MENU_OPTIONS);
 
         return handleDecision(input, 0, 4);
     }
@@ -49,6 +45,7 @@ public class MenuLogic {
     }
 
     public static int showMainMenu(Scanner input) {
+        System.out.println(GAME_TITLE_MENU);
 
         return handleDecision(input, 0, 2);
     }

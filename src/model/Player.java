@@ -71,18 +71,19 @@ public abstract class Player extends Character {
         return getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0);
     }
 
-    public Item getEquippedWeapon(){
+    public Item getEquippedWeapon() {
         return this.equippedWeapon;
     }
-    public Item getEquippedArmor(){
+
+    public void setEquippedWeapon(Item equippedWeapon) {
+        this.equippedWeapon = equippedWeapon;
+    }
+
+    public Item getEquippedArmor() {
         return this.equippedArmor;
     }
 
     public void setEquippedArmor(Item equippedArmor) {
         this.equippedArmor = equippedArmor;
-    }
-
-    public void setEquippedWeapon(Item equippedWeapon) {
-        this.equippedWeapon = equippedWeapon;
     }
 }

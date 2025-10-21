@@ -26,11 +26,19 @@ public abstract class Character {
 
     public int getHp() {return this.hp;}
 
+    protected void setHp(int hp) {this.hp = hp;}
+
     public int getMaxHp() {return this.maxHp;}
+
+    protected void setMaxHp(int maxHp) {this.maxHp = maxHp;}
 
     public int getAttack() {return this.attack;}
 
+    protected void setAttack(int attack) {this.attack = attack;}
+
     public int getDefence() {return this.defence;}
+
+    protected void setDefence(int defence) {this.defence = defence;}
 
     public boolean isAlive() {return this.hp > 0;}
 
@@ -44,6 +52,8 @@ public abstract class Character {
     }
 
     public int getLevel() {return this.level;}
+
+    protected void incrementLevel() {this.level++;}
 
     public int getExperience() {return this.experience;}
 
@@ -64,7 +74,7 @@ public abstract class Character {
         this.maxHp += 10 + (this.level * 2);
         this.hp = this.maxHp;
         this.attack += 2 + this.level;
-        this.defence += 1 + (this.level / 2); // FIXME: Defense is int and we doing (level / 2) fix pls
+        this.defence += 1 + (int) ((double) this.level / 2);
     }
 
 // TODO: Come up with system to lose experience
