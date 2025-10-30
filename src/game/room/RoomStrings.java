@@ -1,17 +1,7 @@
-package game.strings;
+package game.room;
 
 public class RoomStrings {
-    public static final String DUNGEON_ROOM_ONE_MAP = """
-            ======== MAP ========
-            
-                     Door
-                   /
-                 E         ?
-                   \\     /
-                     You
-            
-            =====================
-            """;
+
     public static final String DUNGEON_ROOM_TWO_MAP = """
             ======== MAP ========
             
@@ -23,6 +13,7 @@ public class RoomStrings {
             
             =====================
             """;
+
     public static final String DUNGEON_ROOM_THREE_MAP = """
             ======== MAP ========
             

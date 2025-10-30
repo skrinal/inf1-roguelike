@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.PlayerClass;
+
 import java.util.HashMap;
 
 public abstract class Player extends Character {
@@ -49,6 +51,9 @@ public abstract class Player extends Character {
         return true;
     }
 
+    public String getPowerBar() {
+        return this.getBar(this.getPower(), this.getMaxPower());
+    }
     public void addGold(int amount) {
         this.gold += amount;
     }
@@ -59,16 +64,17 @@ public abstract class Player extends Character {
     }
 
     public abstract String getPowerName();
-
+    public abstract PlayerClass getClassType();
+    public abstract void displayStats();
 
     @Override
     public int getTotalAttack() {
-        return getAttack() + (this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0);
+        return this.getAttack() + (this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0);
     }
 
     @Override
     public int getTotalDefense() {
-        return getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0);
+        return this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0);
     }
 
     public Item getEquippedWeapon() {
@@ -86,4 +92,8 @@ public abstract class Player extends Character {
     public void setEquippedArmor(Item equippedArmor) {
         this.equippedArmor = equippedArmor;
     }
+
+
+
+
 }

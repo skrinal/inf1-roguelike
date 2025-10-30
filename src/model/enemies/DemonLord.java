@@ -2,15 +2,21 @@ package model.enemies;
 
 import model.Character;
 import model.Enemy;
+import model.enums.EnemyType;
 
 public class DemonLord extends Enemy {
-    public DemonLord(String name, int maxHp, int attack, int defence, int goldReward) {
+
+    private static final int MAX_HP = 100;
+    private static final int ATTACK = 100;
+    private static final int DEFENCE = 100;
+    private static final int GOLD_REWARD = 100;
+
+    public DemonLord(String name,  int goldReward) {
         super(name, maxHp, attack, defence, goldReward);
     }
-    public DemonLord(String name, int maxHp, int attack, int defence, int goldReward, int level) {
+    public DemonLord(String name,  int goldReward, int level) {
         super(name, maxHp, attack, defence, goldReward, level);
     }
-
 
     @Override
     public void performeAttack(Character target) {
@@ -18,9 +24,10 @@ public class DemonLord extends Enemy {
     }
 
     @Override
-    public void displayStats() {
-
+    public String getEnemyType() {
+        return EnemyType.DEMON.name();
     }
+
 
     @Override
     public void performSpecialAbility(Character target) {

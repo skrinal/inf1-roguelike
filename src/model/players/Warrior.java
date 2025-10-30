@@ -2,6 +2,7 @@ package model.players;
 
 import model.Character;
 import model.Player;
+import model.enums.PlayerClass;
 
 public class Warrior extends Player {
 
@@ -12,6 +13,11 @@ public class Warrior extends Player {
     @Override
     public String getPowerName() {
         return "RAGE";
+    }
+
+    @Override
+    public PlayerClass getClassType() {
+        return null;
     }
 
     @Override

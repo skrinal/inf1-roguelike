@@ -5,6 +5,11 @@ public abstract class Enemy extends Character {
 
     /**
      * Constructor for enemies without an assigned level at creation.
+     * @param name
+     * @param maxHp
+     * @param attack
+     * @param defence
+     * @param goldReward
      */
     public Enemy(String name, int maxHp, int attack, int defence, int goldReward) {
         super(name, maxHp, attack, defence);
@@ -13,6 +18,12 @@ public abstract class Enemy extends Character {
 
     /**
      * Constructor for enemies with an assigned level at creation.
+     * @param name
+     * @param maxHp
+     * @param attack
+     * @param defence
+     * @param goldReward
+     * @param level
      */
     public Enemy(String name, int maxHp, int attack, int defence, int goldReward, int level) {
         super(name, maxHp, attack, defence);
@@ -21,19 +32,29 @@ public abstract class Enemy extends Character {
         this.initializeAtLevel(level);
     }
 
+    /**
+     * Scales enemy's stats to the targeted level.
+     * @param targetedLevel
+     */
     private void initializeAtLevel(int targetedLevel) {
-        for (int i = 1; 1 < targetedLevel; i++) {
+        for (int i = 1; i < targetedLevel; i++) {
             this.scaleStats();
         }
     }
 
+    /**
+     * Increases the enemy's level and scales its stats accordingly.
+     * Each call increases the enemy's maximum HP, Attack and Defense
+     * based on the current level.
+     * Also reset's current HP to maximum HP.
+     */
     private void scaleStats() {
         int currentLevel = this.getLevel();
         this.incrementLevel();
 
-        int newMaxHp = this.getMaxHp() + 10 + (currentLevel * 2);
+        int newMaxHp = this.getMaxHp() + 15 + (currentLevel * 2);
         int newAttack = this.getAttack() + 2 + currentLevel;
-        int newDefence = this.getDefence() + 1 + (int) Math.round((double) currentLevel / 2);
+        int newDefence = this.getDefence() + 2 + (int)Math.round((double)currentLevel / 2);
 
         this.setMaxHp(newMaxHp);
         this.setHp(newMaxHp);
@@ -41,13 +62,20 @@ public abstract class Enemy extends Character {
         this.setDefence(newDefence);
     }
 
-    public int getGoldReward() {return this.goldReward;}
+    public int getGoldReward() {
+        return this.goldReward;
+    }
 
     @Override
-    public int getTotalAttack() {return this.getAttack();}
+    public int getTotalAttack() {
+        return this.getAttack();
+    }
 
     @Override
-    public int getTotalDefense() {return this.getDefence();}
+    public int getTotalDefense() {
+        return this.getDefence();
+    }
 
     public abstract void performeAttack(Character target);
+    public abstract String getEnemyType();
 }

@@ -1,6 +1,7 @@
 package game;
 
 import model.Item;
+import model.Player;
 import model.enums.PlayerClass;
 import model.players.Mage;
 import model.players.Rogue;
@@ -22,13 +23,15 @@ public class MenuLogic {
     }
 
     public static int showGameMenu(Scanner input) {
-        System.out.println(GAME_MENU_OPTIONS);
+        System.out.println("\n" + GAME_MENU_OPTIONS);
 
-        return handleDecision(input, 0, 4);
+        return handleDecision(input, 0, 3);
     }
 
     public static int handleDecision(Scanner input, int minChoice, int maxChoice) {
         while (true) {
+            System.out.print("Select: ");
+
             if (!input.hasNextInt()) {
                 System.out.println("Invalid selection. Try again");
                 input.nextLine();
@@ -50,7 +53,7 @@ public class MenuLogic {
         return handleDecision(input, 0, 2);
     }
 
-    public static int showInventoryMenu(Scanner input, model.Player player) {
+    public static int showInventoryMenu(Scanner input, Player player) {
         while (true) {
             IO.println("\n=== INVENTORY ===");
             IO.println("Gold : " + player.getGold());
@@ -69,7 +72,8 @@ public class MenuLogic {
                 }
                 int choice = input.nextInt();
                 input.nextLine();
-                if (choice == 0) return 0;
+                if (choice == 0)
+                    return 0;
                 continue;
             }
             int index = 1;
@@ -108,7 +112,7 @@ public class MenuLogic {
     }
 
     //TODO : REMAKE
-    private static void handleItemDetail(Scanner input, model.Player player, Item item) {
+    private static void handleItemDetail(Scanner input, Player player, Item item) {
         while (true) {
             IO.println("\n=== ITEM DETAILS ===");
             IO.println("Name: " + item.getName());
@@ -300,12 +304,7 @@ public class MenuLogic {
 //        System.out.println("Dropped: " + selectedItem.getName());
 //    }
 
-    private static void printGameMenu() {
-
-    }
-
-
-    private static model.Player createCharacter(PlayerClass playerClass, String name) {
+    private static Player createCharacter(PlayerClass playerClass, String name) {
         return switch (playerClass) {
             case WARRIOR -> new Warrior(name);
             case MAGE -> new Mage(name);
@@ -315,10 +314,10 @@ public class MenuLogic {
 
     private static PlayerClass selectedClass(Scanner input) {
         while (true) {
+            System.out.println("\n=== CHOOSE CLASS ===");
             System.out.println("\n1. Warrior");
             System.out.println("2. Mage");
             System.out.println("3. Rogue");
-            System.out.print("Choose a class: ");
 
             int choice = handleDecision(input, 1, 3);
 
@@ -332,9 +331,8 @@ public class MenuLogic {
                 case 3 -> {
                     return PlayerClass.ROGUE;
                 }
-                default -> {
-                    System.out.println("Invalid selection. Try again");
-                }
+                default -> System.out.println("Invalid selection. Try again");
+
             }
         }
     }

@@ -1,11 +1,13 @@
-import model.Player;
-import model.enums.GameState;
 import game.GameLogic;
 import game.MenuLogic;
+import model.Player;
+import model.enums.GameState;
+import java.io.IOException;
+import java.util.Scanner;
 
 void main() throws IOException, InterruptedException {
     Scanner input = new Scanner(System.in);
-    model.Player player = null;
+    Player player = null;
     GameState state = GameState.MAIN_MENU;
 
     while (state != GameState.EXIT) {
@@ -15,37 +17,45 @@ void main() throws IOException, InterruptedException {
                 player = MenuLogic.handleCharacterCreation(input);
                 state = GameState.GAME;
             }
-            case GAME -> state = handleGame(input, player);
+            case GAME -> state = handleGame(input);
             case DUNGEON -> state = handleDungeon(input, player);   //TODO: Implement dungeon
-            case LABYRINTH -> state = handleLabyrinth(input, player);   //TODO: Implement labyrinth
+//            case LABYRINTH -> state = handleLabyrinth(input, player);   //TODO: Implement labyrinth (INF2)
             case INVENTORY -> state = handleInventory(input, player);   //TODO: Working but fi logic
             case STATS -> state = handleStats(input, player);
-            case SETTINGS -> {
-                //TODO: Implement settings
+            //TODO: Implement settings (INF 2) - > Save/Load, Difficulty
+//            case SETTINGS -> {
+//                state = GameState.MAIN_MENU;
+//            }
+            case DEATH -> {
+                System.out.println("\n=== GAME OVER ===");
+                System.out.println("You have died!");
+                System.out.println("Press Enter to return to main menu...");
+                input.nextLine();
+                player = null;
                 state = GameState.MAIN_MENU;
             }
-            case DEATH -> {
-                // TODO : PICUS
+            case COMPLETE -> {
+                //TODO: VICTORY SCREEN
             }
         }
     }
 }
 
-private GameState handleMenu(Scanner input, model.Player player) {
+private GameState handleMenu(Scanner input, Player player) {
     int choice = MenuLogic.showMainMenu(input);
     return switch (choice){
         case 1 -> player == null ? GameState.CHARACTER_CREATION : GameState.GAME;
-        case 2 -> GameState.SETTINGS;
+        //case 2 -> GameState.SETTINGS;
         case 0 -> GameState.EXIT;
         default -> GameState.MAIN_MENU;
     };
 }
 
-private GameState handleGame(Scanner input, model.Player player) {
-    int choice = MenuLogic.showGameMenu(input, player);
+private GameState handleGame(Scanner input) {
+    int choice = MenuLogic.showGameMenu(input);
     return switch (choice) {
         case 1 -> GameState.DUNGEON;
-        case 2 -> GameState.LABYRINTH;
+        //case 2 -> GameState.LABYRINTH;
         case 3 -> GameState.INVENTORY;
         case 4 -> GameState.STATS;
         case 0 -> GameState.MAIN_MENU;
@@ -55,22 +65,27 @@ private GameState handleGame(Scanner input, model.Player player) {
 
 private GameState handleDungeon(Scanner input, Player player) {
     System.out.println("\n=== DUNGEON ===");
-    int result = GameLogic.showGameMap(input, player);
+    GameState result = GameLogic.showGameMap(input, player);
 
-    if (result == -2) {
-        System.out.println("\nGAME OVER");
-        return GameState.DEATH; // Or GameState.EXIT to quit entirely
+    switch (result) {
+        case DEATH -> {
+            return GameState.DEATH;
+        }
+        case COMPLETE -> {
+            return GameState.COMPLETE;
+        }
+        default -> { return GameState.MAIN_MENU; }
     }
-    return GameState.GAME;
 }
 
-private GameState handleLabyrinth(Scanner input, Player player) {
-    System.out.println("\n=== RANDOM LABYRINTH ===");
-    System.out.println("Labyrinth not implemented yet");
-    System.out.println("Press Enter to return...");
-    input.nextLine();
-    return GameState.GAME;
-}
+// (INF2)
+//private GameState handleLabyrinth(Scanner input, Player player) {
+//    System.out.println("\n=== RANDOM LABYRINTH ===");
+//    System.out.println("Labyrinth not implemented yet");
+//    System.out.println("Press Enter to return...");
+//    input.nextLine();
+//    return GameState.GAME;
+//}
 
 private GameState handleInventory(Scanner input, Player player) {
     MenuLogic.showInventoryMenu(input, player);
@@ -90,7 +105,7 @@ private GameState handleStats(Scanner input, Player player) {
 //    String leftColumn = buildPlayerStats();
 //    String rightColumn = buildEnemyDisplay();
 //
-//    // Combine columns side by side
+//    // Combine columns `side by side
 //    displaySideBySide(leftColumn, rightColumn);
 //    displayCombatOptions();
 //}
