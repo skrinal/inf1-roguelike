@@ -1,17 +1,8 @@
 package game.room.instances;
 
-import com.sun.jdi.ClassType;
-import data.ItemDatabase;
-import game.room.Room;
-import game.room.elements.CombatElement;
-import game.room.elements.TreasureElement;
-import model.Item;
-import model.enemies.SkeletonWarrior;
-import model.enums.PlayerClass;
+import game.room.RoomOutCome;
 
-import static model.enums.PlayerClass.*;
-
-public class RoomOne extends Room {
+public class RoomOne  {
 
     private static final String DESCRIPTION = """
             | You step into a dimly lit room.
@@ -47,48 +38,25 @@ public class RoomOne extends Room {
             - 1x {Item}
             """;
 
-    public RoomOne() {
-        super(DESCRIPTION, MAP);
-
-        addElement("enemy", new CombatElement(
-                "Investigate 'X' marking",
-                player -> new SkeletonWarrior(
-                        "Vlado Ice", 100, player.getLevel()),
-                ENEMY_ENCOUNTER,
-                ENEMY_DEFEATED
-        ));
-
-        addElement("treasure", new TreasureElement(
-                "Investigate 'X' marking",
-                player -> {
-                    player.addGold(100);
-                    Item newItem = getClassItem(player.getClassType());
-//                    Item newItem = switch (player.getClassType()) {
-//                        case MAGE -> ItemDatabase.WOODEN_STAFF;
-//                        case ROGUE -> ItemDatabase.IRON_DAGGER;
-//                        case WARRIOR -> ItemDatabase.IRON_SWORD;
-//                    };
-                    player.addItem(newItem);
-                    //TREASURE_FOUND.replace("{Item}", newItem.toString());
-                },
-                player -> TREASURE_FOUND.replace("{Item}", )
-                //TREASURE_FOUND
-        ));
-
+    public static RoomOutCome RoomOne() {
+        return null;
     }
 
-    @Override
-    protected Item getClassItem(PlayerClass playerClass) {
-        switch (playerClass) {
-            case MAGE -> {
-                return ItemDatabase.WOODEN_STAFF;
-            }
-            case ROGUE -> {
-                return ItemDatabase.IRON_DAGGER;
-            }
-            case WARRIOR -> {
-                return ItemDatabase.IRON_SWORD;
-            }
-        };
-    }
+    pul
+
+//    @Override
+//    protected Item getClassItem(PlayerClass playerClass) {
+//        switch (playerClass) {
+//            case MAGE -> {
+//                return ItemDatabase.WOODEN_STAFF;
+//            }
+//            case ROGUE -> {
+//                return ItemDatabase.IRON_DAGGER;
+//            }
+//            case WARRIOR -> {
+//                return ItemDatabase.IRON_SWORD;
+//            }
+//            default -> throw new IllegalStateException("Unexpected value: " + playerClass);
+//        }
+//    }
 }

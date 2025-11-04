@@ -1,18 +1,17 @@
 package game;
 
 import data.EnemyDatabase;
-import game.room.RoomStrings;
+import game.room.RoomOutCome;
 import game.room.combat.CombatSystem;
 import model.Enemy;
 import model.Player;
-import java.util.Scanner;
-
 import model.enums.GameState;
 import model.enums.room.RoomResult;
 import model.enums.room.RoomType;
 
+import java.util.Scanner;
+
 public class GameLogic {
-    private record RoomOutCome(RoomResult result, RoomType nextRoom) { }
 
     public static GameState showGameMap(Scanner input, Player player) {
         RoomType currentRoom = RoomType.ONE;
@@ -20,7 +19,7 @@ public class GameLogic {
 
         while (inDungeon) {
             RoomOutCome outCome = switch (currentRoom) {
-                case ONE -> showRoomOne(input, player, EnemyDatabase.roomOne);
+                case ONE -> showRoomOne(input, player, EnemyDatabase.ROOM_ONE);
                 case TWO -> null;
                 case THREE -> null;
                 case FOUR -> null;
@@ -31,6 +30,7 @@ public class GameLogic {
             switch (outCome.result) {
                 case EXIT -> {
                     inDungeon = false;
+                    return GameState.MAIN_MENU;
                 }
                 case DEATH -> {
                     inDungeon = false;
@@ -50,8 +50,7 @@ public class GameLogic {
         boolean treasureFound = false;
 
         while (true) {
-            System.out.println(RoomStrings.DUNGEON_ROOM_ONE_TEXT);
-            System.out.println(RoomStrings.DUNGEON_ROOM_ONE_MAP);
+
             System.out.println("1. Investigate 'X' marking " + (enemyCleared ? "(cleared)" : ""));
             System.out.println("2. Investigate '?' marking " + (treasureFound ? "(found)" : ""));
 

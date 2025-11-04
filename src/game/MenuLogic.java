@@ -9,7 +9,8 @@ import model.players.Warrior;
 
 import java.util.Scanner;
 
-import static game.strings.MenuStrings.*;
+import static game.strings.MenuStrings.GAME_MENU_OPTIONS;
+import static game.strings.MenuStrings.GAME_TITLE_MENU;
 
 public class MenuLogic {
 

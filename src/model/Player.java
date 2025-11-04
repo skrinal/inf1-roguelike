@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public abstract class Player extends Character {
     private int power;
-    private int maxPower;
+    private final int maxPower;
     private int gold;
     private HashMap<Item, Integer> inventory;
     private Item equippedWeapon;
@@ -63,9 +63,25 @@ public abstract class Player extends Character {
         this.inventory.put(item, this.inventory.getOrDefault(item, 0) + 1);
     }
 
-    public abstract String getPowerName();
+    public abstract String getPowerString();
     public abstract PlayerClass getClassType();
-    public abstract void displayStats();
+
+    public void displayStats() {
+        System.out.println("╔═════════════════════════════════╗");
+        System.out.println("║  " + this.getName() + " [" + this.getClassType() + "]");
+        System.out.println("╠═════════════════════════════════╣");
+        System.out.println("║ HP:      [" + this.getHealthBar() + "] " + this.getHp() + "/" + this.getMaxHp());
+        System.out.println("║ " + this.getPowerString() + ":    [" + this.getPowerBar() + "] " + this.getPower() + "/" + this.getMaxPower());
+        System.out.println("║ Attack:  " + this.getTotalAttack());
+        System.out.println("║ Defense: " + this.getTotalDefense());
+        System.out.println("║ Gold:    " + this.getGold());
+        System.out.println("║ ");
+        System.out.println("║ Level:   " + this.getLevel() + " - " + this.getExperience() + "/" + this.getExperienceToNextLevel());
+        System.out.println("║ ");
+        System.out.println("║ Armor:   " + (this.getEquippedArmor() == null ? "None" : this.getEquippedArmor().getName() + " + " + this.getEquippedArmor().getValue() + " Armor"));
+        System.out.println("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().getName() + " + " + this.getEquippedWeapon().getValue() + " Damage" ));
+        System.out.println("╚═════════════════════════════════╝");
+    }
 
     @Override
     public int getTotalAttack() {

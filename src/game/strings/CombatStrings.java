@@ -123,7 +123,7 @@ public class CombatStrings {
             combinedUI.append("\n");
         }
 
-        System.out.println(combinedUI.toString());
+        System.out.println(combinedUI);
     }
 
     private static String padToWidth(String text, int width) {
@@ -152,7 +152,7 @@ public class CombatStrings {
         ui.append("║").append(padLine(hpText, 33)).append("║\n");
 
         // Power line (Mana/Energy/Rage)
-        String powerText = " " + player.getPowerName() + ":    [" +
+        String powerText = " " + player.getPowerString() + ":    [" +
                 player.getPowerBar() + "] " +
                 player.getPower() + "/" + player.getMaxPower();
         ui.append("║").append(padLine(powerText, 33)).append("║\n");
@@ -169,28 +169,28 @@ public class CombatStrings {
 
         switch (player.getClassType()) {
             case MAGE -> {
-                ui.append("║").append(padLine("    [1] Fireblast (50)", 26)).append("║\n");
-                ui.append("║").append(padLine("    [2] Alter Time (20)", 26)).append("║\n");
-                ui.append("║").append(padLine("    [3] Fireball (10)", 26)).append("║\n");
-                ui.append("║").append(padLine("    [4] Rest", 26)).append("║\n");
+                ui.append("║").append(padLine("  [1] Fireblast (50)", 26)).append("║\n");
+                ui.append("║").append(padLine("  [2] Alter Time (20)", 26)).append("║\n");
+                ui.append("║").append(padLine("  [3] Fireball (10)", 26)).append("║\n");
+
             }
             case ROGUE -> {
-                ui.append("║").append(padLine(" [1] Sinister Strike (30)", 26)).append("║\n");
-                ui.append("║").append(padLine(" [2] Vanish (70)", 26)).append("║\n");
-                ui.append("║").append(padLine(" [3] First Aid (10)", 26)).append("║\n");
-                ui.append("║").append(padLine(" [4] Rest", 26)).append("║\n");
+                ui.append("║").append(padLine("  [1] Sinister Strike (30)", 26)).append("║\n");
+                ui.append("║").append(padLine("  [2] Vanish (70)", 26)).append("║\n");
+                ui.append("║").append(padLine("  [3] First Aid (10)", 26)).append("║\n");
             }
             case WARRIOR -> {
-                ui.append("║").append(padLine("   [1] Bloodthirst (30)", 26)).append("║\n");
-                ui.append("║").append(padLine("   [2] Execute (50)", 26)).append("║\n");
-                ui.append("║").append(padLine("   [3] Ignore Pain (10)", 26)).append("║\n");
-                ui.append("║").append(padLine("   [4] Rest", 26)).append("║\n");
+                ui.append("║").append(padLine("  [1] Bloodthirst (30)", 26)).append("║\n");
+                ui.append("║").append(padLine("  [2] Execute (50)", 26)).append("║\n");
+                ui.append("║").append(padLine("  [3] Ignore Pain (10)", 26)).append("║\n");
             }
         }
+// Mybe INF2 logic
+//        ui.append("╠══════════════════════════╣\n");
+//        ui.append("║").append(padLine("  [I]XXXX", 26)).append("║\n");
 
-        ui.append("╠══════════════════════════╣\n");
-        ui.append("║").append(padLine("         [D]efend", 26)).append("║\n");
-        ui.append("║").append(padLine("         [I]tem", 26)).append("║\n");
+        ui.append("║").append(padLine("  [4] Rest dd", 26)).append("║\n");
+        ui.append("║").append(padLine("  [5] Item", 26)).append("║\n");
         ui.append("╚══════════════════════════╝");
 
         return ui.toString();

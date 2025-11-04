@@ -3,6 +3,7 @@ package game.room.combat;
 import game.MenuLogic;
 import model.Enemy;
 import model.Player;
+
 import java.util.Scanner;
 
 import static game.strings.CombatStrings.printCombatMenu;
@@ -23,6 +24,9 @@ public class CombatSystem {
 //        sb.append(ClassPower.MANA);
 //    }
 
+    private static int handleCombatDecision(Scanner input) {
+        return 0;
+    }
 
 
 }

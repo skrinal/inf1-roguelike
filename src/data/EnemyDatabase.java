@@ -4,6 +4,6 @@ import model.Enemy;
 import model.enemies.DemonLord;
 
 public class EnemyDatabase {
-    public static Enemy roomOne = new
-            DemonLord("Maximus", 100, 10, 10, 100);
+    public static final Enemy ROOM_ONE = new
+            DemonLord("Maximus", 100);
 }
