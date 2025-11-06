@@ -110,7 +110,7 @@ public abstract class Character {
     }
 
     public String getBar(int current, int max) {
-        int bars = (current * max) / max;
+        int bars = (int)((double)current / max * 10);
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < 10; i++) {
             result.append(i < bars ? "█" : "░");
