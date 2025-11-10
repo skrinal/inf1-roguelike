@@ -3,27 +3,29 @@ import game.MenuLogic;
 import model.Player;
 import model.enums.GameState;
 
-void main() throws IOException, InterruptedException {
+void main() {
     Scanner input = new Scanner(System.in);
     Player player = null;
+
+    // TODO: skola
     GameState state = GameState.MAIN_MENU;
+
+    MenuLogic menuLogic = new MenuLogic();
+    GameLogic gameLogic = new GameLogic();
 
     while (state != GameState.EXIT) {
         switch (state){
-            case MAIN_MENU -> state = handleMenu(input, player);
+            case MAIN_MENU -> state = menuLogic.handleMenu(input, player);
             case CHARACTER_CREATION -> {
-                player = MenuLogic.handleCharacterCreation(input);
+                player = menuLogic.handleCharacterCreation(input);
                 state = GameState.GAME;
             }
-            case GAME -> state = handleGame(input);
-            case DUNGEON -> state = handleDungeon(input, player);   //TODO: Implement dungeon
-//            case LABYRINTH -> state = handleLabyrinth(input, player);   //TODO: (INF2) Implement labyrinth
-            case INVENTORY -> state = handleInventory(input, player);   //TODO: Working but fi logic
-            case STATS -> state = handleStats(input, player);
-            //TODO: (INF 2) Implement settings  - > Save/Load, Difficulty
-//            case SETTINGS -> {
-//                state = GameState.MAIN_MENU;
-//            }
+            case GAME -> state = gameLogic.handleGame(input);
+            case DUNGEON -> state = gameLogic.handleDungeon(input, player);
+
+            //case INVENTORY -> state = handleInventory(input, player);
+
+            case STATS -> state = player.handleStats(input);
             case DEATH -> {
                 System.out.println("\n=== GAME OVER ===");
                 System.out.println("You have died!");
@@ -39,42 +41,7 @@ void main() throws IOException, InterruptedException {
     }
 }
 
-private GameState handleMenu(Scanner input, Player player) {
-    int choice = MenuLogic.showMainMenu(input);
-    return switch (choice){
-        case 1 -> player == null ? GameState.CHARACTER_CREATION : GameState.GAME;
-        //case 2 -> GameState.SETTINGS; (INF2)
-        case 0 -> GameState.EXIT;
-        default -> GameState.MAIN_MENU;
-    };
-}
 
-private GameState handleGame(Scanner input) {
-    int choice = MenuLogic.showGameMenu(input);
-    return switch (choice) {
-        case 1 -> GameState.DUNGEON;
-        //case 2 -> GameState.LABYRINTH; (INF2)
-        case 3 -> GameState.INVENTORY;
-        case 4 -> GameState.STATS;
-        case 0 -> GameState.MAIN_MENU;
-        default -> GameState.GAME;
-    };
-}
-
-private GameState handleDungeon(Scanner input, Player player) {
-    System.out.println("\n=== DUNGEON ===");
-    GameState result = GameLogic.showGameMap(input, player);
-
-    switch (result) {
-        case DEATH -> {
-            return GameState.DEATH;
-        }
-        case COMPLETE -> {
-            return GameState.COMPLETE;
-        }
-        default -> { return GameState.MAIN_MENU; }
-    }
-}
 
 // (INF2)
 //private GameState handleLabyrinth(Scanner input, Player player) {
@@ -85,15 +52,17 @@ private GameState handleDungeon(Scanner input, Player player) {
 //    return GameState.GAME;
 //}
 
-private GameState handleInventory(Scanner input, Player player) {
-    MenuLogic.showInventoryMenu(input, player);
-    return GameState.GAME;
-}
+// (INF2)
+//private GameState handleInventory(Scanner input, Player player) {
+//    MenuLogic.showInventoryMenu(input, player);
+//    return GameState.GAME;
+//}
 
-private GameState handleStats(Scanner input, Player player) {
-    System.out.println("\n=== STATS ===");
-    player.displayStats();
-    System.out.print("\nPress Enter to return...");
-    input.nextLine();
-    return GameState.GAME;
-}
+
+//private GameState handleStats(Scanner input, Player player) {
+//    System.out.println("\n=== STATS ===");
+//    player.displayStats();
+//    System.out.print("\nPress Enter to return...");
+//    input.nextLine();
+//    return GameState.GAME;
+//}

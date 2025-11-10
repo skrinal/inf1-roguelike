@@ -7,8 +7,8 @@ import model.Enemy;
 import model.Player;
 import model.enums.room.RoomResult;
 import model.enums.room.RoomType;
-
 import java.util.Scanner;
+import static Utility.Utility.handleDecision;
 
 public class Rooms {
 
@@ -62,10 +62,10 @@ public class Rooms {
 
             if (enemyCleared) {
                 System.out.println("3. Proceed to next room");
-                choice = MenuLogic.handleDecision(input, 0, 3);
+                choice = handleDecision(input, 0, 3);
 
             } else {
-                choice = MenuLogic.handleDecision(input, 0, 2);
+                choice = handleDecision(input, 0, 2);
             }
 
             switch (choice) {

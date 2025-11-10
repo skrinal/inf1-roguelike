@@ -1,14 +1,16 @@
 package model;
 
+import model.enums.GameState;
 import model.enums.PlayerClass;
 
 import java.util.HashMap;
+import java.util.Scanner;
 
 public abstract class Player extends Character {
     private int power;
     private final int maxPower;
     private int gold;
-    private HashMap<Item, Integer> inventory;
+    private final HashMap<Item, Integer> inventory;
     private Item equippedWeapon;
     private Item equippedArmor;
 
@@ -91,6 +93,14 @@ public abstract class Player extends Character {
     @Override
     public int getTotalDefense() {
         return this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0);
+    }
+
+    public GameState handleStats(Scanner input) {
+        System.out.println("\n=== STATS ===");
+        this.displayStats();
+        System.out.print("\nPress Enter to return...");
+        input.nextLine();
+        return GameState.GAME;
     }
 
     public Item getEquippedWeapon() {

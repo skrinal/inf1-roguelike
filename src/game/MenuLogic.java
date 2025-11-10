@@ -2,6 +2,7 @@ package game;
 
 import model.Item;
 import model.Player;
+import model.enums.GameState;
 import model.enums.PlayerClass;
 import model.players.Mage;
 import model.players.Rogue;
@@ -9,12 +10,21 @@ import model.players.Warrior;
 
 import java.util.Scanner;
 
-import static game.strings.MenuStrings.GAME_MENU_OPTIONS;
+import static Utility.Utility.handleDecision;
 import static game.strings.MenuStrings.GAME_TITLE_MENU;
 
 public class MenuLogic {
 
-    public static model.Player handleCharacterCreation(Scanner input) throws InterruptedException {
+    public GameState handleMenu(Scanner input, Player player) {
+        int choice = showMainMenu(input);
+        return switch (choice){
+            case 1 -> player == null ? GameState.CHARACTER_CREATION : GameState.GAME;
+            case 0 -> GameState.EXIT;
+            default -> GameState.MAIN_MENU;
+        };
+    }
+
+    public Player handleCharacterCreation(Scanner input) {
         System.out.println("\n=== CHARACTER CREATION ===\n");
         System.out.print("Name your character: ");
         String name = input.nextLine();
@@ -23,172 +33,148 @@ public class MenuLogic {
         return createCharacter(playerClass, name);
     }
 
-    public static int showGameMenu(Scanner input) {
-        System.out.println("\n" + GAME_MENU_OPTIONS);
 
-        return handleDecision(input, 0, 3);
-    }
-
-    public static int handleDecision(Scanner input, int minChoice, int maxChoice) {
-        while (true) {
-            System.out.print("Select: ");
-
-            if (!input.hasNextInt()) {
-                System.out.println("Invalid selection. Try again");
-                input.nextLine();
-                continue;
-            }
-            int choice = input.nextInt();
-            input.nextLine();
-
-            if (choice >= minChoice && choice <= maxChoice) {
-                return choice;
-            }
-            System.out.println("Invalid selection. Try again");
-        }
-    }
-
-    public static int showMainMenu(Scanner input) {
+    private int showMainMenu(Scanner input) {
         System.out.println(GAME_TITLE_MENU);
 
         return handleDecision(input, 0, 2);
     }
 
-    public static int showInventoryMenu(Scanner input, Player player) {
-        while (true) {
-            IO.println("\n=== INVENTORY ===");
-            IO.println("Gold : " + player.getGold());
-            IO.println("\nEquipped:");
-            IO.println("  Weapon: " + (player.getEquippedWeapon() == null ? "None" : player.getEquippedWeapon().getName()));
-            IO.println("  Armor: " + (player.getEquippedArmor() == null ? "None" : player.getEquippedArmor().getName()));
-
-            IO.println("\nItems:");
-            if (player.getInventory().isEmpty()) {
-                IO.println(" (empty)");
-                IO.println("0. Back");
-                IO.print("Select: ");
-                if (!input.hasNextInt()) {
-                    input.next();
-                    continue;
-                }
-                int choice = input.nextInt();
-                input.nextLine();
-                if (choice == 0)
-                    return 0;
-                continue;
-            }
-            int index = 1;
-            Item[] items = new Item[player.getInventory().size()];
-            for (var entry : player.getInventory().entrySet()) {
-                Item item = entry.getKey();
-                int count = entry.getValue();
-                String equipped = "";
-                if (item.equals(player.getEquippedWeapon()) || item.equals(player.getEquippedArmor())) {
-                    equipped = " [EQUIPPED]";
-                }
-                IO.println(index + ". " + item.getName() + " x" + count + equipped);
-                items[index - 1] = item;
-                index++;
-            }
-            IO.println("0. Back");
-            IO.print("Select item: ");
-
-            if (!input.hasNextInt()) {
-                IO.println("Invalid selection. Try again");
-                input.next();
-                continue;
-            }
-            int choice = input.nextInt();
-            input.nextLine();
-
-            if (choice == 0) {
-                return 0;
-            } else if (choice >= 1 && choice <= items.length) {
-                Item selectedItem = items[choice - 1];
-                handleItemDetail(input, player, selectedItem);
-            } else {
-                IO.println("Invalid selection. Try again");
-            }
-        }
-    }
+//    public int showInventoryMenu(Scanner input, Player player) {
+//        while (true) {
+//            IO.println("\n=== INVENTORY ===");
+//            IO.println("Gold : " + player.getGold());
+//            IO.println("\nEquipped:");
+//            IO.println("  Weapon: " + (player.getEquippedWeapon() == null ? "None" : player.getEquippedWeapon().getName()));
+//            IO.println("  Armor: " + (player.getEquippedArmor() == null ? "None" : player.getEquippedArmor().getName()));
+//
+//            IO.println("\nItems:");
+//            if (player.getInventory().isEmpty()) {
+//                IO.println(" (empty)");
+//                IO.println("0. Back");
+//                IO.print("Select: ");
+//                if (!input.hasNextInt()) {
+//                    input.next();
+//                    continue;
+//                }
+//                int choice = input.nextInt();
+//                input.nextLine();
+//                if (choice == 0)
+//                    return 0;
+//                continue;
+//            }
+//            int index = 1;
+//            Item[] items = new Item[player.getInventory().size()];
+//            for (var entry : player.getInventory().entrySet()) {
+//                Item item = entry.getKey();
+//                int count = entry.getValue();
+//                String equipped = "";
+//                if (item.equals(player.getEquippedWeapon()) || item.equals(player.getEquippedArmor())) {
+//                    equipped = " [EQUIPPED]";
+//                }
+//                IO.println(index + ". " + item.getName() + " x" + count + equipped);
+//                items[index - 1] = item;
+//                index++;
+//            }
+//            IO.println("0. Back");
+//            IO.print("Select item: ");
+//
+//            if (!input.hasNextInt()) {
+//                IO.println("Invalid selection. Try again");
+//                input.next();
+//                continue;
+//            }
+//            int choice = input.nextInt();
+//            input.nextLine();
+//
+//            if (choice == 0) {
+//                return 0;
+//            } else if (choice >= 1 && choice <= items.length) {
+//                Item selectedItem = items[choice - 1];
+//                handleItemDetail(input, player, selectedItem);
+//            } else {
+//                IO.println("Invalid selection. Try again");
+//            }
+//        }
+//    }
 
     //TODO : REMAKE
-    private static void handleItemDetail(Scanner input, Player player, Item item) {
-        while (true) {
-            IO.println("\n=== ITEM DETAILS ===");
-            IO.println("Name: " + item.getName());
-            IO.println("Type: " + item.getType());
-            String statDes = switch (item.getType()) {
-                case WEAPON -> " damage";
-                case ARMOR -> " defense";
-                case POTION -> " health";
-                case TREASURE -> " gold";
-            };
-            IO.println("Value: " + item.getValue() + statDes);
-            IO.println("Quantity: " + player.getInventory().get(item));
+//    private void handleItemDetail(Scanner input, Player player, Item item) {
+//        while (true) {
+//            IO.println("\n=== ITEM DETAILS ===");
+//            IO.println("Name: " + item.getName());
+//            IO.println("Type: " + item.getType());
+//            String statDes = switch (item.getType()) {
+//                case WEAPON -> " damage";
+//                case ARMOR -> " defense";
+//                case POTION -> " health";
+//                case TREASURE -> " gold";
+//            };
+//            IO.println("Value: " + item.getValue() + statDes);
+//            IO.println("Quantity: " + player.getInventory().get(item));
+//
+//            boolean isEquipped = item.equals(player.getEquippedWeapon()) || item.equals(player.getEquippedArmor());
+//            if (isEquipped) {
+//                IO.println("Status: EQUIPPED");
+//            }
+//
+//            IO.println("\n1. Equip" + (isEquipped ? " (already equipped)" : ""));
+//            IO.println("2. Drop/Sell");
+//            IO.println("3. Back to items");
+//            IO.print("Select: ");
+//
+//            if (!input.hasNextInt()) {
+//                IO.println("Invalid selection. Try again");
+//                input.next();
+//                continue;
+//            }
+//            int choice = input.nextInt();
+//            input.nextLine();
+//
+//            switch (choice) {
+//                case 1 -> {
+//                    if (item.getType().equals("Weapon")) {
+//                        player.setEquippedWeapon(item);
+//                        IO.println("Equipped: " + item.getName());
+//                    } else if (item.getType().equals("Armor")) {
+//                        player.setEquippedArmor(item);
+//                        IO.println("Equipped: " + item.getName());
+//                    } else {
+//                        IO.println("Cannot equip this item type");
+//                    }
+//                }
+//                case 2 -> {
+//                    if (dropItem(player, item)) {
+//                        IO.println("Dropped: " + item.getName());
+//                        return;
+//                    }
+//                }
+//                case 3 -> {
+//                    return;
+//                }
+//                default -> IO.println("Invalid selection. Try again");
+//            }
+//        }
+//    }
 
-            boolean isEquipped = item.equals(player.getEquippedWeapon()) || item.equals(player.getEquippedArmor());
-            if (isEquipped) {
-                IO.println("Status: EQUIPPED");
-            }
-
-            IO.println("\n1. Equip" + (isEquipped ? " (already equipped)" : ""));
-            IO.println("2. Drop/Sell");
-            IO.println("3. Back to items");
-            IO.print("Select: ");
-
-            if (!input.hasNextInt()) {
-                IO.println("Invalid selection. Try again");
-                input.next();
-                continue;
-            }
-            int choice = input.nextInt();
-            input.nextLine();
-
-            switch (choice) {
-                case 1 -> {
-                    if (item.getType().equals("Weapon")) {
-                        player.setEquippedWeapon(item);
-                        IO.println("Equipped: " + item.getName());
-                    } else if (item.getType().equals("Armor")) {
-                        player.setEquippedArmor(item);
-                        IO.println("Equipped: " + item.getName());
-                    } else {
-                        IO.println("Cannot equip this item type");
-                    }
-                }
-                case 2 -> {
-                    if (dropItem(player, item)) {
-                        IO.println("Dropped: " + item.getName());
-                        return;
-                    }
-                }
-                case 3 -> {
-                    return;
-                }
-                default -> IO.println("Invalid selection. Try again");
-            }
-        }
-    }
-
-    // TODO : REMAKE
-    private static boolean dropItem(model.Player player, Item item) {
-        int count = player.getInventory().get(item);
-
-        if (count > 1) {
-            player.getInventory().put(item, count - 1);
-            return true;
-        } else {
-            player.getInventory().remove(item);
-            if (item.equals(player.getEquippedWeapon())) {
-                player.setEquippedWeapon(null);
-            }
-            if (item.equals(player.getEquippedArmor())) {
-                player.setEquippedArmor(null);
-            }
-            return true;
-        }
-    }
+//    // TODO : INF 2
+//    private static boolean dropItem(model.Player player, Item item) {
+//        int count = player.getInventory().get(item);
+//
+//        if (count > 1) {
+//            player.getInventory().put(item, count - 1);
+//            return true;
+//        } else {
+//            player.getInventory().remove(item);
+//            if (item.equals(player.getEquippedWeapon())) {
+//                player.setEquippedWeapon(null);
+//            }
+//            if (item.equals(player.getEquippedArmor())) {
+//                player.setEquippedArmor(null);
+//            }
+//            return true;
+//        }
+//    }
 
 //    public static int dshowInventoryMenu(Scanner input, model.Player player) {
 //        while (true) {
@@ -305,7 +291,7 @@ public class MenuLogic {
 //        System.out.println("Dropped: " + selectedItem.getName());
 //    }
 
-    private static Player createCharacter(PlayerClass playerClass, String name) {
+    private Player createCharacter(PlayerClass playerClass, String name) {
         return switch (playerClass) {
             case WARRIOR -> new Warrior(name);
             case MAGE -> new Mage(name);
@@ -313,7 +299,7 @@ public class MenuLogic {
         };
     }
 
-    private static PlayerClass selectedClass(Scanner input) {
+    private PlayerClass selectedClass(Scanner input) {
         while (true) {
             System.out.println("\n=== CHOOSE CLASS ===");
             System.out.println("\n1. Warrior");

@@ -5,7 +5,7 @@ import model.Enemy;
 import model.Player;
 
 import java.util.Scanner;
-
+import static Utility.Utility.handleDecision;
 import static game.strings.CombatStrings.printCombatMenu;
 
 public class CombatSystem {
@@ -14,7 +14,7 @@ public class CombatSystem {
 
         while (player.isAlive() && enemy.isAlive()) {
             printCombatMenu(player, enemy);
-            MenuLogic.handleDecision(input, 0, 2);
+            handleDecision(input, 0, 2);
         }
 
         return false; // Dead

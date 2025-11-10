@@ -5,11 +5,6 @@ public abstract class Enemy extends Character {
 
     /**
      * Constructor for enemies without an assigned level at creation.
-     * @param name
-     * @param maxHp
-     * @param attack
-     * @param defence
-     * @param goldReward
      */
     public Enemy(String name, int maxHp, int attack, int defence, int goldReward) {
         super(name, maxHp, attack, defence);
@@ -18,12 +13,6 @@ public abstract class Enemy extends Character {
 
     /**
      * Constructor for enemies with an assigned level at creation.
-     * @param name
-     * @param maxHp
-     * @param attack
-     * @param defence
-     * @param goldReward
-     * @param level
      */
     public Enemy(String name, int maxHp, int attack, int defence, int goldReward, int level) {
         super(name, maxHp, attack, defence);
@@ -34,7 +23,6 @@ public abstract class Enemy extends Character {
 
     /**
      * Scales enemy's stats to the targeted level.
-     * @param targetedLevel
      */
     private void initializeAtLevel(int targetedLevel) {
         for (int i = 1; i < targetedLevel; i++) {
