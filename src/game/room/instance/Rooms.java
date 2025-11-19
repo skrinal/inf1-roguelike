@@ -1,6 +1,5 @@
 package game.room.instance;
 
-import game.MenuLogic;
 import game.room.RoomOutCome;
 import game.room.combat.CombatSystem;
 import model.Enemy;
@@ -8,7 +7,7 @@ import model.Player;
 import model.enums.room.RoomResult;
 import model.enums.room.RoomType;
 import java.util.Scanner;
-import static Utility.Utility.handleDecision;
+import static utility.Utility.handleDecision;
 
 public class Rooms {
 
@@ -46,7 +45,11 @@ public class Rooms {
             - 1x {Item}
             """;
 
-    public static RoomOutCome showRoomOne(Scanner input, Player player, Enemy enemy) {
+    private final CombatSystem combatSystem = new CombatSystem();
+
+    public Rooms() { }
+
+    public RoomOutCome showRoomOne(Scanner input, Player player, Enemy enemy) {
         boolean enemyCleared = false;
         boolean treasureFound = false;
 
@@ -74,7 +77,7 @@ public class Rooms {
                 }
                 case 1 -> { // Enemy
                     if (!enemyCleared) {
-                        enemyCleared = CombatSystem.startCombat(input, player, enemy);
+                        enemyCleared = this.combatSystem.startCombat(input, player, enemy);
 
                         if (!enemyCleared) {
                             return new RoomOutCome(RoomResult.DEATH, null);
@@ -85,7 +88,7 @@ public class Rooms {
                     }
                 }
                 case 2 -> { // Treasure
-                    treasureFound(player);
+                    this.treasureFound(player);
                 }
             }
 
@@ -127,9 +130,8 @@ public class Rooms {
         }
     }
 
-    private static void treasureFound(Player player) {
+    private void treasureFound(Player player) {
         System.out.println(TREASURE_FOUND);
-
     }
 
 

@@ -5,6 +5,8 @@ import model.Player;
 import model.enums.ClassPower;
 import model.enums.PlayerClass;
 
+import java.util.Scanner;
+
 public class Rogue extends Player {
 
     private static final int MAX_HP = 100;
@@ -26,9 +28,18 @@ public class Rogue extends Player {
         return PlayerClass.ROGUE;
     }
 
+    @Override
+    public void performeUtilityAbitlity() {
+
+    }
 
     @Override
-    public void performSpecialAbility(Character target) {
+    public void performeBasicAbility(Character target) {
+
+    }
+
+    @Override
+    public void performeSpecialAbility(Character target) {
 
     }
 }

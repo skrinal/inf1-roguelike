@@ -7,13 +7,15 @@ import model.Player;
 import model.enums.GameState;
 import model.enums.room.RoomType;
 import java.util.Scanner;
-import static Utility.Utility.handleDecision;
+import static utility.Utility.handleDecision;
 import static game.strings.MenuStrings.GAME_MENU_OPTIONS;
 
 public class GameLogic {
 
+    private final Rooms rooms = new Rooms();
+
     public GameState handleGame(Scanner input) {
-        int choice = showGameMenu(input);
+        int choice = this.showGameMenu(input);
         return switch (choice) {
             case 1 -> GameState.DUNGEON;
             case 2 -> GameState.STATS;
@@ -24,7 +26,7 @@ public class GameLogic {
 
     public GameState handleDungeon(Scanner input, Player player) {
         System.out.println("\n=== DUNGEON ===");
-        GameState result = showGameMap(input, player);
+        GameState result = this.showGameMap(input, player);
 
         switch (result) {
             case DEATH -> {
@@ -48,15 +50,14 @@ public class GameLogic {
     private GameState showGameMap(Scanner input, Player player) {
         RoomType currentRoom = RoomType.ONE;
         boolean inDungeon = true;
-        Object dada;
+
         while (inDungeon) {
             RoomOutCome outCome = switch (currentRoom) {
-                case ONE -> Rooms.showRoomOne(input, player, EnemyDatabase.ROOM_ONE);
+                case ONE -> this.rooms.showRoomOne(input, player, EnemyDatabase.ROOM_ONE);
                 case TWO -> null;
                 case THREE -> null;
                 case FOUR -> null;
                 case FIVE -> null;
-
             };
 
             switch (outCome.result()) {
@@ -71,6 +72,9 @@ public class GameLogic {
                 case COMPLETED -> {
                     inDungeon = false;
                     return GameState.COMPLETE;
+                }
+                default -> {
+                    inDungeon = false;
                 }
             }
         }

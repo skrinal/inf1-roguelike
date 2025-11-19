@@ -119,7 +119,6 @@ public abstract class Player extends Character {
         this.equippedArmor = equippedArmor;
     }
 
-
-
+    public abstract void performeUtilityAbitlity();
 
 }

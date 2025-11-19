@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.Character;
 import model.Enemy;
 import model.enums.EnemyType;
 
@@ -18,7 +19,7 @@ public class SkeletonWarrior extends Enemy {
     }
 
     @Override
-    public void performeAttack(model.Character target) {
+    public void performeAttack(Character target) {
 
     }
 
@@ -28,7 +29,12 @@ public class SkeletonWarrior extends Enemy {
     }
 
     @Override
-    public void performSpecialAbility(model.Character target) {
+    public void performeBasicAbility(Character target) {
+
+    }
+
+    @Override
+    public void performeSpecialAbility(Character target) {
 
     }
 }

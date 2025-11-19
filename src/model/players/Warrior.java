@@ -27,7 +27,17 @@ public class Warrior extends Player {
     }
 
     @Override
-    public void performSpecialAbility(Character target) {
+    public void performeUtilityAbitlity() {
+
+    }
+
+    @Override
+    public void performeBasicAbility(Character target) {
+
+    }
+
+    @Override
+    public void performeSpecialAbility(Character target) {
 
     }
 }

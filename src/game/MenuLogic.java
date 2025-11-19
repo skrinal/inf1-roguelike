@@ -1,6 +1,5 @@
 package game;
 
-import model.Item;
 import model.Player;
 import model.enums.GameState;
 import model.enums.PlayerClass;
@@ -10,14 +9,14 @@ import model.players.Warrior;
 
 import java.util.Scanner;
 
-import static Utility.Utility.handleDecision;
+import static utility.Utility.handleDecision;
 import static game.strings.MenuStrings.GAME_TITLE_MENU;
 
 public class MenuLogic {
 
     public GameState handleMenu(Scanner input, Player player) {
-        int choice = showMainMenu(input);
-        return switch (choice){
+        int choice = this.showMainMenu(input);
+        return switch (choice) {
             case 1 -> player == null ? GameState.CHARACTER_CREATION : GameState.GAME;
             case 0 -> GameState.EXIT;
             default -> GameState.MAIN_MENU;
@@ -28,9 +27,9 @@ public class MenuLogic {
         System.out.println("\n=== CHARACTER CREATION ===\n");
         System.out.print("Name your character: ");
         String name = input.nextLine();
-        PlayerClass playerClass = selectedClass(input);
+        PlayerClass playerClass = this.selectedClass(input);
 
-        return createCharacter(playerClass, name);
+        return this.createCharacter(playerClass, name);
     }
 
 

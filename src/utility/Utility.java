@@ -1,5 +1,4 @@
-package Utility;
-
+package utility;
 import java.util.Scanner;
 
 public class Utility {

@@ -7,8 +7,6 @@ import model.enums.ClassPower;
 import model.enums.ItemType;
 import model.enums.PlayerClass;
 
-import java.util.Random;
-
 public class Mage extends Player {
     private final Item itemd = new Item("Kraken", ItemType.WEAPON, 5);
 
@@ -34,35 +32,37 @@ public class Mage extends Player {
         return PlayerClass.MAGE;
     }
 
-//    @Override
-//    public void displayStats() {
-//        System.out.println("╔═════════════════════════════════╗");
-//        System.out.println("║  " + this.getName().toUpperCase() + " [" + PlayerClass.MAGE + "]");
-//        System.out.println("╠═════════════════════════════════╣");
-//        System.out.println("║ HP:      [" + this.getHealthBar() + "] " + this.getHp() + "/" + this.getMaxHp());
-//        System.out.println("║ " + this.getPowerName() + ":    [" + this.getPowerBar() + "] " + this.getPower() + "/" + this.getMaxPower());
-//        System.out.println("║ Attack:  " + this.getTotalAttack());
-//        System.out.println("║ Defense: " + this.getTotalDefense());
-//        System.out.println("║ Gold:    " + this.getGold());
-//        System.out.println("║ ");
-//        System.out.println("║ Level:   " + this.getLevel() + " - " + this.getExperience() + "/" + this.getExperienceToNextLevel());
-//        System.out.println("║ ");
-//        System.out.println("║ Armor:   " + (this.getEquippedArmor() == null ? "None" : this.getEquippedArmor().getName() + " + " + this.getEquippedArmor().getValue() + " Armor"));
-//        System.out.println("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().getName() + " + " + this.getEquippedWeapon().getValue() + " Damage" ));
-//        System.out.println("╚═════════════════════════════════╝");
-//    }
-
     // TODO: Damage logic is bad
     @Override
-    public void performSpecialAbility(Character target) {
-        if (usePower(30)) {
-            int damage = target.getTotalDefense() * 2 + new Random().nextInt(10);
+    public void performeSpecialAbility(Character target) {
+        if (usePower(50)) {
+            int damage = (int)(this.getMaxPower() * 2.5);
             target.takeDamage(damage);
-            System.out.println("FIREBALL! You blast " + target.getName() + " for " + damage + " damage!");
+            System.out.println("FIREBLAST! You blast " + target.getName() + " for " + damage + " damage!");
         } else {
             System.out.println("Not enough Mana!");
         }
     }
+    @Override
+    public void performeBasicAbility(Character target) {
+        if (usePower(10)) {
+            int damage = (int)(this.getMaxPower() * 1.2);
+            target.takeDamage(damage);
+            System.out.println("Fireball! You blast " + target.getName() + " for " + damage + " damage!");
+
+
+
+        } else {
+            System.out.println("Not enough Mana!");
+        }
+    }
+
+    @Override
+    public void performeUtilityAbitlity() {
+
+    }
+
+
 
 
 }

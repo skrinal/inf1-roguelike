@@ -30,7 +30,12 @@ public class DemonLord extends Enemy {
 
 
     @Override
-    public void performSpecialAbility(Character target) {
+    public void performeBasicAbility(Character target) {
+
+    }
+
+    @Override
+    public void performeSpecialAbility(Character target) {
 
     }
 }

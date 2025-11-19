@@ -1,7 +1,7 @@
 package model;
 
 public abstract class Character {
-    private String name;
+    private final String name;
     private int hp;
     private int maxHp;
     private int attack;
@@ -62,9 +62,9 @@ public abstract class Character {
         return this.hp > 0;
     }
 
-    public void takeDamage(int damage) {
-        int actualDamage = Math.max(1, damage - this.getTotalDefense());
-        this.hp = Math.max(0, this.hp - actualDamage);
+    public void takeDamage(double damage) {
+        int actualDamage = (int)Math.max(1, damage - this.getTotalDefense());
+        this.setHp(Math.max(this.hp, actualDamage));
     }
 
     public void heal(int amount) {
@@ -109,7 +109,7 @@ public abstract class Character {
         return this.getBar(this.getHp(), this.getMaxHp());
     }
 
-    public String getBar(int current, int max) {
+    protected String getBar(int current, int max) {
         int bars = (int)((double)current / max * 10);
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < 10; i++) {
@@ -129,6 +129,7 @@ public abstract class Character {
 
     public abstract int getTotalDefense();
 
-    public abstract void performSpecialAbility(Character target);
+    public abstract void performeBasicAbility(Character target);
+    public abstract void performeSpecialAbility(Character target);
 
 }
