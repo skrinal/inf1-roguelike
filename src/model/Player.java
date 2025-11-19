@@ -36,8 +36,17 @@ public abstract class Player extends Character {
         return this.gold;
     }
 
+    public void addGold(int amount) {
+        this.gold += amount;
+    }
+
     public HashMap<Item, Integer> getInventory() {
         return this.inventory;
+    }
+
+    //TODO: Nastudovat
+    public void addItem(Item item) {
+        this.inventory.put(item, this.inventory.getOrDefault(item, 0) + 1);
     }
 
     public void restorePower(int amount) {
@@ -56,34 +65,7 @@ public abstract class Player extends Character {
     public String getPowerBar() {
         return this.getBar(this.getPower(), this.getMaxPower());
     }
-    public void addGold(int amount) {
-        this.gold += amount;
-    }
-
-    //TODO: Nastudovat
-    public void addItem(Item item) {
-        this.inventory.put(item, this.inventory.getOrDefault(item, 0) + 1);
-    }
-
-    public abstract String getPowerString();
-    public abstract PlayerClass getClassType();
-
-    public void displayStats() {
-        System.out.println("╔═════════════════════════════════╗");
-        System.out.println("║  " + this.getName() + " [" + this.getClassType() + "]");
-        System.out.println("╠═════════════════════════════════╣");
-        System.out.println("║ HP:      [" + this.getHealthBar() + "] " + this.getHp() + "/" + this.getMaxHp());
-        System.out.println("║ " + this.getPowerString() + ":    [" + this.getPowerBar() + "] " + this.getPower() + "/" + this.getMaxPower());
-        System.out.println("║ Attack:  " + this.getTotalAttack());
-        System.out.println("║ Defense: " + this.getTotalDefense());
-        System.out.println("║ Gold:    " + this.getGold());
-        System.out.println("║ ");
-        System.out.println("║ Level:   " + this.getLevel() + " - " + this.getExperience() + "/" + this.getExperienceToNextLevel());
-        System.out.println("║ ");
-        System.out.println("║ Armor:   " + (this.getEquippedArmor() == null ? "None" : this.getEquippedArmor().getName() + " + " + this.getEquippedArmor().getValue() + " Armor"));
-        System.out.println("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().getName() + " + " + this.getEquippedWeapon().getValue() + " Damage" ));
-        System.out.println("╚═════════════════════════════════╝");
-    }
+    
 
     @Override
     public int getTotalAttack() {
@@ -119,6 +101,25 @@ public abstract class Player extends Character {
         this.equippedArmor = equippedArmor;
     }
 
+    public void displayStats() {
+        System.out.println("╔═════════════════════════════════╗");
+        System.out.println("║  " + this.getName() + " [" + this.getClassType() + "]");
+        System.out.println("╠═════════════════════════════════╣");
+        System.out.println("║ HP:      [" + this.getHealthBar() + "] " + this.getHp() + "/" + this.getMaxHp());
+        System.out.println("║ " + this.getPowerString() + ":    [" + this.getPowerBar() + "] " + this.getPower() + "/" + this.getMaxPower());
+        System.out.println("║ Attack:  " + this.getTotalAttack());
+        System.out.println("║ Defense: " + this.getTotalDefense());
+        System.out.println("║ Gold:    " + this.getGold());
+        System.out.println("║ ");
+        System.out.println("║ Level:   " + this.getLevel() + " - " + this.getExperience() + "/" + this.getExperienceToNextLevel());
+        System.out.println("║ ");
+        System.out.println("║ Armor:   " + (this.getEquippedArmor() == null ? "None" : this.getEquippedArmor().getName() + " + " + this.getEquippedArmor().getValue() + " Armor"));
+        System.out.println("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().getName() + " + " + this.getEquippedWeapon().getValue() + " Damage" ));
+        System.out.println("╚═════════════════════════════════╝");
+    }
+
+    public abstract String getPowerString();
+    public abstract PlayerClass getClassType();
     public abstract void performeUtilityAbitlity();
 
 }

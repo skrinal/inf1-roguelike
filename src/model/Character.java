@@ -126,7 +126,6 @@ public abstract class Character {
     }
 
     public abstract int getTotalAttack();
-
     public abstract int getTotalDefense();
 
     public abstract void performeBasicAbility(Character target);
