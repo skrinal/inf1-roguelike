@@ -74,7 +74,8 @@ public abstract class Character {
     public int getLevel() {
         return this.level;
     }
-
+    
+    //TODO: preco tu je protected ?
     protected void incrementLevel() {
         this.level++;
     }

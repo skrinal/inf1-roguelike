@@ -23,11 +23,11 @@ public class DemonLord extends Enemy {
 
     }
 
+    // TODO: preco tu je string ?? IntelJ kuk -> zmenit potom UML
     @Override
     public String getEnemyType() {
         return EnemyType.DEMON.name();
     }
-
 
     @Override
     public void performeBasicAbility(Character target) {

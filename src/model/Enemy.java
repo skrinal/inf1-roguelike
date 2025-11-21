@@ -4,7 +4,7 @@ public abstract class Enemy extends Character {
     private final int goldReward;
 
     /**
-     * Constructor for enemies without an assigned level at creation.
+     * Constructor for enemy without an assigned level at creation.
      */
     public Enemy(String name, int maxHp, int attack, int defence, int goldReward) {
         super(name, maxHp, attack, defence);
@@ -12,7 +12,7 @@ public abstract class Enemy extends Character {
     }
 
     /**
-     * Constructor for enemies with an assigned level at creation.
+     * Constructor for enemy with an assigned level at creation.
      */
     public Enemy(String name, int maxHp, int attack, int defence, int goldReward, int level) {
         super(name, maxHp, attack, defence);

@@ -13,12 +13,19 @@ public class Item {
         this.value = value;
     }
 
-    public String getName() {return this.name;}
+    public String getName() {
+        return this.name;
+    }
 
-    public ItemType getType() {return this.type;}
+    public ItemType getType() {
+        return this.type;
+    }
 
-    public int getValue() {return this.value;}
+    public int getValue() {
+        return this.value;
+    }
 
+    //TODO: Checkstyle + switch
     public void displayInfo() {
         String typeStr = "";
         if (type == ItemType.WEAPON) {

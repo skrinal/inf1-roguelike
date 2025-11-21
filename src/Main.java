@@ -57,12 +57,3 @@ void main() {
 //    MenuLogic.showInventoryMenu(input, player);
 //    return GameState.GAME;
 //}
-
-
-//private GameState handleStats(Scanner input, Player player) {
-//    System.out.println("\n=== STATS ===");
-//    player.displayStats();
-//    System.out.print("\nPress Enter to return...");
-//    input.nextLine();
-//    return GameState.GAME;
-//}
