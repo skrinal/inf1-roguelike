@@ -36,7 +36,8 @@ public class Mage extends Player {
     @Override
     public void performeSpecialAbility(Character target) {
         if (usePower(50)) {
-            int damage = (int)(this.getMaxPower() * 2.5);
+            int damage = (int)(this.getMaxPower() * 2.5); //TODO: Chyba prepoctu DMG
+            System.out.println("blaba: " + damage);
             target.takeDamage(damage);
             System.out.println("FIREBLAST! You blast " + target.getName() + " for " + damage + " damage!");
         } else {
