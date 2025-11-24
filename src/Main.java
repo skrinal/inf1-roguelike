@@ -27,12 +27,14 @@ void main() {
 
             case STATS -> state = player.handleStats(input);
             case DEATH -> {
+                player = null;
+                state = GameState.MAIN_MENU;
+
                 System.out.println("\n=== GAME OVER ===");
                 System.out.println("You have died!");
                 System.out.println("Press Enter to return to main menu...");
+
                 input.nextLine();
-                player = null;
-                state = GameState.MAIN_MENU;
             }
             case COMPLETE -> {
                 //TODO: VICTORY SCREEN
