@@ -1,6 +1,6 @@
 package game.room.combat;
 
-import game.strings.CombatStrings;
+import model.strings.CombatStrings;
 import model.Enemy;
 import model.Player;
 
@@ -38,7 +38,7 @@ public class CombatSystem {
             }
         }
 
-        return player.isAlive(); // Dead
+        return player.isAlive();
     }
 
 

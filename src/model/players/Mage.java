@@ -36,10 +36,11 @@ public class Mage extends Player {
     @Override
     public void performeSpecialAbility(Character target) {
         if (usePower(50)) {
-            int damage = (int)(this.getMaxPower() * 2.5); //TODO: Chyba prepoctu DMG
-            System.out.println("blaba: " + damage);
-            target.takeDamage(damage);
-            System.out.println("FIREBLAST! You blast " + target.getName() + " for " + damage + " damage!");
+            int rawDamage = (int)(this.getTotalAttack() * 2.5);
+            int actualDamage = target.takeDamage(rawDamage);
+
+            System.out.println("FIREBLAST! You blast " + target.getName() + " for "
+                    + actualDamage + " damage! (" + rawDamage + " raw)");
         } else {
             System.out.println("Not enough Mana!");
         }
@@ -47,12 +48,11 @@ public class Mage extends Player {
     @Override
     public void performeBasicAbility(Character target) {
         if (usePower(10)) {
-            int damage = (int)(this.getMaxPower() * 1.2);
-            target.takeDamage(damage);
-            System.out.println("Fireball! You blast " + target.getName() + " for " + damage + " damage!");
+            int rawDamage = (int)(this.getTotalAttack() * 1.2);
+            int actualDamage = target.takeDamage(rawDamage);
 
-
-
+            System.out.println("Fireball! You blast " + target.getName() + " for "
+                    + actualDamage + " damage! (" + rawDamage + " raw)");
         } else {
             System.out.println("Not enough Mana!");
         }
@@ -60,7 +60,9 @@ public class Mage extends Player {
 
     @Override
     public void performeUtilityAbitlity() {
-
+        // private arralist<Buff>
+        // spravit mozno buff class
+        // preddefinovat buffy cez enum ?
     }
 
 

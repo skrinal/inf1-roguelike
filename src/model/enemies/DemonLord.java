@@ -6,9 +6,9 @@ import model.enums.EnemyType;
 
 public class DemonLord extends Enemy {
 
-    private static final int MAX_HP = 100;
-    private static final int ATTACK = 100;
-    private static final int DEFENCE = 100;
+    private static final int MAX_HP = 5;
+    private static final int ATTACK = 30;
+    private static final int DEFENCE = 20;
     //private static final int GOLD_REWARD = 100;
 
     public DemonLord(String name,  int goldReward) {

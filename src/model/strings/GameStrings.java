@@ -1,4 +1,4 @@
-package game.strings;
+package model.strings;
 
 public class GameStrings {
 

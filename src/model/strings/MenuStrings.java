@@ -1,4 +1,4 @@
-package game.strings;
+package model.strings;
 
 public class MenuStrings {
     public static final String GAME_TITLE_MENU = """

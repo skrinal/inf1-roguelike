@@ -62,9 +62,11 @@ public abstract class Character {
         return this.hp > 0;
     }
 
-    public void takeDamage(double damage) {
-        int actualDamage = (int)Math.max(1, damage - this.getTotalDefense());
-        this.setHp(Math.max(this.hp, actualDamage));
+    //TODO: UML ZMENA
+    public int takeDamage(int damage) {
+        int actualDamage = Math.max(1, damage - this.getTotalDefense());
+        this.setHp(Math.max(0, this.hp - actualDamage));
+        return actualDamage;
     }
 
     public void heal(int amount) {

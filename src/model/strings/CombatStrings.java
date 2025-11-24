@@ -1,4 +1,4 @@
-package game.strings;
+package model.strings;
 
 import model.Enemy;
 import model.Player;

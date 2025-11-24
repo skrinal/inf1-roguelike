@@ -2,17 +2,18 @@ package game;
 
 import data.EnemyDatabase;
 import game.room.RoomOutCome;
-import game.room.instance.Rooms;
+import game.room.combat.CombatSystem;
+import game.room.instance.Room;
+import game.room.instance.RoomOne;
 import model.Player;
 import model.enums.GameState;
+import model.enums.room.RoomMap;
 import model.enums.room.RoomType;
 import java.util.Scanner;
 import static utility.Utility.handleDecision;
-import static game.strings.MenuStrings.GAME_MENU_OPTIONS;
+import static model.strings.MenuStrings.GAME_MENU_OPTIONS;
 
 public class GameLogic {
-
-    private final Rooms rooms = new Rooms();
 
     public GameState handleGame(Scanner input) {
         int choice = this.showGameMenu(input);
@@ -52,26 +53,21 @@ public class GameLogic {
         boolean inDungeon = true;
 
         while (inDungeon) {
-            RoomOutCome outCome = switch (currentRoom) {
-                case ONE -> this.rooms.showRoomOne(input, player, EnemyDatabase.ROOM_ONE);
-                case TWO -> null;
-                case THREE -> null;
-                case FOUR -> null;
-                case FIVE -> null;
-            };
+            Room room = this.createRoom(currentRoom, player);
+            RoomOutCome outCome = room.enter(input);
 
             switch (outCome.result()) {
                 case EXIT -> {
-                    inDungeon = false;
                     return GameState.MAIN_MENU;
                 }
                 case DEATH -> {
-                    inDungeon = false;
                     return GameState.DEATH;
                 }
                 case COMPLETED -> {
-                    inDungeon = false;
-                    return GameState.COMPLETE;
+                    currentRoom = outCome.nextRoom();
+                    if (currentRoom == RoomType.FIVE) {
+                        return GameState.COMPLETE;
+                    }
                 }
                 default -> {
                     inDungeon = false;
@@ -81,16 +77,18 @@ public class GameLogic {
         return GameState.COMPLETE; // Completed dungeon
     }
 
+    private Room createRoom(RoomType type, Player player) {
+        CombatSystem combat = new CombatSystem();
 
-
-    private static int showRoomTwo(Scanner input, Player player) {
-        System.out.println("Room 2");
-        return 3;
+        return switch (type){
+            case ONE -> new RoomOne(player, combat, RoomMap.ROOM_ONE);
+            case TWO -> null;
+            case THREE -> null;
+            case FOUR -> null;
+            case FIVE -> null;
+        };
     }
 
-    private static int showRoomThree(Scanner input, Player player) {
-        System.out.println("Room 3 - Final room");
-        return 0; // Exit dungeon after completion
-    }
+
 
 }
