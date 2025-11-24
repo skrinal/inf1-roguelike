@@ -3,6 +3,7 @@ package data;
 import model.Item;
 import model.Player;
 import model.enums.ItemType;
+import utility.Utility;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -25,8 +26,8 @@ public class ItemDatabase {
         switch (player.getClassType()) {
             case MAGE -> {
                 this.lootTable.add(new Item("Wooden Staff", ItemType.WEAPON, 4));
-                this.lootTable.add(new Item("Magic Wand", ItemType.WEAPON, 6));
-                this.lootTable.add(new Item("Robe of Sparks", ItemType.ARMOR, 3));
+                //this.lootTable.add(new Item("Magic Wand", ItemType.WEAPON, 6));
+                //this.lootTable.add(new Item("Robe of Sparks", ItemType.ARMOR, 3));
             }
             case ROGUE -> {
                 this.lootTable.add(new Item("Iron Dagger", ItemType.WEAPON, 5));
@@ -42,10 +43,9 @@ public class ItemDatabase {
 
     public static ItemDatabase getInstance(Player player) {
         if (instance == null) {
-            return new ItemDatabase(player);
-        } else {
-            return instance;
+            instance = new ItemDatabase(player);
         }
+        return instance;
     }
 
     /**
@@ -53,7 +53,8 @@ public class ItemDatabase {
      */
     public Item getRandomItem() {
         if (this.lootTable.isEmpty()) {
-            System.out.println("No items in loot table!");
+            System.out.println("\n" + "No items in loot table!");
+            Utility.enterToContinue();
             return null;
         }
         int index = this.random.nextInt(this.lootTable.size());

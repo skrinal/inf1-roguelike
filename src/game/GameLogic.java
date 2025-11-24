@@ -1,20 +1,19 @@
 package game;
 
-import data.EnemyDatabase;
 import game.room.RoomOutCome;
 import game.room.combat.CombatSystem;
 import game.room.instance.Room;
-import game.room.instance.RoomOne;
+import game.room.instance.RoomFactory;
 import model.Player;
 import model.enums.GameState;
-import model.enums.room.RoomMap;
 import model.enums.room.RoomType;
 import java.util.Scanner;
 import static utility.Utility.handleDecision;
 import static model.strings.MenuStrings.GAME_MENU_OPTIONS;
 
 public class GameLogic {
-    private EnemyDatabase enemies = new EnemyDatabase();
+    private RoomFactory roomFactory = new RoomFactory();
+    private CombatSystem combat = new CombatSystem();
 
     public GameState handleGame(Scanner input) {
         int choice = this.showGameMenu(input);
@@ -79,15 +78,7 @@ public class GameLogic {
     }
 
     private Room createRoom(RoomType type, Player player) {
-        CombatSystem combat = new CombatSystem();
-
-        return switch (type) {
-            case ONE -> new RoomOne(player, combat, RoomMap.ROOM_ONE, this.enemies.getEnemies(type));
-            case TWO -> null;
-            case THREE -> null;
-            case FOUR -> null;
-            case FIVE -> null;
-        };
+        return this.roomFactory.createRoom(type, player, this.combat);
     }
 
 
