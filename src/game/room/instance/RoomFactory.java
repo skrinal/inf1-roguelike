@@ -19,11 +19,11 @@ public class RoomFactory {
         switch (roomType) {
             case ONE -> {
                 ArrayList<Enemy> enemies = db.getEnemies(RoomType.ONE);
-                return new Room(player, combat, RoomMap.ROOM_ONE, enemies, true);
+                return new Room(roomType, player, combat, RoomMap.ROOM_ONE, enemies, true);
             }
             case TWO -> {
                 ArrayList<Enemy> enemies = db.getEnemies(RoomType.TWO);
-                return new Room(player, combat, RoomMap.ROOM_TWO, enemies, false);
+                return new Room(roomType, player, combat, RoomMap.ROOM_TWO, enemies, false);
             }
         }
         return null;

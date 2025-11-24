@@ -19,6 +19,7 @@ import java.util.Scanner;
 import static utility.Utility.handleDecision;
 
 public class Room {
+    private RoomType roomType;
     private Player player;
     private CombatSystem combat;
     private RoomMap display;
@@ -26,7 +27,8 @@ public class Room {
     private ItemDatabase itemDatabase;
     private TreasureStatus treasureState;
 
-    public Room(Player player, CombatSystem combat, RoomMap display, ArrayList<Enemy> enemies, Boolean treasurePresent) {
+    public Room(RoomType roomType, Player player, CombatSystem combat, RoomMap display, ArrayList<Enemy> enemies, Boolean treasurePresent) {
+        this.roomType = roomType;
         this.player = player;
         this.combat = combat;
         this.display = display;
@@ -34,6 +36,12 @@ public class Room {
         this.itemDatabase = ItemDatabase.getInstance(player);
 
         this.treasureState = treasurePresent ? TreasureStatus.AVAILABLE : TreasureStatus.NONE;
+
+//        if (this.treasureState == null) {
+//            this.treasureState = treasurePresent ? TreasureStatus.AVAILABLE : TreasureStatus.NONE;
+//        } else {
+//            this.treasureState = TreasureStatus.FOUND;
+//        }
 
         if (enemies != null) {
             this.enemies.addAll(enemies);
@@ -44,12 +52,25 @@ public class Room {
         while (true) {
             this.showRoomInfo();
 
+            if (this.player.getCompletedRooms().contains(this.roomType)) {
+                System.out.println("\n" + "You have already cleared this room.");
+                System.out.println("\n" + "Move to another room...");
+                Utility.enterToContinue();
+                return new RoomOutCome(RoomResult.COMPLETED, RoomType.TWO);
+            }
+
             System.out.println("1. Investigate 'X' marking " + (this.allEnemiesKilled() ? "(cleared)" : ""));
 
             int choice = this.userInput();
 
             switch (choice) {
                 case 0 -> {
+                    if (this.allEnemiesKilled() && this.isTreasureFound()) {
+                        if (this.player.getCompletedRooms().contains(this.roomType)) {
+                            return new RoomOutCome(RoomResult.EXIT, null); // back to menu
+                        }
+                        this.player.addCompletedRoom(this.roomType);
+                    }
                     return new RoomOutCome(RoomResult.EXIT, null); // back to menu
                 }
                 case 1 -> { // Enemy
@@ -68,6 +89,7 @@ public class Room {
                     this.treasureFound();
                 }
                 case 3 -> {
+                    this.player.addCompletedRoom(this.roomType);
                     return new RoomOutCome(RoomResult.COMPLETED, RoomType.TWO);
                 }
                 default -> {

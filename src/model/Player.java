@@ -2,11 +2,14 @@ package model;
 
 import model.enums.GameState;
 import model.enums.PlayerClass;
+import model.enums.room.RoomType;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
 public abstract class Player extends Character {
+    private ArrayList<RoomType> completedRooms;
     private int power;
     private final int maxPower;
     private int gold;
@@ -16,12 +19,21 @@ public abstract class Player extends Character {
 
     public Player(String name, int maxHp, int attack, int defence, int maxPower) {
         super(name, maxHp, attack, defence);
+        this.completedRooms = new ArrayList<>();
         this.maxPower = maxPower;
         this.power = maxPower;
         this.gold = 0;
         this.inventory = new HashMap<>();
         this.equippedArmor = null;
         this.equippedWeapon = null;
+    }
+
+    public ArrayList<RoomType> getCompletedRooms() {
+        return this.completedRooms;
+    }
+
+    public void addCompletedRoom(RoomType roomType) {
+        this.completedRooms.add(roomType);
     }
 
     public int getPower() {
