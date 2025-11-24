@@ -91,20 +91,21 @@ public abstract class Room {
                 System.out.println("2. Keep");
             }
         }
+        //System.out.println("\n");
         switch (handleDecision(1, 2)) {
             case 1 -> {
                 switch (item.getType()) {
                     case WEAPON -> {
                         this.player.setEquippedWeapon(item);
-                        System.out.println("Item has been equipped.");
+                        System.out.println("\n" + "Item has been equipped.");
                     }
                     case ARMOR -> {
                         this.player.setEquippedArmor(item);
-                        System.out.println("Item has been equipped.");
+                        System.out.println("\n" + "Item has been equipped.");
                     }
                     case POTION -> {
                         this.player.restorePower(item.getValue());
-                        System.out.println("Potion has been used.");
+                        System.out.println("\n" + "Potion has been used.");
                     }
                 }
             }
@@ -115,8 +116,6 @@ public abstract class Room {
     }
 
     private void itemOutput(Item item) {
-//        System.out.println("\n" + "You found a " + item.getType() + " " + item.getName() + " !!"
-//                            + " ( " + item.getValue() + " dmg)");
         System.out.println("\n" + "You have found");
         item.displayInfo();
         this.itemOptions(item);

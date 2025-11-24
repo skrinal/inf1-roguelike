@@ -3,10 +3,9 @@ package game.room.combat;
 import model.strings.CombatStrings;
 import model.Enemy;
 import model.Player;
+import utility.Utility;
 
 import java.util.Random;
-import java.util.Scanner;
-import static utility.Utility.handleDecision;
 
 public class CombatSystem {
     private final CombatStrings combatStrings = new CombatStrings();
@@ -18,7 +17,7 @@ public class CombatSystem {
         while (player.isAlive() && enemy.isAlive()) {
             this.combatStrings.printCombatMenu(player, enemy);
 
-            switch (handleDecision( 1, 5)) {
+            switch (Utility.handleDecision(1, 5)) {
                 case 1 -> player.performeSpecialAbility(enemy);
                 case 2 -> player.performeUtilityAbitlity();
                 case 3 -> player.performeBasicAbility(enemy);
@@ -29,6 +28,8 @@ public class CombatSystem {
             }
 
             if (!enemy.isAlive()) {
+                System.out.println("\n" + "Enemy has been defeated !!!");
+                Utility.enterToContinue();
                 break;
             }
 
