@@ -28,15 +28,14 @@ public class Item {
     //TODO: Checkstyle + switch
     public void displayInfo() {
         String typeStr = "";
-        if (type == ItemType.WEAPON) {
-            typeStr = "Weapon (+" + this.value + " damage)";
-        } else if (type == ItemType.POTION) {
-            typeStr = "Potion (+" + this.value + " HP)";
-        } else if (type == ItemType.ARMOR) {
-            typeStr = "Armor (+" + this.value + " defense)";
-        } else if (type == ItemType.TREASURE) {
-            typeStr = "Treasure (" + this.value + " gold)";
+
+        switch (this.type) {
+            case WEAPON -> typeStr = "Weapon (+" + this.value + " damage)";
+            case ARMOR -> typeStr = "Armor (+" + this.value + " defense)";
+            case POTION -> typeStr = "Potion (+" + this.value + " HP)";
+            case TREASURE -> typeStr = "Treasure (" + this.value + " gold)";
         }
+
         System.out.println("  " + this.name + " [" + typeStr + "]");
     }
 }

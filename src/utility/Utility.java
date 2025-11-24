@@ -3,7 +3,9 @@ import java.util.Scanner;
 
 public class Utility {
 
-    public static int handleDecision(Scanner input, int minChoice, int maxChoice) {
+    private static Scanner input = new Scanner(System.in);
+
+    public static int handleDecision(int minChoice, int maxChoice) {
         while (true) {
             System.out.print("Select: ");
 
@@ -21,4 +23,11 @@ public class Utility {
             System.out.println("Invalid selection. Try again");
         }
     }
+
+    public static void enterToContinue() {
+        System.out.println("Press enter to continue...");
+        input.nextLine();
+    }
+
+
 }

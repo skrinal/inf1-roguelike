@@ -12,13 +12,13 @@ public class CombatSystem {
     private final CombatStrings combatStrings = new CombatStrings();
     private final Random random = new Random();
 
-    public boolean startCombat(Scanner input, Player player, Enemy enemy) {
+    public boolean startCombat(Player player, Enemy enemy) {
         System.out.println("\n=== COMBAT START ===");
 
         while (player.isAlive() && enemy.isAlive()) {
             this.combatStrings.printCombatMenu(player, enemy);
 
-            switch (handleDecision(input, 1, 5)) {
+            switch (handleDecision( 1, 5)) {
                 case 1 -> player.performeSpecialAbility(enemy);
                 case 2 -> player.performeUtilityAbitlity();
                 case 3 -> player.performeBasicAbility(enemy);

@@ -36,7 +36,7 @@ public class MenuLogic {
     private int showMainMenu(Scanner input) {
         System.out.println(GAME_TITLE_MENU);
 
-        return handleDecision(input, 0, 2);
+        return handleDecision(0, 2);
     }
 
 //    public int showInventoryMenu(Scanner input, Player player) {
@@ -305,7 +305,7 @@ public class MenuLogic {
             System.out.println("2. Mage");
             System.out.println("3. Rogue");
 
-            int choice = handleDecision(input, 1, 3);
+            int choice = handleDecision(1, 3);
 
             switch (choice) {
                 case 1 -> {

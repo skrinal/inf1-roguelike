@@ -5,7 +5,8 @@ import model.Enemy;
 import model.enums.EnemyType;
 
 public class SkeletonWarrior extends Enemy {
-    private static final int MAX_HP = 60;
+    // TODO: opravit
+    private static final int MAX_HP = 5;
     private static final int ATTACK = 8;
     private static final int DEFENCE = 2;
     //private static final int GOLD_REWARD = 100;

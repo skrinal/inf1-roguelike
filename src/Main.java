@@ -2,6 +2,7 @@ import game.GameLogic;
 import game.MenuLogic;
 import model.Player;
 import model.enums.GameState;
+import utility.Utility;
 
 void main() {
     Scanner input = new Scanner(System.in);
@@ -32,9 +33,8 @@ void main() {
 
                 System.out.println("\n=== GAME OVER ===");
                 System.out.println("You have died!");
-                System.out.println("Press Enter to return to main menu...");
 
-                input.nextLine();
+                Utility.enterToContinue();
             }
             case COMPLETE -> {
                 //TODO: VICTORY SCREEN
@@ -42,20 +42,3 @@ void main() {
         }
     }
 }
-
-
-
-// (INF2)
-//private GameState handleLabyrinth(Scanner input, Player player) {
-//    System.out.println("\n=== RANDOM LABYRINTH ===");
-//    System.out.println("Labyrinth not implemented yet");
-//    System.out.println("Press Enter to return...");
-//    input.nextLine();
-//    return GameState.GAME;
-//}
-
-// (INF2)
-//private GameState handleInventory(Scanner input, Player player) {
-//    MenuLogic.showInventoryMenu(input, player);
-//    return GameState.GAME;
-//}
