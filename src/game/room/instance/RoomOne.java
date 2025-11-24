@@ -1,6 +1,5 @@
 package game.room.instance;
 
-import game.room.RoomDisplay;
 import game.room.RoomOutCome;
 import game.room.combat.CombatSystem;
 import model.Enemy;
@@ -15,7 +14,7 @@ import java.util.Scanner;
 
 import static utility.Utility.handleDecision;
 
-public class RoomOne extends Room{
+public class RoomOne extends Room {
     private ArrayList<Enemy> enemies;
     private boolean treasureFound = false;
 
@@ -27,7 +26,7 @@ public class RoomOne extends Room{
         this.enemies.add(new SkeletonWarrior("2Maximus", 100));
     }
 
-    private boolean allEnemiesKilled(){
+    private boolean allEnemiesKilled() {
         return this.enemies.isEmpty();
     }
 
@@ -57,7 +56,7 @@ public class RoomOne extends Room{
                 }
                 case 1 -> { // Enemy
                     if (!this.allEnemiesKilled()) {
-                        if (this.combat.startCombat(input, player, this.enemies.getFirst())) {
+                        if (this.getCombat().startCombat(input, this.getPlayer(), this.enemies.getFirst())) {
                             this.enemies.removeFirst();
                         } else {
                             return new RoomOutCome(RoomResult.DEATH, null);
@@ -67,7 +66,7 @@ public class RoomOne extends Room{
                     }
                 }
                 case 2 -> { // Treasure
-                    this.treasureFound(player);
+                    this.treasureFound(this.getPlayer());
                 }
                 case 3 -> {
                     return new RoomOutCome(RoomResult.COMPLETED, RoomType.TWO);
@@ -80,7 +79,7 @@ public class RoomOne extends Room{
         }
     }
 
-    private void treasureFound(Player player){
+    private void treasureFound(Player player) {
         if (!this.treasureFound) {
             this.treasureFound = true;
             System.out.println("You found a treasure!");
