@@ -54,7 +54,7 @@ public class GameLogic {
 
         while (inDungeon) {
             Room room = this.createRoom(currentRoom, player);
-            RoomOutCome outCome = room.enter(input);
+            RoomOutCome outCome = room.enter();
 
             switch (outCome.result()) {
                 case EXIT -> {

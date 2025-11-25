@@ -2,26 +2,26 @@ package model.enums.room;
 
 public enum RoomMap {
     ROOM_ONE("""
-            ======== MAP ========
+            ╚════════ MAP ════════╝
                      Door
                    /
                  X         ?
                    \\     /
                      You
-            =====================""",
+            ═══════════════════════""",
             """
                     | You step into a dimly lit room.
                 Two strange markings catch your eye on opposite walls
                 — one shaped like an “X”, the other like a “?”."""
     ),
     ROOM_TWO("""
-            ======== MAP ========
+            ╚════════ MAP ════════╝
                      Door
                    /
                  X         ?
                    \\     /
                      You
-            =====================""",
+            ═══════════════════════""",
             """
                     | You step into a dimly lit room.
                 Two strange markings catch your eye on opposite walls

@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public abstract class Player extends Character {
     private ArrayList<RoomType> completedRooms;
+    private ArrayList<RoomType> treasureFound;
     private int power;
     private final int maxPower;
     private int gold;
@@ -20,6 +21,7 @@ public abstract class Player extends Character {
     public Player(String name, int maxHp, int attack, int defence, int maxPower) {
         super(name, maxHp, attack, defence);
         this.completedRooms = new ArrayList<>();
+        this.treasureFound = new ArrayList<>();
         this.maxPower = maxPower;
         this.power = maxPower;
         this.gold = 0;
@@ -34,6 +36,14 @@ public abstract class Player extends Character {
 
     public void addCompletedRoom(RoomType roomType) {
         this.completedRooms.add(roomType);
+    }
+
+    public ArrayList<RoomType> getTreasureFound() {
+        return this.treasureFound;
+    }
+
+    public boolean addTreasureFound(RoomType roomType) {
+        return this.treasureFound.add(roomType);
     }
 
     public int getPower() {
