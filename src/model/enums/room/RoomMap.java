@@ -14,6 +14,7 @@ public enum RoomMap {
                 Two strange markings catch your eye on opposite walls
                 — one shaped like an “X”, the other like a “?”."""
     ),
+    //TODO: ADD ANOTHER MAPS -> FIX this description
     ROOM_TWO("""
             ╚════════ MAP ════════╝
                      Door
