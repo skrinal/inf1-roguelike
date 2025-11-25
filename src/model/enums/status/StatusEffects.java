@@ -3,6 +3,7 @@ package model.enums.status;
 public enum StatusEffects {
     STRENGTH("Strength +25% Damage"),
     INVISIBILITY("Invisible"),
+    VANISH("Untargetable"),
     SHIELD("Shield +50% Defence"),
     HEALING("Healing over time");
 

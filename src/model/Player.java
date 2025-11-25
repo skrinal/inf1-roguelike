@@ -40,9 +40,9 @@ public abstract class Player extends Character {
         this.statusEffects.put(effect, turns);
     }
 
-//    public boolean hasStatusEffect(Status effect) {
-//        return this.statusEffects.containsKey(effect);
-//    }
+    protected void removeStatusEffect(StatusEffects effect) {
+        this.statusEffects.remove(effect);
+    }
 
     public int getStatusEffectDuration(Status effect) {
         return this.statusEffects.getOrDefault(effect, 0);

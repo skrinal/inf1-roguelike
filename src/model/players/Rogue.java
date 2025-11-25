@@ -90,6 +90,7 @@ public class Rogue extends Player {
     public void performeSpecialAbility(Character target) {
         if (!this.isVanished) {
             if (usePower(60)) {
+                this.applyStatusEffect(StatusEffects.VANISH, -1);
                 System.out.println("You have used Vanish!");
                 this.isVanished = true;
                 this.vanishChance = 0.6;
@@ -97,6 +98,8 @@ public class Rogue extends Player {
             } else {
                 System.out.println("Not enough Energy!");
             }
+        } else {
+            System.out.println("You are already vanished!");
         }
     }
 
@@ -104,12 +107,13 @@ public class Rogue extends Player {
         if (this.isVanished) {
             if (this.random.nextDouble() <= this.vanishChance) {
 
-                System.out.println("You remain invisible and strike again!");
+                System.out.println("You remain untargetable and strike again!");
 
                 this.vanishChance += 0.1; // Increase chance to get out each turn
             } else {
-                System.out.println("You are no longer invisible.");
+                System.out.println("You are no longer untargetable.");
 
+                this.removeStatusEffect(StatusEffects.VANISH);
                 this.isVanished = false;
                 this.vanishChance = 0.6; // Reset for next vanish
             }
