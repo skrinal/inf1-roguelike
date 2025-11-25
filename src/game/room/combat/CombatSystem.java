@@ -15,17 +15,21 @@ public class CombatSystem {
         System.out.println("\n=== COMBAT START ===");
 
         while (player.isAlive() && enemy.isAlive()) {
+
+            player.beforeTurn();
+
             this.combatStrings.printCombatMenu(player, enemy);
 
             switch (Utility.handleDecision(1, 5)) {
                 case 1 -> player.performeSpecialAbility(enemy);
-                case 2 -> player.performeUtilityAbitlity();
-                case 3 -> player.performeBasicAbility(enemy);
-                case 4 -> player.restorePower(10);
+                case 2 -> player.performeBasicAbility(enemy);
+                case 3 -> player.performeUtilityAbitlity();
+                case 4 -> player.heal(3);
                 case 5 -> {
                     // TODO: Item
                 }
             }
+
 
             if (!enemy.isAlive()) {
                 System.out.println("\n" + "Enemy has been defeated !!!");
@@ -33,12 +37,18 @@ public class CombatSystem {
                 break;
             }
 
-            switch (this.random.nextInt(2) + 1 ) {
-                case 1 -> enemy.performeSpecialAbility(player);
-                case 2 -> enemy.performeAttack(player);
+            if (player.isUntargatable()) {
+                System.out.println("Enemy attacks but misses!");
+            } else {
+                if (this.random.nextBoolean()) {
+                    enemy.performeSpecialAbility(player);
+                } else {
+                    enemy.performeAttack(player);
+                }
             }
-        }
 
+            player.updateStatusEffects();
+        }
         return player.isAlive();
     }
 

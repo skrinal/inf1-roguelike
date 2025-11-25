@@ -11,7 +11,7 @@ public abstract class Character {
     private int experience;
     private int experienceToNextLevel;
 
-    public Character(String name, int maxHp, int attack, int defence) {
+    protected Character(String name, int maxHp, int attack, int defence) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;

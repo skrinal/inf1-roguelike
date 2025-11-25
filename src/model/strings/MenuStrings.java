@@ -17,7 +17,6 @@ public class MenuStrings {
     public static final String  GAME_MENU_OPTIONS = """
             ======== GAME MENU ========
             1. Dungeon
-            2. Inventory
-            3. Stats
+            2. Stats
             0. Back""";
 }

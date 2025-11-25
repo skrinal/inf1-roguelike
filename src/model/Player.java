@@ -3,23 +3,29 @@ package model;
 import model.enums.GameState;
 import model.enums.PlayerClass;
 import model.enums.room.RoomType;
+import model.enums.status.StatusEffects;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public abstract class Player extends Character {
-    private ArrayList<RoomType> completedRooms;
-    private ArrayList<RoomType> treasureFound;
+    private HashMap<StatusEffects, Integer> statusEffects;
+    private List<RoomType> completedRooms;
+    private List<RoomType> treasureFound;
     private int power;
     private final int maxPower;
     private int gold;
     private final HashMap<Item, Integer> inventory;
     private Item equippedWeapon;
     private Item equippedArmor;
+    private double damageMultiplier = 1.0;
+    private double defenceMultiplier = 1.0;
 
-    public Player(String name, int maxHp, int attack, int defence, int maxPower) {
+    protected Player(String name, int maxHp, int attack, int defence, int maxPower) {
         super(name, maxHp, attack, defence);
+        this.statusEffects = new HashMap<>();
         this.completedRooms = new ArrayList<>();
         this.treasureFound = new ArrayList<>();
         this.maxPower = maxPower;
@@ -30,7 +36,50 @@ public abstract class Player extends Character {
         this.equippedWeapon = null;
     }
 
-    public ArrayList<RoomType> getCompletedRooms() {
+    public void applyStatusEffect(StatusEffects effect, int turns) {
+        this.statusEffects.put(effect, turns);
+    }
+
+//    public boolean hasStatusEffect(Status effect) {
+//        return this.statusEffects.containsKey(effect);
+//    }
+
+    public int getStatusEffectDuration(Status effect) {
+        return this.statusEffects.getOrDefault(effect, 0);
+    }
+
+    public HashMap<StatusEffects, Integer> getStatusEffects() {
+        return this.statusEffects;
+    }
+
+    public void updateStatusEffects() {
+        ArrayList<StatusEffects> toRemove = new ArrayList<>();
+
+        for (var effect : this.statusEffects.entrySet()) {
+            StatusEffects statusEffect = effect.getKey();
+            int turnsLeft = effect.getValue() - 1;
+
+            switch (statusEffect) {
+                case STRENGTH -> { }
+                case HEALING -> this.heal(2);
+                case INVISIBILITY -> { }
+                case VANISH -> { }
+                case SHIELD -> this.defenceMultiplier += 0.5;
+            }
+            this.statusEffects.put(statusEffect, turnsLeft);
+            if (turnsLeft == 0) {
+                toRemove.add(statusEffect);
+            }
+        }
+        toRemove.forEach(this.statusEffects::remove);
+    }
+
+
+    protected void setDamageMultiplier(double damageMultiplier) {
+        this.damageMultiplier = damageMultiplier;
+    }
+
+    public List<RoomType> getCompletedRooms() {
         return this.completedRooms;
     }
 
@@ -38,7 +87,7 @@ public abstract class Player extends Character {
         this.completedRooms.add(roomType);
     }
 
-    public ArrayList<RoomType> getTreasureFound() {
+    public List<RoomType> getTreasureFound() {
         return this.treasureFound;
     }
 
@@ -91,12 +140,14 @@ public abstract class Player extends Character {
 
     @Override
     public int getTotalAttack() {
-        return this.getAttack() + (this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0);
+        return (int)((this.getAttack() + (this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0))
+                * this.damageMultiplier);
     }
 
     @Override
     public int getTotalDefense() {
-        return this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0);
+        return (int)((this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0))
+                * this.defenceMultiplier);
     }
 
     public GameState handleStats(Scanner input) {
@@ -144,4 +195,8 @@ public abstract class Player extends Character {
     public abstract PlayerClass getClassType();
     public abstract void performeUtilityAbitlity();
 
+    public abstract void beforeTurn();
+    public boolean isUntargatable() {
+        return false;
+    }
 }

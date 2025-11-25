@@ -17,6 +17,11 @@ public class Warrior extends Player {
     }
 
     @Override
+    public void beforeTurn() {
+
+    }
+
+    @Override
     public String getPowerString() {
         return ClassPower.RAGE.toString();
     }
@@ -30,6 +35,8 @@ public class Warrior extends Player {
     public void performeUtilityAbitlity() {
 
     }
+
+
 
     @Override
     public void performeBasicAbility(Character target) {

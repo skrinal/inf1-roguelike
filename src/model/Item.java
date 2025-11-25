@@ -25,7 +25,6 @@ public class Item {
         return this.value;
     }
 
-    //TODO: Checkstyle + switch
     public void displayInfo() {
         String typeStr = "";
 

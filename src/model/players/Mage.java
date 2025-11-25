@@ -1,15 +1,11 @@
 package model.players;
 
 import model.Character;
-import model.Item;
 import model.Player;
 import model.enums.ClassPower;
-import model.enums.ItemType;
 import model.enums.PlayerClass;
 
 public class Mage extends Player {
-    private final Item itemd = new Item("Kraken", ItemType.WEAPON, 5);
-
     private static final int MAX_HP = 80;
     private static final int ATTACK = 10;
     private static final int DEFENCE = 3;
@@ -17,9 +13,6 @@ public class Mage extends Player {
 
     public Mage(String name) {
         super(name, MAX_HP, ATTACK, DEFENCE, POWER);
-        //this.setEquippedWeapon(new Item("Wooden Staff", ItemType.WEAPON, 5));
-        //this.addItem(itemd);
-        //this.equipedArmor = new Item("Leather Armor", ItemType.ARMOR, 4);
     }
 
     @Override
@@ -48,7 +41,7 @@ public class Mage extends Player {
     @Override
     public void performeBasicAbility(Character target) {
         if (usePower(10)) {
-            int rawDamage = (int)(this.getTotalAttack() * 1.2);
+            int rawDamage = (int)(this.getTotalAttack() * 1.3);
             int actualDamage = target.takeDamage(rawDamage);
 
             System.out.println("Fireball! You blast " + target.getName() + " for "
@@ -65,7 +58,10 @@ public class Mage extends Player {
         // preddefinovat buffy cez enum ?
     }
 
-
+    @Override
+    public void beforeTurn() {
+        restorePower(10);
+    }
 
 
 }

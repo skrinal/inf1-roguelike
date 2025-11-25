@@ -19,14 +19,14 @@ import static utility.Utility.handleDecision;
 public class Room {
     private RoomType roomType;
     private Player player;
-    private Boolean playerHasTreasure;
+    private boolean playerHasTreasure;
     private CombatSystem combat;
     private RoomMap display;
     private ArrayList<Enemy> enemies;
     private ItemDatabase itemDatabase;
-    private Boolean isTreasurePresent;
+    private boolean isTreasurePresent;
 
-    public Room(RoomType roomType, Player player, CombatSystem combat, RoomMap display, ArrayList<Enemy> enemies, Boolean treasurePresent) {
+    public Room(RoomType roomType, Player player, CombatSystem combat, RoomMap display, ArrayList<Enemy> enemies, boolean treasurePresent) {
         this.roomType = roomType;
         this.player = player;
         this.playerHasTreasure = this.player.getTreasureFound().contains(roomType);
@@ -94,9 +94,7 @@ public class Room {
                         Utility.enterToContinue();
                     }
                 }
-                case 2 -> { // Treasure
-                    this.treasureFound();
-                }
+                case 2 -> this.treasureFound(); // Treasure
                 case 3 -> { // Proceed to the next room
                     this.player.addCompletedRoom(this.roomType);
                     return new RoomOutCome(RoomResult.COMPLETED, RoomType.TWO);
@@ -155,6 +153,7 @@ public class Room {
                 System.out.println("1. Use");
                 System.out.println("2. Keep");
             }
+            default -> System.out.println("Invalid selection. Try again");
         }
 
         switch (handleDecision(1, 2)) {
@@ -172,11 +171,11 @@ public class Room {
                         this.player.restorePower(item.getValue());
                         System.out.println("\n" + "Potion has been used.");
                     }
+                    default -> System.out.println("Invalid selection. Try again");
                 }
             }
-            case 2 -> {
-                item.displayInfo();
-            }
+            case 2 -> item.displayInfo();
+            default -> System.out.println("Invalid selection. Try again");
         }
     }
 

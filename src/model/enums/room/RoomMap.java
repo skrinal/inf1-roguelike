@@ -4,8 +4,8 @@ public enum RoomMap {
     ROOM_ONE("""
             ╚════════ MAP ════════╝
                      Door
-                   /
-                 X         ?
+                    /
+                  X        ?
                    \\     /
                      You
             ═══════════════════════""",
@@ -18,9 +18,50 @@ public enum RoomMap {
     ROOM_TWO("""
             ╚════════ MAP ════════╝
                      Door
+                     /
+                   X
+                  /
+                 X         X
+                   \\     /
+                     You
+            ═══════════════════════""",
+            """
+                    | You step into a dimly lit room.
+                Two strange markings catch your eye on opposite walls
+                — one shaped like an “X”, the other like a “?”."""
+    ),
+    ROOM_TREE("""
+            ╚════════ MAP ════════╝
+                     Door
                    /
                  X         ?
                    \\     /
+                     You
+            ═══════════════════════""",
+            """
+                    | You step into a dimly lit room.
+                Two strange markings catch your eye on opposite walls
+                — one shaped like an “X”, the other like a “?”."""
+    ),
+    ROOM_FOUR("""
+            ╚════════ MAP ════════╝
+                     Door
+                     /
+                   X
+                  /
+                 X         ?
+                   \\     /
+                     You
+            ═══════════════════════""",
+            """
+                    | You step into a dimly lit room.
+                Two strange markings catch your eye on opposite walls
+                — one shaped like an “X”, the other like a “?”."""
+    ),
+    ROOM_FIVE("""
+            ╚════════ MAP ════════╝
+                     Boss
+            
                      You
             ═══════════════════════""",
             """

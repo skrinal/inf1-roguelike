@@ -2,6 +2,7 @@ package model.strings;
 
 import model.Enemy;
 import model.Player;
+import model.Status;
 
 public class CombatStrings {
     private static final int LEFT_PANEL_WIDTH = 37;
@@ -66,6 +67,17 @@ public class CombatStrings {
                 player.getPower() + "/" + player.getMaxPower();
         ui.append("║").append(this.padLine(powerText, 33)).append("║\n");
 
+        ui.append("║").append(this.padLine(powerText, 33)).append("║\n");
+        ui.append("║").append(this.padLine(powerText, 33)).append("║\n");
+
+        if (!player.getActiveEffects().isEmpty()) {
+            StringBuilder effects = new StringBuilder("║ Effects: ");
+
+            for (Status effect : player.getActiveEffects()) {
+                effects.append(effect.getName()).append(" ");
+            }
+            System.out.println(effects);
+        }
         // Bottom border
         ui.append("╚═════════════════════════════════╝");
 
@@ -79,18 +91,18 @@ public class CombatStrings {
         switch (player.getClassType()) {
             case MAGE -> {
                 ui.append("║").append(this.padLine("  [1] Fireblast (50)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [2] Alter Time (20)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [3] Fireball (10)", 26)).append("║\n");
+                ui.append("║").append(this.padLine("  [2] Fireball (10)", 26)).append("║\n");
+                ui.append("║").append(this.padLine("  [3] Alter Time (20)", 26)).append("║\n");
 
             }
             case ROGUE -> {
-                ui.append("║").append(this.padLine("  [1] Sinister Strike (30)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [2] Vanish (70)", 26)).append("║\n");
+                ui.append("║").append(this.padLine("  [1] Vanish (60)", 26)).append("║\n");
+                ui.append("║").append(this.padLine("  [2] Sinister Strike (25)", 26)).append("║\n");
                 ui.append("║").append(this.padLine("  [3] First Aid (10)", 26)).append("║\n");
             }
             case WARRIOR -> {
-                ui.append("║").append(this.padLine("  [1] Bloodthirst (30)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [2] Execute (50)", 26)).append("║\n");
+                ui.append("║").append(this.padLine("  [1] Execute (50)", 26)).append("║\n");
+                ui.append("║").append(this.padLine("  [2] Bloodthirst (30)", 26)).append("║\n");
                 ui.append("║").append(this.padLine("  [3] Ignore Pain (10)", 26)).append("║\n");
             }
         }
