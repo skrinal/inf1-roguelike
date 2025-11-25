@@ -25,6 +25,18 @@ public class RoomFactory {
                 ArrayList<Enemy> enemies = db.getEnemies(RoomType.TWO);
                 return new Room(roomType, player, combat, RoomMap.ROOM_TWO, enemies, false);
             }
+            case THREE -> {
+                ArrayList<Enemy> enemies = db.getEnemies(RoomType.THREE);
+                return new Room(roomType, player, combat, RoomMap.ROOM_TREE, enemies, true);
+            }
+            case FOUR -> {
+                ArrayList<Enemy> enemies = db.getEnemies(RoomType.FOUR);
+                return new Room(roomType, player, combat, RoomMap.ROOM_FOUR, enemies, true);
+            }
+            case FIVE -> {
+                ArrayList<Enemy> enemies = db.getEnemies(RoomType.FIVE);
+                return new Room(roomType, player, combat, RoomMap.ROOM_FIVE, enemies, false);
+            }
         }
         return null;
     }
