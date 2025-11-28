@@ -4,11 +4,13 @@ import model.enums.GameState;
 import model.enums.PlayerClass;
 import model.enums.room.RoomType;
 import model.enums.status.StatusEffects;
+import utility.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
+
 
 public abstract class Player extends Character {
     private HashMap<StatusEffects, Integer> statusEffects;
@@ -48,7 +50,7 @@ public abstract class Player extends Character {
         return this.statusEffects.getOrDefault(effect, 0);
     }
 
-    public HashMap<StatusEffects, Integer> getStatusEffects() {
+    public Map<StatusEffects, Integer> getStatusEffects() {
         return this.statusEffects;
     }
 
@@ -71,6 +73,7 @@ public abstract class Player extends Character {
                 toRemove.add(statusEffect);
             }
         }
+
         toRemove.forEach(this.statusEffects::remove);
     }
 
@@ -150,11 +153,11 @@ public abstract class Player extends Character {
                 * this.defenceMultiplier);
     }
 
-    public GameState handleStats(Scanner input) {
+    public GameState handleStats() {
         System.out.println("\n=== STATS ===");
         this.displayStats();
-        System.out.print("\nPress Enter to return...");
-        input.nextLine();
+
+        Utility.enterToContinue();
         return GameState.GAME;
     }
 

@@ -27,7 +27,7 @@ public class MenuLogic {
         System.out.println("\n=== CHARACTER CREATION ===\n");
         System.out.print("Name your character: ");
         String name = input.nextLine();
-        PlayerClass playerClass = this.selectedClass(input);
+        PlayerClass playerClass = this.selectedClass();
 
         return this.createCharacter(playerClass, name);
     }
@@ -298,7 +298,7 @@ public class MenuLogic {
         };
     }
 
-    private PlayerClass selectedClass(Scanner input) {
+    private PlayerClass selectedClass() {
         while (true) {
             System.out.println("\n=== CHOOSE CLASS ===");
             System.out.println("\n1. Warrior");

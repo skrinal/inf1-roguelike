@@ -98,7 +98,7 @@ public class CombatStrings {
             case ROGUE -> {
                 ui.append("║").append(this.padLine("  [1] Vanish (60)", 26)).append("║\n");
                 ui.append("║").append(this.padLine("  [2] Sinister Strike (25)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [3] First Aid (10)", 26)).append("║\n");
+                ui.append("║").append(this.padLine("  [3] Dice roll (10)", 26)).append("║\n");
             }
             case WARRIOR -> {
                 ui.append("║").append(this.padLine("  [1] Execute (50)", 26)).append("║\n");

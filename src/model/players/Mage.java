@@ -53,6 +53,9 @@ public class Mage extends Player {
 
     @Override
     public void performeUtilityAbitlity() {
+        if (usePower(10)) {
+
+        }
         // private arralist<Buff>
         // spravit mozno buff class
         // preddefinovat buffy cez enum ?

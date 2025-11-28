@@ -26,7 +26,7 @@ void main() {
 
             //case INVENTORY -> state = handleInventory(input, player);
 
-            case STATS -> state = player.handleStats(input);
+            case STATS -> state = player.handleStats();
             case DEATH -> {
                 player = null;
                 state = GameState.MAIN_MENU;
