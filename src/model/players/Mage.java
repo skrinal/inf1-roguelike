@@ -4,6 +4,7 @@ import model.Character;
 import model.Player;
 import model.enums.ClassPower;
 import model.enums.PlayerClass;
+import model.enums.status.StatusEffects;
 
 public class Mage extends Player {
     private static final int MAX_HP = 80;
@@ -53,12 +54,12 @@ public class Mage extends Player {
 
     @Override
     public void performeUtilityAbitlity() {
-        if (usePower(10)) {
-
+        if (usePower(15)) {
+            this.applyStatusEffect(StatusEffects.INVISIBILITY, -1);
+            System.out.println("You have used !");
+        } else {
+            System.out.println("Not enough Mana!");
         }
-        // private arralist<Buff>
-        // spravit mozno buff class
-        // preddefinovat buffy cez enum ?
     }
 
     @Override
