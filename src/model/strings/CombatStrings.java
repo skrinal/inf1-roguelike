@@ -2,7 +2,7 @@ package model.strings;
 
 import model.Enemy;
 import model.Player;
-import model.Status;
+import model.enums.status.StatusEffects;
 
 public class CombatStrings {
     private static final int LEFT_PANEL_WIDTH = 37;
@@ -67,17 +67,17 @@ public class CombatStrings {
                 player.getPower() + "/" + player.getMaxPower();
         ui.append("║").append(this.padLine(powerText, 33)).append("║\n");
 
-        ui.append("║").append(this.padLine(powerText, 33)).append("║\n");
-        ui.append("║").append(this.padLine(powerText, 33)).append("║\n");
+        String effectText = " Effects:";
+        ui.append("║").append(this.padLine("", 33)).append("║\n");
+        ui.append("║").append(this.padLine(effectText, 33)).append("║\n");
 
-        if (!player.getActiveEffects().isEmpty()) {
-            StringBuilder effects = new StringBuilder("║ Effects: ");
-
-            for (Status effect : player.getActiveEffects()) {
-                effects.append(effect.getName()).append(" ");
+        if (!player.isStatusEffectsEmpty()) {
+            for (StatusEffects status : player.getStatusEffects().keySet()) {
+                String statusText = " " + status.toString() + " - " + status.getDescription();
+                ui.append("║").append(this.padLine(statusText, 33)).append("║\n");
             }
-            System.out.println(effects);
         }
+
         // Bottom border
         ui.append("╚═════════════════════════════════╝");
 
@@ -92,7 +92,7 @@ public class CombatStrings {
             case MAGE -> {
                 ui.append("║").append(this.padLine("  [1] Fireblast (50)", 26)).append("║\n");
                 ui.append("║").append(this.padLine("  [2] Fireball (10)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [3] Alter Time (20)", 26)).append("║\n");
+                ui.append("║").append(this.padLine("  [3] Cloak of Shadows (15)", 26)).append("║\n");
 
             }
             case ROGUE -> {
@@ -106,9 +106,6 @@ public class CombatStrings {
                 ui.append("║").append(this.padLine("  [3] Ignore Pain (10)", 26)).append("║\n");
             }
         }
-// Mybe INF2 logic
-//        ui.append("╠══════════════════════════╣\n");
-//        ui.append("║").append(padLine("  [I]XXXX", 26)).append("║\n");
 
         ui.append("║").append(this.padLine("  [4] Rest ", 26)).append("║\n");
         ui.append("║").append(this.padLine("  [5] Item", 26)).append("║\n");
