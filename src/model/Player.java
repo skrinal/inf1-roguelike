@@ -46,12 +46,16 @@ public abstract class Player extends Character {
         this.statusEffects.remove(effect);
     }
 
-    public int getStatusEffectDuration(Status effect) {
+    public int getStatusEffectDuration(StatusEffects effect) {
         return this.statusEffects.getOrDefault(effect, 0);
     }
 
     public Map<StatusEffects, Integer> getStatusEffects() {
         return this.statusEffects;
+    }
+
+    public boolean isStatusEffectsEmpty() {
+        return this.statusEffects.isEmpty();
     }
 
     public void updateStatusEffects() {
@@ -62,10 +66,8 @@ public abstract class Player extends Character {
             int turnsLeft = effect.getValue() - 1;
 
             switch (statusEffect) {
-                case STRENGTH -> { }
+                case STRENGTH, INVISIBILITY, VANISH -> { /* nothing needed */ }
                 case HEALING -> this.heal(2);
-                case INVISIBILITY -> { }
-                case VANISH -> { }
                 case SHIELD -> this.defenceMultiplier += 0.5;
             }
             this.statusEffects.put(statusEffect, turnsLeft);
