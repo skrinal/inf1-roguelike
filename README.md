@@ -1,7 +1,7 @@
 <h2 align="center">
   <br>
     <p align="center">
-        <img src="src/assets/banner.png" width="1080" height="210"/>
+        <img src="src/main/java/assets/banner.png" width="1080" height="210"/>
     </p>
      Semester Console Roguelike Project in Java
   <br>
@@ -46,11 +46,11 @@ git clone https://github.com/skrinal/inf1-roguelike
 # Move into the source directory
 cd inf1-roguelike/src
 
-# Run the game
-java Main.java
+# Run the main.main.java.game
+java main.main.java
 ```
 ## Player Classes & Enemies
-Each class in the game has unique stats and abilities. 
+Each class in the main.main.java.game has unique stats and abilities. 
 All classes share the same core mechanics (HP, Attack, Defence, Power), but their abilities define their playstyle.
 
 | Stats   | Rogue | Mage | Warrior | x | Skeleton | DemonLord |

@@ -157,7 +157,7 @@ public class MenuLogic {
 //    }
 
 //    // TODO : INF 2
-//    private static boolean dropItem(model.Player player, Item item) {
+//    private static boolean dropItem(Main.model.Player player, Item item) {
 //        int count = player.getInventory().get(item);
 //
 //        if (count > 1) {
@@ -175,7 +175,7 @@ public class MenuLogic {
 //        }
 //    }
 
-//    public static int dshowInventoryMenu(Scanner input, model.Player player) {
+//    public static int dshowInventoryMenu(Scanner input, Main.model.Player player) {
 //        while (true) {
 //            System.out.println("\n=== INVENTORY ===");
 //            System.out.println("Gold: " + player.getGold());
@@ -209,7 +209,7 @@ public class MenuLogic {
 //            input.nextLine();
 //
 //            if (choice == 3) {
-//                return 3; // Return to game menu
+//                return 3; // Return to Main.game menu
 //            } else if (choice == 1) {
 //                handleEquipItem(input, player);
 //            } else if (choice == 2) {
@@ -220,7 +220,7 @@ public class MenuLogic {
 //        }
 //    }
 
-//    private static void handleEquipItem(Scanner input, model.Player player) {
+//    private static void handleEquipItem(Scanner input, Main.model.Player player) {
 //        if (player.getInventory().isEmpty()) {
 //            System.out.println("No items to equip!");
 //            return;
@@ -253,7 +253,7 @@ public class MenuLogic {
 //        }
 //    }
 //
-//    private static void handleDropItem(Scanner input, model.Player player) {
+//    private static void handleDropItem(Scanner input, Main.model.Player player) {
 //        if (player.getInventory().isEmpty()) {
 //            System.out.println("No items to drop!");
 //            return;

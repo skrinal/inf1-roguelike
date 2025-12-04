@@ -5,8 +5,6 @@ import model.Player;
 import model.enums.ClassPower;
 import model.enums.PlayerClass;
 
-import java.util.Scanner;
-
 public class Rogue extends Player {
 
     private static final int MAX_HP = 100;
