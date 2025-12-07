@@ -26,7 +26,7 @@ class ItemDataBaseTest {
         ItemDatabase db1 = ItemDatabase.getInstance(this.magePlayer);
         ItemDatabase db2 = ItemDatabase.getInstance(this.roguePlayer);
 
-        assertSame(db1, db2, "ItemDatabase should be a singleton");
+        assertSame(db1, db2);
     }
 
     @Test
