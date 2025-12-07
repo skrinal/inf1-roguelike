@@ -56,6 +56,7 @@ public class Room {
      *
      * @return
      */
+    // TODO: Refactor this method -> too big for one method ( nesting )
     public RoomOutCome enter() {
         while (true) {
             this.showRoomInfo();

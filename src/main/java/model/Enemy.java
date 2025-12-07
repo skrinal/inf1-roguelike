@@ -21,21 +21,12 @@ public abstract class Enemy extends Character {
         this.initializeAtLevel(level);
     }
 
-    /**
-     * Scales enemy's stats to the targeted level.
-     */
     private void initializeAtLevel(int targetedLevel) {
         for (int i = 1; i < targetedLevel; i++) {
             this.scaleStats();
         }
     }
 
-    /**
-     * Increases the enemy's level and scales its stats accordingly.
-     * Each call increases the enemy's maximum HP, Attack and Defense
-     * based on the current level.
-     * Also reset's current HP to maximum HP.
-     */
     private void scaleStats() {
         int currentLevel = this.getLevel();
         this.incrementLevel();
