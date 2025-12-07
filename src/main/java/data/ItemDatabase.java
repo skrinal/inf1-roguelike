@@ -14,10 +14,6 @@ public class ItemDatabase {
     private final ArrayList<Item> lootTable;
     private final Random random;
 
-    /**
-     * Constructs a new ItemDatabase with a loot table based on the player's class.
-     * @param player
-     */
     private ItemDatabase(Player player) {
 
         this.random = new Random();
@@ -49,7 +45,7 @@ public class ItemDatabase {
     }
 
     /**
-     * Get's a random item from the loot table.
+     * Gets a random item from the loot table.
      */
     public Item getRandomItem() {
         if (this.lootTable.isEmpty()) {

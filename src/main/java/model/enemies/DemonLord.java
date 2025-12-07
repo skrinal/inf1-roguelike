@@ -23,7 +23,7 @@ public class DemonLord extends Enemy {
 
     }
 
-    // TODO: preco tu je string ?? IntelJ kuk -> zmenit potom UML
+    // TODO: preco tu mam string ?? (skor EnemeType) -> zmenit potom UML
     @Override
     public String getEnemyType() {
         return EnemyType.DEMON.name();

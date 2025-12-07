@@ -75,6 +75,7 @@ public enum RoomMap {
 
     private final String map;
     private final String description;
+    
     RoomMap(String display, String description) {
         this.map = display;
         this.description = description;
