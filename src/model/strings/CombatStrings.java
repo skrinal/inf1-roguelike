@@ -108,7 +108,7 @@ public class CombatStrings {
         }
 
         ui.append("║").append(this.padLine("  [4] Rest ", 26)).append("║\n");
-        ui.append("║").append(this.padLine("  [5] Item", 26)).append("║\n");
+        ui.append("║").append(this.padLine("  [5] Inventory", 26)).append("║\n");
         ui.append("╚══════════════════════════╝");
 
         return ui.toString();
