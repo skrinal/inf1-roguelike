@@ -25,11 +25,9 @@ public class CombatSystem {
                 case 2 -> player.performeBasicAbility(enemy);
                 case 3 -> player.performeUtilityAbitlity();
                 case 4 -> player.heal(3);
-                case 5 -> {
-                    // TODO: Item
-                }
+                case 5 -> player.showInventory();
+                default -> System.out.println("Invalid selection. Try again");
             }
-
 
             if (!enemy.isAlive()) {
                 System.out.println("\n" + "Enemy has been defeated !!!");
@@ -49,6 +47,7 @@ public class CombatSystem {
 
             player.updateStatusEffects();
         }
+        player.removeAllStatusEffects();
         return player.isAlive();
     }
 
