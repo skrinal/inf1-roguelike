@@ -23,7 +23,7 @@ public class CombatSystem {
             switch (Utility.handleDecision(1, 5)) {
                 case 1 -> player.performeSpecialAbility(enemy);
                 case 2 -> player.performeBasicAbility(enemy);
-                case 3 -> player.performeUtilityAbitlity();
+                case 3 -> player.performeUtilityAbility();
                 case 4 -> player.heal(3);
                 case 5 -> player.showInventory();
                 default -> System.out.println("Invalid selection. Try again");
@@ -37,14 +37,18 @@ public class CombatSystem {
 
             if (player.isUntargatable()) {
                 System.out.println("Enemy attacks but misses!");
+            } else if (player.canBeTargetedBy(enemy)) {
+                int damage = player.takeDamage((enemy.getTotalAttack() * 50) / 100);
+                System.out.println("Enemy still can see you, dealing " + damage + " damage.");
             } else {
                 if (this.random.nextBoolean()) {
                     enemy.performeSpecialAbility(player);
                 } else {
-                    enemy.performeAttack(player);
+                    enemy.performeBasicAbility(player);
                 }
             }
 
+            Utility.enterToContinue();
             player.updateStatusEffects();
         }
         player.removeAllStatusEffects();
