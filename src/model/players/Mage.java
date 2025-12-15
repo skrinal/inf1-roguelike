@@ -1,7 +1,6 @@
 package model.players;
 
 import model.Character;
-import model.Enemy;
 import model.Player;
 import model.enums.ClassPower;
 import model.enums.PlayerClass;
@@ -14,6 +13,16 @@ public class Mage extends Player {
     private static final int ATTACK = 10;
     private static final int DEFENCE = 3;
     private static final int POWER = 100;
+
+    private final String basicAbilityName = "Frostbolt";
+    private final String specialAbilityName = "Fireblast";
+    private final String utilityAbilityName = "Cloak of Shadows";
+
+    private final int basicAbilityCost = 10;
+    private final int specialAbilityCost = 50;
+    private final int utilityAbilityCost = 15;
+
+    private final String actionVerb = "blast";
 
     private double invisibilityChance = 0.4;
     private boolean isInvisible = false;
@@ -34,44 +43,34 @@ public class Mage extends Player {
         return PlayerClass.MAGE;
     }
 
-    // TODO: Damage logic is bad
     @Override
-    public void performeSpecialAbility(Character target) {
-        if (usePower(50)) {
-            int rawDamage = (int)(this.getTotalAttack() * 2.5);
-            int actualDamage = target.takeDamage(rawDamage);
-
-            System.out.println("FIREBLAST! You blast " + target.getName() + " for "
-                    + actualDamage + " damage! (" + rawDamage + " raw)");
-        } else {
-            System.out.println("Not enough Mana!");
-        }
-    }
-    @Override
-    public void performeBasicAbility(Character target) {
-        if (usePower(10)) {
-            int rawDamage = (int)(this.getTotalAttack() * 1.3);
-            int actualDamage = target.takeDamage(rawDamage);
-
-            System.out.println("Fireball! You blast " + target.getName() + " for "
-                    + actualDamage + " damage! (" + rawDamage + " raw)");
-        } else {
-            System.out.println("Not enough Mana!");
-        }
+    public String getBasicAbilityName() {
+        return this.basicAbilityName;
     }
 
     @Override
-    public void performeUtilityAbitlity() {
-        if (!this.isInvisible) {
-            if (this.usePower(15)) {
-                this.applyStatusEffect(StatusEffects.INVISIBILITY, -1);
-                System.out.println("You have used !");
-            } else {
-                System.out.println("Not enough Mana!");
-            }
-        } else {
-            System.out.println("You are already invisible!");
-        }
+    public String getSpecialAbilityName() {
+        return this.specialAbilityName;
+    }
+
+    @Override
+    public String getUtilityAbilityName() {
+        return this.utilityAbilityName;
+    }
+
+    @Override
+    public int getBasicAbilityCost() {
+        return this.basicAbilityCost;
+    }
+
+    @Override
+    public int getSpecialAbilityCost() {
+        return this.specialAbilityCost;
+    }
+
+    @Override
+    public int getUtilityAbilityCost() {
+        return this.utilityAbilityCost;
     }
 
     @Override
@@ -81,8 +80,57 @@ public class Mage extends Player {
             this.checkInvisibilityStatus();
 
         }
-        restorePower(10);
+        restorePower(15);
     }
+
+    @Override
+    public void performeBasicAbility(Character target) {
+        if (usePower(this.basicAbilityCost)) {
+            int rawDamage = (int)(this.getTotalAttack() * 1.3);
+            int damage = target.takeDamage(rawDamage);
+
+            this.damageAbilitySystemOut(
+                    this.basicAbilityName, this.actionVerb, target, damage, rawDamage
+            );
+
+        } else {
+            this.noPowerSystemOut(this.getPowerString());
+        }
+    }
+
+    @Override
+    public void performeSpecialAbility(Character target) {
+        if (usePower(this.specialAbilityCost)) {
+            int rawDamage = (int)(this.getTotalAttack() * 2.5);
+            int damage = target.takeDamage(rawDamage);
+
+            this.damageAbilitySystemOut(
+                    this.specialAbilityName, this.actionVerb, target, damage, rawDamage
+            );
+
+        } else {
+            this.noPowerSystemOut(this.getPowerString());
+        }
+    }
+
+    @Override
+    public void performeUtilityAbility() {
+        if (!this.isInvisible) {
+            if (this.usePower(this.utilityAbilityCost)) {
+
+                this.isInvisible = true;
+                this.applyStatusEffect(StatusEffects.INVISIBILITY, -1);
+
+                this.useAbilitySystemOut(this.utilityAbilityName, "casted");
+            } else {
+                this.noPowerSystemOut(this.getPowerString());
+            }
+        } else {
+            System.out.println("You are already invisible!");
+        }
+    }
+
+
 
     private void checkInvisibilityStatus() {
         if (this.isInvisible) {
@@ -96,6 +144,9 @@ public class Mage extends Player {
                 this.removeStatusEffect(StatusEffects.INVISIBILITY);
                 this.isInvisible = false;
                 this.invisibilityChance = 0.5;
+
+                this.applyStatusEffect(StatusEffects.SHIELD, 1);
+                System.out.println("Small shield applied");
             }
         }
     }
