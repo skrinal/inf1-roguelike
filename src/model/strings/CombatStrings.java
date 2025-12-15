@@ -49,9 +49,12 @@ public class CombatStrings {
         // Top border
         ui.append("╔═════════════════════════════════╗\n");
 
+        //TODO: Rewrite to one function as its duplicated in createRightPanel
         // Name and class line - padded to fit within the box
         String nameClass = "  " + player.getName().toUpperCase() + " [" + player.getClassType() + "]";
-        ui.append("║").append(this.padLine(nameClass, 33)).append("║\n");
+        ui.append("║")
+                .append(this.padLine(nameClass, 33))
+                .append("║\n");
 
         // Separator
         ui.append("╠═════════════════════════════════╣\n");
@@ -59,17 +62,25 @@ public class CombatStrings {
         // HP line
         String hpText = " HP:      [" + player.getHealthBar() + "] " +
                 player.getHp() + "/" + player.getMaxHp();
-        ui.append("║").append(this.padLine(hpText, 33)).append("║\n");
+        ui.append("║")
+                .append(this.padLine(hpText, 33))
+                .append("║\n");
 
         // Power line (Mana/Energy/Rage)
         String powerText = " " + player.getPowerString() + ":    [" +
                 player.getPowerBar() + "] " +
                 player.getPower() + "/" + player.getMaxPower();
-        ui.append("║").append(this.padLine(powerText, 33)).append("║\n");
+        ui.append("║")
+                .append(this.padLine(powerText, 33))
+                .append("║\n");
 
-        String effectText = " Effects:";
-        ui.append("║").append(this.padLine("", 33)).append("║\n");
-        ui.append("║").append(this.padLine(effectText, 33)).append("║\n");
+
+        ui.append("║")
+                .append(this.padLine("", 33))
+                .append("║\n");
+        ui.append("║")
+                .append(this.padLine(" Effects:", 33))
+                .append("║\n");
 
         if (!player.isStatusEffectsEmpty()) {
             for (StatusEffects status : player.getStatusEffects().keySet()) {
@@ -88,27 +99,31 @@ public class CombatStrings {
         StringBuilder ui = new StringBuilder();
         ui.append("╔══════════════════════════╗\n");
 
-        switch (player.getClassType()) {
-            case MAGE -> {
-                ui.append("║").append(this.padLine("  [1] Fireblast (50)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [2] Fireball (10)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [3] Cloak of Shadows (15)", 26)).append("║\n");
 
-            }
-            case ROGUE -> {
-                ui.append("║").append(this.padLine("  [1] Vanish (60)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [2] Sinister Strike (25)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [3] Dice roll (10)", 26)).append("║\n");
-            }
-            case WARRIOR -> {
-                ui.append("║").append(this.padLine("  [1] Execute (50)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [2] Bloodthirst (30)", 26)).append("║\n");
-                ui.append("║").append(this.padLine("  [3] Ignore Pain (10)", 26)).append("║\n");
-            }
-        }
+        ui.append("║")
+                .append(this.padLine(
+                    String.format(" [1] %s (%s)", player.getBasicAbilityName(), player.getBasicAbilityCost()), 26))
+                .append("║\n");
 
-        ui.append("║").append(this.padLine("  [4] Rest ", 26)).append("║\n");
-        ui.append("║").append(this.padLine("  [5] Inventory", 26)).append("║\n");
+        ui.append("║")
+                .append(this.padLine(
+                    String.format(" [2] %s (%s)", player.getSpecialAbilityName(), player.getSpecialAbilityCost()), 26))
+                .append("║\n");
+
+        ui.append("║")
+                .append(this.padLine(
+                    String.format(" [3] %s (%s)", player.getUtilityAbilityName(), player.getUtilityAbilityCost()
+                ), 26))
+                .append("║\n");
+
+
+        ui.append("║")
+                .append(this.padLine("  [4] Rest ", 26))
+                .append("║\n");
+        ui.append("║")
+                .append(this.padLine("  [5] Inventory", 26))
+                .append("║\n");
+
         ui.append("╚══════════════════════════╝");
 
         return ui.toString();
@@ -122,7 +137,9 @@ public class CombatStrings {
 
         // Name and type line
         String nameType = "  " + enemy.getName().toUpperCase() + " [" + enemy.getEnemyType() + "]";
-        ui.append("║").append(this.padLine(nameType, 33)).append("║\n");
+        ui.append("║")
+                .append(this.padLine(nameType, 33))
+                .append("║\n");
 
         // Separator
         ui.append("╠═════════════════════════════════╣\n");
