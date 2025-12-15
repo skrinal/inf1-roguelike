@@ -64,6 +64,7 @@ public abstract class Enemy extends Character {
         return this.getDefence();
     }
 
-    public abstract void performeAttack(Character target);
+    //public abstract void performeAttack(Character target);
     public abstract String getEnemyType();
+    public abstract boolean canTargetInvisible();
 }

@@ -18,15 +18,15 @@ public class DemonLord extends Enemy {
         super(name, MAX_HP, ATTACK, DEFENCE, goldReward, level);
     }
 
-    @Override
-    public void performeAttack(Character target) {
-
-    }
-
     // TODO: preco tu je string ?? IntelJ kuk -> zmenit potom UML
     @Override
     public String getEnemyType() {
         return EnemyType.DEMON.name();
+    }
+
+    @Override
+    public boolean canTargetInvisible() {
+        return false;
     }
 
     @Override
