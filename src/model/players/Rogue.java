@@ -89,7 +89,7 @@ public class Rogue extends Player {
     @Override
     public void performeSpecialAbility(Character target) {
         if (!this.isVanished) {
-            if (usePower(60)) {
+            if (this.usePower(60)) {
                 this.applyStatusEffect(StatusEffects.VANISH, -1);
                 System.out.println("You have used Vanish!");
                 this.isVanished = true;
@@ -105,11 +105,11 @@ public class Rogue extends Player {
 
     private void checkVanishStatus() {
         if (this.isVanished) {
-            if (this.random.nextDouble() <= this.vanishChance) {
+            if (this.random.nextDouble() >= this.vanishChance) {
 
                 System.out.println("You remain untargetable and strike again!");
 
-                this.vanishChance += 0.1; // Increase chance to get out each turn
+                this.vanishChance -= 0.1; // Increase chance to get out each turn
             } else {
                 System.out.println("You are no longer untargetable.");
 
