@@ -1,7 +1,7 @@
 package data;
 
 import model.Enemy;
-import model.enemies.SkeletonWarrior;
+import model.enemies.Skeleton;
 import model.enums.room.RoomType;
 
 import java.util.ArrayList;
@@ -27,12 +27,12 @@ public class EnemyDatabase {
 
     private void loadEnemies() {
         ArrayList<Enemy> roomOneEnemies = new ArrayList<>();
-        roomOneEnemies.add(new SkeletonWarrior("Maximus", 100));
-        roomOneEnemies.add(new SkeletonWarrior("Bonecrusher", 120));
+        roomOneEnemies.add(new Skeleton("Maximus", 100));
+        roomOneEnemies.add(new Skeleton("Bonecrusher", 120));
 
         ArrayList<Enemy> roomTwoEnemies = new ArrayList<>();
-        roomTwoEnemies.add(new SkeletonWarrior("Maximus", 100));
-        roomTwoEnemies.add(new SkeletonWarrior("Bonecrusher", 120));
+        roomTwoEnemies.add(new Skeleton("Maximus", 100));
+        roomTwoEnemies.add(new Skeleton("Bonecrusher", 120));
 
         this.enemies.put(RoomType.ONE, roomOneEnemies);
         this.enemies.put(RoomType.TWO, roomTwoEnemies);

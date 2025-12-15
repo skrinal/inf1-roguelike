@@ -9,8 +9,15 @@ public class CombatStrings {
     private static final int CENTER_PANEL_WIDTH = 30;
     private static final int RIGHT_PANEL_WIDTH = 37;
 
-    public CombatStrings() { }
+    public CombatStrings() { /* No need to initialize anything */ }
 
+    /**
+     * Outputs the combat menu to the console.
+     * At first we create three panels, each with a fixed width. Which we split into lines.
+     * Then we print each line to the console, padding it to the correct width.
+     * @param player
+     * @param enemy
+     */
     public void printCombatMenu(Player player, Enemy enemy) {
         StringBuilder combinedUI = new StringBuilder();
         String[] leftPanel = this.createLeftPanel(player).split("\n");

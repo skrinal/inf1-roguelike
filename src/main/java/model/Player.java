@@ -138,7 +138,7 @@ public abstract class Player extends Character {
         }
     }
 
-    //TODO: Nastudovat
+    //TODO: Refactor later
     public void addItem(Item item) {
         this.inventory.put(item, this.inventory.getOrDefault(item, 0) + 1);
     }

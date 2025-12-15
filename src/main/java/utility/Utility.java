@@ -3,19 +3,19 @@ import java.util.Scanner;
 
 public class Utility {
 
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner INPUT = new Scanner(System.in);
 
     public static int handleDecision(int minChoice, int maxChoice) {
         while (true) {
             System.out.print("Select: ");
 
-            if (!input.hasNextInt()) {
+            if (!INPUT.hasNextInt()) {
                 System.out.println("Invalid selection. Try again");
-                input.nextLine();
+                INPUT.nextLine();
                 continue;
             }
-            int choice = input.nextInt();
-            input.nextLine();
+            int choice = INPUT.nextInt();
+            INPUT.nextLine();
 
             if (choice >= minChoice && choice <= maxChoice) {
                 return choice;
@@ -26,6 +26,6 @@ public class Utility {
 
     public static void enterToContinue() {
         System.out.println("Press enter to continue...");
-        input.nextLine();
+        INPUT.nextLine();
     }
 }

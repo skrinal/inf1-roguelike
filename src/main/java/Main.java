@@ -8,7 +8,6 @@ void main() {
     Scanner input = new Scanner(System.in);
     Player player = null;
 
-    // TODO: skola
     GameState state = GameState.MAIN_MENU;
 
     MenuLogic menuLogic = new MenuLogic();
