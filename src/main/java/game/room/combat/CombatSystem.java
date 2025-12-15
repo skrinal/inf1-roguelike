@@ -15,16 +15,18 @@ public class CombatSystem {
         System.out.println("\n=== COMBAT START ===");
 
         while (player.isAlive() && enemy.isAlive()) {
+
+            player.beforeTurn();
+
             this.combatStrings.printCombatMenu(player, enemy);
 
             switch (Utility.handleDecision(1, 5)) {
                 case 1 -> player.performeSpecialAbility(enemy);
-                case 2 -> player.performeUtilityAbitlity();
-                case 3 -> player.performeBasicAbility(enemy);
-                case 4 -> player.restorePower(10);
-                case 5 -> {
-                    // TODO: Item
-                }
+                case 2 -> player.performeBasicAbility(enemy);
+                case 3 -> player.performeUtilityAbility();
+                case 4 -> player.heal(3);
+                case 5 -> player.showInventory();
+                default -> System.out.println("Invalid selection. Try again");
             }
 
             if (!enemy.isAlive()) {
@@ -33,12 +35,23 @@ public class CombatSystem {
                 break;
             }
 
-            switch (this.random.nextInt(2) + 1 ) {
-                case 1 -> enemy.performeSpecialAbility(player);
-                case 2 -> enemy.performeAttack(player);
+            if (player.isUntargatable()) {
+                System.out.println("Enemy attacks but misses!");
+            } else if (player.canBeTargetedBy(enemy)) {
+                int damage = player.takeDamage((enemy.getTotalAttack() * 50) / 100);
+                System.out.println("Enemy still can see you, dealing " + damage + " damage.");
+            } else {
+                if (this.random.nextBoolean()) {
+                    enemy.performeSpecialAbility(player);
+                } else {
+                    enemy.performeBasicAbility(player);
+                }
             }
-        }
 
+            Utility.enterToContinue();
+            player.updateStatusEffects();
+        }
+        player.removeAllStatusEffects();
         return player.isAlive();
     }
 

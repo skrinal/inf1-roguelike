@@ -1,25 +1,35 @@
 package model;
 
 import model.enums.GameState;
+import model.enums.InventoryView;
+import model.enums.ItemType;
 import model.enums.PlayerClass;
 import model.enums.room.RoomType;
+import model.enums.status.StatusEffects;
+import utility.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
+import java.util.List;
+
 
 public abstract class Player extends Character {
-    private ArrayList<RoomType> completedRooms;
-    private ArrayList<RoomType> treasureFound;
-    private int power;
     private final int maxPower;
+    private int power;
     private int gold;
+
     private final HashMap<Item, Integer> inventory;
+    //private HashMap<StatusEffects, Integer> statusEffects;
+
+    private List<RoomType> completedRooms;
+    private List<RoomType> treasureFound;
+
     private Item equippedWeapon;
     private Item equippedArmor;
 
-    public Player(String name, int maxHp, int attack, int defence, int maxPower) {
+    protected Player(String name, int maxHp, int attack, int defence, int maxPower) {
         super(name, maxHp, attack, defence);
+        //this.statusEffects = new HashMap<>();
         this.completedRooms = new ArrayList<>();
         this.treasureFound = new ArrayList<>();
         this.maxPower = maxPower;
@@ -30,7 +40,7 @@ public abstract class Player extends Character {
         this.equippedWeapon = null;
     }
 
-    public ArrayList<RoomType> getCompletedRooms() {
+    public List<RoomType> getCompletedRooms() {
         return this.completedRooms;
     }
 
@@ -38,7 +48,7 @@ public abstract class Player extends Character {
         this.completedRooms.add(roomType);
     }
 
-    public ArrayList<RoomType> getTreasureFound() {
+    public List<RoomType> getTreasureFound() {
         return this.treasureFound;
     }
 
@@ -62,8 +72,70 @@ public abstract class Player extends Character {
         this.gold += amount;
     }
 
-    public HashMap<Item, Integer> getInventory() {
-        return this.inventory;
+//    public HashMap<Item, Integer> getInventory() {
+//        return this.inventory;
+//    }
+
+    public void showInventory() {
+        boolean open = true;
+        while (open) {
+            System.out.println("\n" + "=== Inventory Menu ===");
+            System.out.println("1) Show all items");
+            System.out.println("2) Show consumables");
+            System.out.println("3) Show weapons");
+            System.out.println("4) Show armor");
+            System.out.println("0) Exit Inventory");
+
+            int choice = Utility.handleDecision(0, 4);
+
+            switch (choice) {
+                case 1 -> this.showInventory(InventoryView.ALL);
+                case 2 -> this.showInventory(InventoryView.CONSUMABLES);
+                case 3 -> this.showInventory(InventoryView.WEAPONS);
+                case 4 -> this.showInventory(InventoryView.ARMOR);
+                case 0 -> open = false;
+                default -> System.out.println("Invalid selection. Try again");
+            }
+        }
+    }
+
+    private void showInventory(InventoryView view) {
+        boolean found = false;
+
+        System.out.println("\n" + "Inventory:");
+
+        for (var item : this.inventory.keySet()) {
+
+            switch (view) {
+                case ALL -> {
+                    System.out.println(item.getName() + " (" + item.getType() + ")");
+                    found = true;
+                }
+                case CONSUMABLES -> {
+                    if (item.getType() == ItemType.POTION) {
+                        System.out.println(item.getName() + " (" + item.getValue() + " HP)");
+                        found = true;
+                    }
+                }
+                case WEAPONS -> {
+                    if (item.getType() == ItemType.WEAPON) {
+                        System.out.println(item.getName() + " (" + item.getValue() + " damage)");
+                        found = true;
+                    }
+                }
+                case ARMOR -> {
+                    if (item.getType() == ItemType.ARMOR) {
+                        System.out.println(item.getName() + " (" + item.getValue() + " defense)");
+                        found = true;
+                    }
+                }
+
+                default -> System.out.println("No item found.");
+            }
+            if (!found) {
+                System.out.println("No item found.");
+            }
+        }
     }
 
     //TODO: Refactor later
@@ -87,23 +159,24 @@ public abstract class Player extends Character {
     public String getPowerBar() {
         return this.getBar(this.getPower(), this.getMaxPower());
     }
-    
 
     @Override
     public int getTotalAttack() {
-        return this.getAttack() + (this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0);
+        return (int)((this.getAttack() + (
+                this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0)) * this.getDamageMultiplier());
     }
 
     @Override
     public int getTotalDefense() {
-        return this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0);
+        return (int)(
+                (this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0)) * this.getDefenceMultiplier());
     }
 
-    public GameState handleStats(Scanner input) {
+    public GameState handleStats() {
         System.out.println("\n=== STATS ===");
         this.displayStats();
-        System.out.print("\nPress Enter to return...");
-        input.nextLine();
+
+        Utility.enterToContinue();
         return GameState.GAME;
     }
 
@@ -136,12 +209,29 @@ public abstract class Player extends Character {
         System.out.println("║ Level:   " + this.getLevel() + " - " + this.getExperience() + "/" + this.getExperienceToNextLevel());
         System.out.println("║ ");
         System.out.println("║ Armor:   " + (this.getEquippedArmor() == null ? "None" : this.getEquippedArmor().getName() + " + " + this.getEquippedArmor().getValue() + " Armor"));
-        System.out.println("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().getName() + " + " + this.getEquippedWeapon().getValue() + " Damage" ));
+        System.out.println("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().getName() + " + " + this.getEquippedWeapon().getValue() + " Damage"));
         System.out.println("╚═════════════════════════════════╝");
+    }
+
+    public boolean canBeTargetedBy(Enemy attacker) {
+        if (this.hasStatusEffect(StatusEffects.INVISIBILITY)) {
+            return attacker.canTargetInvisible();
+        }
+        return false;
+    }
+
+    public boolean isUntargatable() {
+        return false;
     }
 
     public abstract String getPowerString();
     public abstract PlayerClass getClassType();
-    public abstract void performeUtilityAbitlity();
-
+    public abstract String getBasicAbilityName();
+    public abstract String getSpecialAbilityName();
+    public abstract String getUtilityAbilityName();
+    public abstract int getBasicAbilityCost();
+    public abstract int getSpecialAbilityCost();
+    public abstract int getUtilityAbilityCost();
+    public abstract void performeUtilityAbility();
+    public abstract void beforeTurn();
 }

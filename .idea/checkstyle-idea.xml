@@ -5,13 +5,14 @@
     <scanScope>AllSourcesWithTests</scanScope>
     <option name="thirdPartyClasspath" />
     <option name="activeLocationIds">
-      <option value="4cbb5833-5a67-48fc-9c51-5ee1b23f3433" />
+      <option value="98b8d659-62cd-4789-94cc-e25125391afd" />
     </option>
     <option name="locations">
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="4cbb5833-5a67-48fc-9c51-5ee1b23f3433" type="INSECURE_HTTP_URL" scope="All" description="BlueJ">https://raw.githubusercontent.com/infjava/BlueJFRI/master/data/checkstyle/default_checks.xml</ConfigurationLocation>
+        <ConfigurationLocation id="98b8d659-62cd-4789-94cc-e25125391afd" type="LOCAL_FILE" scope="All" description="yes">$USER_HOME$/Documents/UNIZA/INF/CheckStyle/default_checks.xml</ConfigurationLocation>
       </list>
     </option>
   </component>

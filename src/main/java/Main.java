@@ -20,12 +20,12 @@ void main() {
                 player = menuLogic.handleCharacterCreation(input);
                 state = GameState.GAME;
             }
-            case GAME -> state = gameLogic.handleGame(input);
-            case DUNGEON -> state = gameLogic.handleDungeon(input, player);
+            case GAME -> state = gameLogic.handleGame();
+            case DUNGEON -> state = gameLogic.handleDungeon(player);
 
             //case INVENTORY -> state = handleInventory(input, player);
 
-            case STATS -> state = player.handleStats(input);
+            case STATS -> state = player.handleStats();
             case DEATH -> {
                 player = null;
                 state = GameState.MAIN_MENU;

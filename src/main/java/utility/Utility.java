@@ -28,6 +28,4 @@ public class Utility {
         System.out.println("Press enter to continue...");
         INPUT.nextLine();
     }
-
-
 }

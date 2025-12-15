@@ -6,7 +6,7 @@ public abstract class Enemy extends Character {
     /**
      * Constructor for enemy without an assigned level at creation.
      */
-    public Enemy(String name, int maxHp, int attack, int defence, int goldReward) {
+    protected Enemy(String name, int maxHp, int attack, int defence, int goldReward) {
         super(name, maxHp, attack, defence);
         this.goldReward = goldReward;
     }
@@ -14,7 +14,7 @@ public abstract class Enemy extends Character {
     /**
      * Constructor for enemy with an assigned level at creation.
      */
-    public Enemy(String name, int maxHp, int attack, int defence, int goldReward, int level) {
+    protected Enemy(String name, int maxHp, int attack, int defence, int goldReward, int level) {
         super(name, maxHp, attack, defence);
         this.goldReward = goldReward;
 
@@ -55,6 +55,7 @@ public abstract class Enemy extends Character {
         return this.getDefence();
     }
 
-    public abstract void performeAttack(Character target);
+    //public abstract void performeAttack(Character target);
     public abstract String getEnemyType();
+    public abstract boolean canTargetInvisible();
 }

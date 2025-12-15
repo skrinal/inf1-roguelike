@@ -20,13 +20,13 @@ public class Skeleton extends Enemy {
     }
 
     @Override
-    public void performeAttack(Character target) {
-
+    public String getEnemyType() {
+        return EnemyType.SKELETON.name();
     }
 
     @Override
-    public String getEnemyType() {
-        return EnemyType.SKELETON.name();
+    public boolean canTargetInvisible() {
+        return false;
     }
 
     @Override
