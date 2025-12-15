@@ -122,9 +122,9 @@ public abstract class Player extends Character {
         this.gold += amount;
     }
 
-    public HashMap<Item, Integer> getInventory() {
-        return this.inventory;
-    }
+//    public HashMap<Item, Integer> getInventory() {
+//        return this.inventory;
+//    }
 
 
     public void showInventory() {
