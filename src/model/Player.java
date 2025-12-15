@@ -11,25 +11,25 @@ import utility.Utility;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public abstract class Player extends Character {
     private final int maxPower;
-    private final HashMap<Item, Integer> inventory;
-    private HashMap<StatusEffects, Integer> statusEffects;
-    private List<RoomType> completedRooms;
-    private List<RoomType> treasureFound;
     private int power;
     private int gold;
+
+    private final HashMap<Item, Integer> inventory;
+    //private HashMap<StatusEffects, Integer> statusEffects;
+
+    private List<RoomType> completedRooms;
+    private List<RoomType> treasureFound;
+
     private Item equippedWeapon;
     private Item equippedArmor;
-    private double damageMultiplier = 1.0;
-    private double defenceMultiplier = 1.0;
 
     protected Player(String name, int maxHp, int attack, int defence, int maxPower) {
         super(name, maxHp, attack, defence);
-        this.statusEffects = new HashMap<>();
+        //this.statusEffects = new HashMap<>();
         this.completedRooms = new ArrayList<>();
         this.treasureFound = new ArrayList<>();
         this.maxPower = maxPower;
@@ -38,56 +38,6 @@ public abstract class Player extends Character {
         this.inventory = new HashMap<>();
         this.equippedArmor = null;
         this.equippedWeapon = null;
-    }
-
-    public void applyStatusEffect(StatusEffects effect, int turns) {
-        this.statusEffects.put(effect, turns);
-    }
-
-    protected void removeStatusEffect(StatusEffects effect) {
-        this.statusEffects.remove(effect);
-    }
-
-    public void removeAllStatusEffects() {
-        this.statusEffects.clear();
-    }
-
-    public int getStatusEffectDuration(StatusEffects effect) {
-        return this.statusEffects.getOrDefault(effect, 0);
-    }
-
-    public Map<StatusEffects, Integer> getStatusEffects() {
-        return this.statusEffects;
-    }
-
-    public boolean isStatusEffectsEmpty() {
-        return this.statusEffects.isEmpty();
-    }
-
-    public void updateStatusEffects() {
-        ArrayList<StatusEffects> toRemove = new ArrayList<>();
-
-        for (var effect : this.statusEffects.entrySet()) {
-            StatusEffects statusEffect = effect.getKey();
-            int turnsLeft = effect.getValue() - 1;
-
-            switch (statusEffect) {
-                case STRENGTH, INVISIBILITY, VANISH -> { /* nothing needed */ }
-                case HEALING -> this.heal(2);
-                case SHIELD -> this.defenceMultiplier += 0.5;
-            }
-            this.statusEffects.put(statusEffect, turnsLeft);
-            if (turnsLeft == 0) {
-                toRemove.add(statusEffect);
-            }
-        }
-
-        toRemove.forEach(this.statusEffects::remove);
-    }
-
-
-    protected void setDamageMultiplier(double damageMultiplier) {
-        this.damageMultiplier = damageMultiplier;
     }
 
     public List<RoomType> getCompletedRooms() {
@@ -125,7 +75,6 @@ public abstract class Player extends Character {
 //    public HashMap<Item, Integer> getInventory() {
 //        return this.inventory;
 //    }
-
 
     public void showInventory() {
         boolean open = true;
@@ -189,7 +138,6 @@ public abstract class Player extends Character {
         }
     }
 
-
     //TODO: Nastudovat
     public void addItem(Item item) {
         this.inventory.put(item, this.inventory.getOrDefault(item, 0) + 1);
@@ -212,15 +160,16 @@ public abstract class Player extends Character {
         return this.getBar(this.getPower(), this.getMaxPower());
     }
 
-
     @Override
     public int getTotalAttack() {
-        return (int)((this.getAttack() + (this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0)) * this.damageMultiplier);
+        return (int)((this.getAttack() + (
+                this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0)) * this.getDamageMultiplier());
     }
 
     @Override
     public int getTotalDefense() {
-        return (int)((this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0)) * this.defenceMultiplier);
+        return (int)(
+                (this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0)) * this.getDefenceMultiplier());
     }
 
     public GameState handleStats() {
@@ -264,15 +213,25 @@ public abstract class Player extends Character {
         System.out.println("╚═════════════════════════════════╝");
     }
 
-    public abstract String getPowerString();
-
-    public abstract PlayerClass getClassType();
-
-    public abstract void performeUtilityAbitlity();
-
-    public abstract void beforeTurn();
+    public boolean canBeTargetedBy(Enemy attacker) {
+        if (this.hasStatusEffect(StatusEffects.INVISIBILITY)) {
+            return attacker.canTargetInvisible();
+        }
+        return false;
+    }
 
     public boolean isUntargatable() {
         return false;
     }
+
+    public abstract String getPowerString();
+    public abstract PlayerClass getClassType();
+    public abstract String getBasicAbilityName();
+    public abstract String getSpecialAbilityName();
+    public abstract String getUtilityAbilityName();
+    public abstract int getBasicAbilityCost();
+    public abstract int getSpecialAbilityCost();
+    public abstract int getUtilityAbilityCost();
+    public abstract void performeUtilityAbility();
+    public abstract void beforeTurn();
 }
