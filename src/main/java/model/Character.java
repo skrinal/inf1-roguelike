@@ -1,5 +1,6 @@
 package model;
 
+import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
 import utility.Utility;
 
@@ -316,4 +317,5 @@ public abstract class Character {
     public abstract void performeBasicAbility(Character target);
     public abstract void performeSpecialAbility(Character target);
 
+    public abstract CombatTag getCombatTag();
 }

@@ -3,7 +3,7 @@ package model.players;
 import model.Character;
 import model.Player;
 import model.enums.ClassPower;
-import model.enums.PlayerClass;
+import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
 import utility.Utility;
 
@@ -37,8 +37,8 @@ public class Warrior extends Player {
     }
 
     @Override
-    public PlayerClass getClassType() {
-        return PlayerClass.WARRIOR;
+    public CombatTag getCombatTag() {
+        return CombatTag.WARRIOR;
     }
 
     @Override

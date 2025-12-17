@@ -3,7 +3,7 @@ package model;
 import model.enums.GameState;
 import model.enums.InventoryView;
 import model.enums.ItemType;
-import model.enums.PlayerClass;
+import model.enums.CombatTag;
 import model.enums.room.RoomType;
 import model.enums.status.StatusEffects;
 import utility.Utility;
@@ -198,7 +198,7 @@ public abstract class Player extends Character {
 
     public void displayStats() {
         System.out.println("╔═════════════════════════════════╗");
-        System.out.println("║  " + this.getName() + " [" + this.getClassType() + "]");
+        System.out.println("║  " + this.getName() + " [" + this.getCombatTag() + "]");
         System.out.println("╠═════════════════════════════════╣");
         System.out.println("║ HP:      [" + this.getHealthBar() + "] " + this.getHp() + "/" + this.getMaxHp());
         System.out.println("║ " + this.getPowerString() + ":    [" + this.getPowerBar() + "] " + this.getPower() + "/" + this.getMaxPower());
@@ -225,7 +225,6 @@ public abstract class Player extends Character {
     }
 
     public abstract String getPowerString();
-    public abstract PlayerClass getClassType();
     public abstract String getBasicAbilityName();
     public abstract String getSpecialAbilityName();
     public abstract String getUtilityAbilityName();

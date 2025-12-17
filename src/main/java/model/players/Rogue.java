@@ -3,7 +3,7 @@ package model.players;
 import model.Character;
 import model.Player;
 import model.enums.ClassPower;
-import model.enums.PlayerClass;
+import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
 
 import java.util.Random;
@@ -40,8 +40,8 @@ public class Rogue extends Player {
     }
 
     @Override
-    public PlayerClass getClassType() {
-        return PlayerClass.ROGUE;
+    public CombatTag getCombatTag() {
+        return CombatTag.ROGUE;
     }
 
     @Override

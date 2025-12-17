@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Character;
 import model.Enemy;
+import model.enums.CombatTag;
 import model.enums.EnemyType;
 
 public class DemonLord extends Enemy {
@@ -20,8 +21,8 @@ public class DemonLord extends Enemy {
 
     // TODO: preco tu je string ?? IntelJ kuk -> zmenit potom UML
     @Override
-    public String getEnemyType() {
-        return EnemyType.DEMON.name();
+    public CombatTag getCombatTag() {
+        return CombatTag.DEMON;
     }
 
     @Override

@@ -2,6 +2,7 @@ package model.enemies;
 
 import model.Character;
 import model.Enemy;
+import model.enums.CombatTag;
 import model.enums.EnemyType;
 
 public class Skeleton extends Enemy {
@@ -20,8 +21,8 @@ public class Skeleton extends Enemy {
     }
 
     @Override
-    public String getEnemyType() {
-        return EnemyType.SKELETON.name();
+    public CombatTag getCombatTag() {
+        return CombatTag.SKELETON;
     }
 
     @Override

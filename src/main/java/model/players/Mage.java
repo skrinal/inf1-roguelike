@@ -3,7 +3,7 @@ package model.players;
 import model.Character;
 import model.Player;
 import model.enums.ClassPower;
-import model.enums.PlayerClass;
+import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
 
 import java.util.Random;
@@ -39,8 +39,8 @@ public class Mage extends Player {
     }
 
     @Override
-    public PlayerClass getClassType() {
-        return PlayerClass.MAGE;
+    public CombatTag getCombatTag() {
+        return CombatTag.MAGE;
     }
 
     @Override
