@@ -1,7 +1,9 @@
 package model;
 
+import model.enums.CombatTag;
+
 public abstract class Enemy extends Character {
-    private final int goldReward;
+    private int goldReward;
 
     /**
      * Constructor for enemy without an assigned level at creation.
@@ -34,11 +36,13 @@ public abstract class Enemy extends Character {
         int newMaxHp = this.getMaxHp() + 15 + (currentLevel * 2);
         int newAttack = this.getAttack() + 2 + currentLevel;
         int newDefence = this.getDefence() + 2 + (int)Math.round((double)currentLevel / 2);
+        int newGold = this.goldReward + (currentLevel * 10);
 
         this.setMaxHp(newMaxHp);
         this.setHp(newMaxHp);
         this.setAttack(newAttack);
         this.setDefence(newDefence);
+        this.goldReward = newGold;
     }
 
     public int getGoldReward() {
@@ -55,7 +59,5 @@ public abstract class Enemy extends Character {
         return this.getDefence();
     }
 
-    //public abstract void performeAttack(Character target);
-    public abstract String getEnemyType();
     public abstract boolean canTargetInvisible();
 }

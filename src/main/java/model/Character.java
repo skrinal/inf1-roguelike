@@ -68,7 +68,7 @@ public abstract class Character {
         this.attack = attack;
     }
 
-    public int getDefence() {
+    protected int getDefence() {
         return this.defence;
     }
 
@@ -200,22 +200,22 @@ public abstract class Character {
         return this.defenceMultiplier;
     }
 
-
-
-    public int getLevel() {
+    protected int getLevel() {
         return this.level;
     }
-    
-    //TODO: preco tu je protected ?
+
     protected void incrementLevel() {
         this.level++;
     }
 
-    public int getExperience() {
+    protected int getExperience() {
         return this.experience;
     }
 
-    public int getExperienceToNextLevel() {
+    // TODO: Come up with system to lose experience
+    // public void loseExperience(int amount) {}
+
+    protected int getExperienceToNextLevel() {
         return this.experienceToNextLevel;
     }
 
@@ -303,9 +303,6 @@ public abstract class Character {
 
         Utility.enterToContinue();
     }
-
-// TODO: Come up with system to lose experience
-// public void loseExperience(int amount) {}
 
     private int calculateExperienceToNextLevel() {
         return (int)(100 * Math.pow(1.2, this.level));
