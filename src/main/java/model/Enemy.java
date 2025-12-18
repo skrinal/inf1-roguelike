@@ -1,6 +1,8 @@
 package model;
 
 import model.enums.CombatTag;
+import model.enums.status.EnemyType;
+import utility.Utility;
 
 public abstract class Enemy extends Character {
     private int goldReward;
@@ -59,5 +61,31 @@ public abstract class Enemy extends Character {
         return this.getDefence();
     }
 
+    protected void damageAbilitySystemOut(int damage, boolean isSpectral) {
+        StringBuilder sb = new StringBuilder(80);
+        sb.append(this.returnFormattedText(isSpectral))
+                .append(damage);
+        System.out.println(sb);
+
+        Utility.enterToContinue();
+    }
+
+    private String returnFormattedText(boolean isSpectral) {
+        if (isSpectral) {
+             return switch (this.getEnemyType()) {
+                case BOSS -> "The mighty " + this.getCombatTag().name() + " can still see you and It's dealing ";
+                case ELITE -> "The " + this.getCombatTag().name() + " sees you and It's dealing ";
+                default -> "";
+            };
+        }
+
+        return switch (this.getEnemyType()) {
+            case BOSS -> "The mighty " + this.getCombatTag().name() + " Boss struck you for ";
+            case ELITE -> "The " + this.getCombatTag().name() + " Elite struck you for ";
+            case TRASH -> "A wild " + this.getCombatTag().name() + " mob hits you for ";
+        };
+    }
+    public abstract EnemyType getEnemyType();
     public abstract boolean canTargetInvisible();
+    public abstract void performSpectralDamage(Character target);
 }
