@@ -85,7 +85,12 @@ public abstract class Enemy extends Character {
             case TRASH -> "A wild " + this.getCombatTag().name() + " mob hits you for ";
         };
     }
+
+    public boolean canTargetInvisible() {
+        return this.getEnemyType().isSpectral();
+    }
+
+
     public abstract EnemyType getEnemyType();
-    public abstract boolean canTargetInvisible();
-    public abstract void performSpectralDamage(Character target);
+    //public abstract void performSpectralDamage(Character target);
 }

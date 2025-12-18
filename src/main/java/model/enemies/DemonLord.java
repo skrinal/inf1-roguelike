@@ -4,8 +4,9 @@ import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
 import model.enums.status.EnemyType;
+import model.interfaces.SpectralAttacker;
 
-public class DemonLord extends Enemy {
+public class DemonLord extends Enemy implements SpectralAttacker {
 
     private static final int MAX_HP = 5;
     private static final int ATTACK = 30;
@@ -31,17 +32,6 @@ public class DemonLord extends Enemy {
     }
 
     @Override
-    public boolean canTargetInvisible() {
-        return true;
-    }
-
-    @Override
-    public void performSpectralDamage(Character target) {
-        int damage = target.takeDamage((this.getTotalAttack() * 40) / 100 ); // 40% normal Damage
-        this.damageAbilitySystemOut(damage, true);
-    }
-
-    @Override
     public void performeBasicAbility(Character target) {
         int damage = target.takeDamage(this.getTotalAttack());
         this.damageAbilitySystemOut(damage, false);
@@ -51,5 +41,11 @@ public class DemonLord extends Enemy {
     @Override
     public void performeSpecialAbility(Character target) {
 
+    }
+
+    @Override
+    public void performSpectralDamage(Character target) {
+        int damage = target.takeDamage((this.getTotalAttack() * this.getEnemyType().getDamagePercentage()) / 100 ); // 50% normal Damage
+        this.damageAbilitySystemOut(damage, true);
     }
 }

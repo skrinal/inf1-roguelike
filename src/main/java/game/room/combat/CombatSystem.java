@@ -1,5 +1,6 @@
 package game.room.combat;
 
+import model.interfaces.SpectralAttacker;
 import model.strings.CombatStrings;
 import model.Enemy;
 import model.Player;
@@ -38,8 +39,9 @@ public class CombatSystem {
             if (player.isUntargatable()) {
                 System.out.println("Enemy attacks but misses!");
 
-            } else if (player.canBeTargetedBy(enemy)) {
-                enemy.performSpectralDamage(player);
+            } else if (player.canBeTargetedBy(enemy)
+                        && enemy instanceof SpectralAttacker spectralAttacker) {
+                spectralAttacker.performSpectralDamage(player);
 
             } else {
 

@@ -3,6 +3,7 @@ package model.enemies;
 import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
+import model.enums.status.EnemyType;
 
 public class Skeleton extends Enemy {
     // TODO: opravit
@@ -25,14 +26,10 @@ public class Skeleton extends Enemy {
     }
 
     @Override
-    public boolean canTargetInvisible() {
-        return false;
+    public EnemyType getEnemyType() {
+        return EnemyType.TRASH;
     }
 
-    @Override
-    public void performSpectralDamage(Character target) {
-
-    }
 
     @Override
     public void performeBasicAbility(Character target) {
