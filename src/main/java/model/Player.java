@@ -213,6 +213,60 @@ public abstract class Player extends Character {
         System.out.println("╚═════════════════════════════════╝");
     }
 
+    protected void damageAbilitySystemOut(
+            String abilityName,
+            String actionVerb,
+            Character target,
+            int damage,
+            int rawDamage
+    ) {
+        StringBuilder sb = new StringBuilder(80);
+        sb.append(abilityName)
+                .append("! You ")
+                .append(actionVerb)
+                .append(" ")
+                .append(target.getName())
+                .append(" for ")
+                .append(damage)
+                .append(" damage! (")
+                .append(rawDamage)
+                .append(" raw)");
+        System.out.println(sb);
+
+        Utility.enterToContinue();
+    }
+
+    protected void useAbilitySystemOut(String abilityName) {
+        StringBuilder sb = new StringBuilder(50);
+        sb.append("You have used ")
+                .append(abilityName)
+                .append("!");
+
+        Utility.enterToContinue();
+    }
+
+    protected void useAbilitySystemOut(String abilityName, String actionVerb) {
+        StringBuilder sb = new StringBuilder(50);
+        sb.append("You have ")
+                .append(actionVerb)
+                .append(" ")
+                .append(abilityName)
+                .append("!");
+
+        Utility.enterToContinue();
+    }
+
+    protected void noPowerSystemOut(String power) {
+        StringBuilder sb = new StringBuilder(50);
+        sb.append("Not enough ")
+                .append(power)
+                .append(" !");
+
+        System.out.println(sb);
+
+        Utility.enterToContinue();
+    }
+
     public boolean canBeTargetedBy(Enemy attacker) {
         if (this.hasStatusEffect(StatusEffects.INVISIBILITY)) {
             return attacker.canTargetInvisible();
