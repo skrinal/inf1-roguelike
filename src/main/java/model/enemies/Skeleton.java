@@ -3,7 +3,6 @@ package model.enemies;
 import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
-import model.enums.EnemyType;
 
 public class Skeleton extends Enemy {
     // TODO: opravit
@@ -31,8 +30,13 @@ public class Skeleton extends Enemy {
     }
 
     @Override
-    public void performeBasicAbility(Character target) {
+    public void performSpectralDamage(Character target) {
 
+    }
+
+    @Override
+    public void performeBasicAbility(Character target) {
+        //int xd = switch (target.)
     }
 
     @Override

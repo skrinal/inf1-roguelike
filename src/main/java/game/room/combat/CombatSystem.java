@@ -37,10 +37,12 @@ public class CombatSystem {
 
             if (player.isUntargatable()) {
                 System.out.println("Enemy attacks but misses!");
+
             } else if (player.canBeTargetedBy(enemy)) {
-                int damage = player.takeDamage((enemy.getTotalAttack() * 50) / 100);
-                System.out.println("Enemy still can see you, dealing " + damage + " damage.");
+                enemy.performSpectralDamage(player);
+
             } else {
+
                 if (this.random.nextBoolean()) {
                     enemy.performeSpecialAbility(player);
                 } else {
