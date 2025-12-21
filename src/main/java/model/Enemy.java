@@ -1,7 +1,6 @@
 package model;
 
-import model.enums.CombatTag;
-import model.enums.status.EnemyType;
+import model.enums.type.EnemyType;
 import utility.Utility;
 
 public abstract class Enemy extends Character {
@@ -64,15 +63,27 @@ public abstract class Enemy extends Character {
     protected void damageAbilitySystemOut(int damage, boolean isSpectral) {
         StringBuilder sb = new StringBuilder(80);
         sb.append(this.returnFormattedText(isSpectral))
-                .append(damage);
+                .append(damage)
+                .append(" damage");
         System.out.println(sb);
 
         Utility.enterToContinue();
     }
 
+    protected void trueDamageAbilitySystemOut(int damage, boolean isSpectral) {
+        StringBuilder sb = new StringBuilder(80);
+        sb.append(this.returnFormattedText(isSpectral))
+                .append(damage)
+                .append(" true damage");
+        System.out.println(sb);
+
+        Utility.enterToContinue();
+    }
+
+
     private String returnFormattedText(boolean isSpectral) {
         if (isSpectral) {
-             return switch (this.getEnemyType()) {
+            return switch (this.getEnemyType()) {
                 case BOSS -> "The mighty " + this.getCombatTag().name() + " can still see you and It's dealing ";
                 case ELITE -> "The " + this.getCombatTag().name() + " sees you and It's dealing ";
                 default -> "";
@@ -92,5 +103,4 @@ public abstract class Enemy extends Character {
 
 
     public abstract EnemyType getEnemyType();
-    //public abstract void performSpectralDamage(Character target);
 }

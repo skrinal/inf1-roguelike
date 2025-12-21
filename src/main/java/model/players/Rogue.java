@@ -87,7 +87,7 @@ public class Rogue extends Player {
     public void performeBasicAbility(Character target) {
         if (usePower(this.basicAbilityCost)) {
             int rawDamage = (int)(this.getTotalAttack() * 1.5);
-            int actualDamage = target.takeDamage(rawDamage);
+            int actualDamage = target.takeDamage(rawDamage, this);
 
             this.damageAbilitySystemOut(
                     this.basicAbilityName, this.actionVerb, target, actualDamage, rawDamage

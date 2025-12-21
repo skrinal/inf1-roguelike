@@ -34,4 +34,8 @@ public class Utility {
     public static double getRandomDouble() {
         return RANDOM.nextDouble();
     }
+
+    public static Random getRandom() {
+        return RANDOM;
+    }
 }

@@ -2,7 +2,7 @@ package data;
 
 import model.Item;
 import model.Player;
-import model.enums.ItemType;
+import model.enums.type.ItemType;
 import utility.Utility;
 
 import java.util.ArrayList;

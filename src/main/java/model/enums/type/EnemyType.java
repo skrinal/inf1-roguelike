@@ -1,4 +1,4 @@
-package model.enums.status;
+package model.enums.type;
 
 public enum EnemyType {
     TRASH(false, 0),

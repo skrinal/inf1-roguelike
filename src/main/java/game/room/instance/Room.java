@@ -17,14 +17,14 @@ import java.util.ArrayList;
 import static utility.Utility.handleDecision;
 
 public class Room {
-    private RoomType roomType;
-    private Player player;
+    private final RoomType roomType;
+    private final Player player;
     private boolean playerHasTreasure;
-    private CombatSystem combat;
-    private RoomMap display;
-    private ArrayList<Enemy> enemies;
-    private ItemDatabase itemDatabase;
-    private boolean isTreasurePresent;
+    private final CombatSystem combat;
+    private final RoomMap display;
+    private final ArrayList<Enemy> enemies;
+    private final ItemDatabase itemDatabase;
+    private final boolean isTreasurePresent;
 
     public Room(RoomType roomType, Player player, CombatSystem combat, RoomMap display, ArrayList<Enemy> enemies, boolean treasurePresent) {
         this.roomType = roomType;

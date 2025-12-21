@@ -5,8 +5,7 @@ import model.Player;
 import model.enums.ClassPower;
 import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
-
-import java.util.Random;
+import utility.Utility;
 
 public class Mage extends Player {
     private static final int MAX_HP = 80;
@@ -22,12 +21,13 @@ public class Mage extends Player {
     private final int specialAbilityCost = 50;
     private final int utilityAbilityCost = 15;
 
+    private final int invisibilityDuration = -1;
+    private final int shieldDuration = 1;
+
     private final String actionVerb = "blast";
 
     private double invisibilityChance = 0.4;
     private boolean isInvisible = false;
-
-    private final Random random = new Random();
 
     public Mage(String name) {
         super(name, MAX_HP, ATTACK, DEFENCE, POWER);
@@ -87,7 +87,7 @@ public class Mage extends Player {
     public void performeBasicAbility(Character target) {
         if (usePower(this.basicAbilityCost)) {
             int rawDamage = (int)(this.getTotalAttack() * 1.3);
-            int damage = target.takeDamage(rawDamage);
+            int damage = target.takeDamage(rawDamage, this);
 
             this.damageAbilitySystemOut(
                     this.basicAbilityName, this.actionVerb, target, damage, rawDamage
@@ -102,7 +102,7 @@ public class Mage extends Player {
     public void performeSpecialAbility(Character target) {
         if (usePower(this.specialAbilityCost)) {
             int rawDamage = (int)(this.getTotalAttack() * 2.5);
-            int damage = target.takeDamage(rawDamage);
+            int damage = target.takeDamage(rawDamage, this);
 
             this.damageAbilitySystemOut(
                     this.specialAbilityName, this.actionVerb, target, damage, rawDamage
@@ -119,7 +119,7 @@ public class Mage extends Player {
             if (this.usePower(this.utilityAbilityCost)) {
 
                 this.isInvisible = true;
-                this.applyStatusEffect(StatusEffects.INVISIBILITY, -1);
+                this.applyStatusEffect(StatusEffects.INVISIBILITY, this.invisibilityDuration);
 
                 this.useAbilitySystemOut(this.utilityAbilityName, "casted");
             } else {
@@ -130,11 +130,9 @@ public class Mage extends Player {
         }
     }
 
-
-
     private void checkInvisibilityStatus() {
         if (this.isInvisible) {
-            if (this.random.nextDouble() >= this.invisibilityChance) {
+            if (Utility.getRandomDouble() >= this.invisibilityChance) {
 
                 System.out.println("You remain invisible!");
                 this.invisibilityChance -= 0.1;
@@ -145,7 +143,7 @@ public class Mage extends Player {
                 this.isInvisible = false;
                 this.invisibilityChance = 0.5;
 
-                this.applyStatusEffect(StatusEffects.SHIELD, 1);
+                this.applyStatusEffect(StatusEffects.SHIELD, this.shieldDuration);
                 System.out.println("Small shield applied");
             }
         }

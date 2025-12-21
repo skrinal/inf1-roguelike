@@ -2,8 +2,7 @@ package model;
 
 import model.enums.GameState;
 import model.enums.InventoryView;
-import model.enums.ItemType;
-import model.enums.CombatTag;
+import model.enums.type.ItemType;
 import model.enums.room.RoomType;
 import model.enums.status.StatusEffects;
 import utility.Utility;
