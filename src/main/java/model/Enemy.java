@@ -1,7 +1,10 @@
 package model;
 
+import model.enums.type.EnemyType;
+import utility.Utility;
+
 public abstract class Enemy extends Character {
-    private final int goldReward;
+    private int goldReward;
 
     /**
      * Constructor for enemy without an assigned level at creation.
@@ -34,11 +37,13 @@ public abstract class Enemy extends Character {
         int newMaxHp = this.getMaxHp() + 15 + (currentLevel * 2);
         int newAttack = this.getAttack() + 2 + currentLevel;
         int newDefence = this.getDefence() + 2 + (int)Math.round((double)currentLevel / 2);
+        int newGold = this.goldReward + (currentLevel * 10);
 
         this.setMaxHp(newMaxHp);
         this.setHp(newMaxHp);
         this.setAttack(newAttack);
         this.setDefence(newDefence);
+        this.goldReward = newGold;
     }
 
     public int getGoldReward() {
@@ -55,7 +60,47 @@ public abstract class Enemy extends Character {
         return this.getDefence();
     }
 
-    //public abstract void performeAttack(Character target);
-    public abstract String getEnemyType();
-    public abstract boolean canTargetInvisible();
+    protected void damageAbilitySystemOut(int damage, boolean isSpectral) {
+        StringBuilder sb = new StringBuilder(80);
+        sb.append(this.returnFormattedText(isSpectral))
+                .append(damage)
+                .append(" damage");
+        System.out.println(sb);
+
+        Utility.enterToContinue();
+    }
+
+    protected void trueDamageAbilitySystemOut(int damage, boolean isSpectral) {
+        StringBuilder sb = new StringBuilder(80);
+        sb.append(this.returnFormattedText(isSpectral))
+                .append(damage)
+                .append(" true damage");
+        System.out.println(sb);
+
+        Utility.enterToContinue();
+    }
+
+
+    private String returnFormattedText(boolean isSpectral) {
+        if (isSpectral) {
+            return switch (this.getEnemyType()) {
+                case BOSS -> "The mighty " + this.getCombatTag().name() + " can still see you and It's dealing ";
+                case ELITE -> "The " + this.getCombatTag().name() + " sees you and It's dealing ";
+                default -> "";
+            };
+        }
+
+        return switch (this.getEnemyType()) {
+            case BOSS -> "The mighty " + this.getCombatTag().name() + " Boss struck you for ";
+            case ELITE -> "The " + this.getCombatTag().name() + " Elite struck you for ";
+            case TRASH -> "A wild " + this.getCombatTag().name() + " mob hits you for ";
+        };
+    }
+
+    public boolean canTargetInvisible() {
+        return this.getEnemyType().isSpectral();
+    }
+
+
+    public abstract EnemyType getEnemyType();
 }

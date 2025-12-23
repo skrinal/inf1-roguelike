@@ -3,7 +3,7 @@ package model.players;
 import model.Character;
 import model.Player;
 import model.enums.ClassPower;
-import model.enums.PlayerClass;
+import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
 
 import java.util.Random;
@@ -40,8 +40,8 @@ public class Rogue extends Player {
     }
 
     @Override
-    public PlayerClass getClassType() {
-        return PlayerClass.ROGUE;
+    public CombatTag getCombatTag() {
+        return CombatTag.ROGUE;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Rogue extends Player {
     public void performeBasicAbility(Character target) {
         if (usePower(this.basicAbilityCost)) {
             int rawDamage = (int)(this.getTotalAttack() * 1.5);
-            int actualDamage = target.takeDamage(rawDamage);
+            int actualDamage = target.takeDamage(rawDamage, this);
 
             this.damageAbilitySystemOut(
                     this.basicAbilityName, this.actionVerb, target, actualDamage, rawDamage

@@ -1,4 +1,4 @@
-package model.enums;
+package model.enums.type;
 
 public enum ItemType {
     WEAPON,

@@ -58,7 +58,7 @@ public class CombatStrings {
 
         //TODO: Rewrite to one function as its duplicated in createRightPanel
         // Name and class line - padded to fit within the box
-        String nameClass = "  " + player.getName().toUpperCase() + " [" + player.getClassType() + "]";
+        String nameClass = "  " + player.getName().toUpperCase() + " [" + player.getCombatTag() + "]";
         ui.append("║")
                 .append(this.padLine(nameClass, 33))
                 .append("║\n");
@@ -143,7 +143,7 @@ public class CombatStrings {
         ui.append("╔═════════════════════════════════╗\n");
 
         // Name and type line
-        String nameType = "  " + enemy.getName().toUpperCase() + " [" + enemy.getEnemyType() + "]";
+        String nameType = "  " + enemy.getName().toUpperCase() + " [" + enemy.getCombatTag() + "]";
         ui.append("║")
                 .append(this.padLine(nameType, 33))
                 .append("║\n");

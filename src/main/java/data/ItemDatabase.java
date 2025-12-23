@@ -2,7 +2,7 @@ package data;
 
 import model.Item;
 import model.Player;
-import model.enums.ItemType;
+import model.enums.type.ItemType;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ public class ItemDatabase {
         this.random = new Random();
         this.lootTable = new ArrayList<>();
 
-        switch (player.getClassType()) {
+        switch (player.getCombatTag()) {
             case MAGE -> {
                 this.lootTable.add(new Item("Wooden Staff", ItemType.WEAPON, 4));
                 //this.lootTable.add(new Item("Magic Wand", ItemType.WEAPON, 6));

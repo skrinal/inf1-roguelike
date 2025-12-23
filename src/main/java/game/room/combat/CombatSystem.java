@@ -1,5 +1,7 @@
 package game.room.combat;
 
+import model.interfaces.Boss;
+import model.interfaces.SpectralAttacker;
 import model.strings.CombatStrings;
 import model.Enemy;
 import model.Player;
@@ -16,17 +18,22 @@ public class CombatSystem {
 
         while (player.isAlive() && enemy.isAlive()) {
 
+            if (!enemy.isAlive()) {
+                System.out.println("\n" + "Enemy has been defeated !!!");
+                Utility.enterToContinue();
+                break;
+            }
+
             player.beforeTurn();
 
             this.combatStrings.printCombatMenu(player, enemy);
 
             switch (Utility.handleDecision(1, 5)) {
-                case 1 -> player.performeSpecialAbility(enemy);
-                case 2 -> player.performeBasicAbility(enemy);
+                case 1 -> player.performeBasicAbility(enemy);
+                case 2 -> player.performeSpecialAbility(enemy);
                 case 3 -> player.performeUtilityAbility();
                 case 4 -> player.heal(3);
                 case 5 -> player.showInventory();
-                default -> System.out.println("Invalid selection. Try again");
             }
 
             if (!enemy.isAlive()) {
@@ -35,27 +42,32 @@ public class CombatSystem {
                 break;
             }
 
-            if (player.isUntargatable()) {
-                System.out.println("Enemy attacks but misses!");
-            } else if (player.canBeTargetedBy(enemy)) {
-                int damage = player.takeDamage((enemy.getTotalAttack() * 50) / 100);
-                System.out.println("Enemy still can see you, dealing " + damage + " damage.");
+            if (enemy instanceof Boss boss) {
+                boss.onBossTurn(player);
             } else {
-                if (this.random.nextBoolean()) {
-                    enemy.performeSpecialAbility(player);
+                if (player.isUntargatable()) {
+                    System.out.println("Enemy lost vision of you!");
+
+                } else if (player.canBeTargetedBy(enemy)
+                        && enemy instanceof SpectralAttacker spectralAttacker) {
+                    spectralAttacker.performSpectralDamage(player);
+
                 } else {
-                    enemy.performeBasicAbility(player);
+                    if (this.random.nextBoolean()) {
+                        enemy.performeSpecialAbility(player);
+                    } else {
+                        enemy.performeBasicAbility(player);
+                    }
                 }
             }
 
-            Utility.enterToContinue();
             player.updateStatusEffects();
+            enemy.updateStatusEffects();
+            //Utility.enterToContinue();
         }
+
         player.removeAllStatusEffects();
         return player.isAlive();
     }
-
-
-
 
 }
