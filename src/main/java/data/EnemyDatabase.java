@@ -27,12 +27,12 @@ public class EnemyDatabase {
 
     private void loadEnemies() {
         ArrayList<Enemy> roomOneEnemies = new ArrayList<>();
-        roomOneEnemies.add(new Skeleton("Maximus", 100));
-        roomOneEnemies.add(new Skeleton("Bonecrusher", 120));
+        roomOneEnemies.add(new Skeleton("Maximus"));
+        roomOneEnemies.add(new Skeleton("Bonecrusher"));
 
         ArrayList<Enemy> roomTwoEnemies = new ArrayList<>();
-        roomTwoEnemies.add(new Skeleton("Maximus", 100));
-        roomTwoEnemies.add(new Skeleton("Bonecrusher", 120));
+        roomTwoEnemies.add(new Skeleton("Maximus"));
+        roomTwoEnemies.add(new Skeleton("Bonecrusher"));
 
         this.enemies.put(RoomType.ONE, roomOneEnemies);
         this.enemies.put(RoomType.TWO, roomTwoEnemies);

@@ -1,7 +1,7 @@
 package model;
 
+import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
-import utility.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,8 +30,8 @@ public abstract class Character {
         this.hp = maxHp;
         this.attack = attack;
         this.defence = defence;
-        this.shield = 0;
 
+        this.shield = 0;
         this.statusEffects = new HashMap<>();
 
         this.level = 1;
@@ -59,7 +59,7 @@ public abstract class Character {
         this.maxHp = maxHp;
     }
 
-    public int getAttack() {
+    protected int getAttack() {
         return this.attack;
     }
 
@@ -67,7 +67,7 @@ public abstract class Character {
         this.attack = attack;
     }
 
-    public int getDefence() {
+    protected int getDefence() {
         return this.defence;
     }
 
@@ -84,7 +84,7 @@ public abstract class Character {
     }
 
     //TODO: UML ZMENA
-    public int takeDamage(int damage) {
+    public int takeDamage(int damage, Character attacker) {
         if (this.shield > 0) {
             if (damage <= this.shield) {
                 this.shield -= damage;
@@ -99,12 +99,26 @@ public abstract class Character {
                 System.out.println("Shield broken! Absorbed " + absorbedDamage + " damage.");
                 return damage;
             }
-
         }
 
         int actualDamage = Math.max(1, damage - this.getTotalDefense());
         this.setHp(Math.max(0, this.hp - actualDamage));
+
+        if (this.hasStatusEffect(StatusEffects.THORNS)) {
+            int reflected = Math.max(1, actualDamage / 4);
+            attacker.takeTrueDamage(reflected);
+
+            System.out.println(
+                    attacker.getName() + " is pierced by thorns for " + reflected + " damage!"
+            );
+        }
+
         return actualDamage;
+    }
+
+    public int takeTrueDamage(int damage) {
+        this.setHp(Math.max(0, this.hp - damage));
+        return damage;
     }
 
     public void heal(int amount) {
@@ -113,6 +127,7 @@ public abstract class Character {
 
     public void applyStatusEffect(StatusEffects effect, int turns) {
         switch (effect) {
+            //Warrior
             case AGGRESSIVE -> this.setDamageMultiplier(1.35);
             case DEFENSIVE -> this.setDefenceMultiplier(1.35);
             case BALANCED -> {
@@ -144,15 +159,15 @@ public abstract class Character {
         this.statusEffects.clear();
     }
 
-    public int getStatusEffectDuration(StatusEffects effect) {
-        return this.statusEffects.getOrDefault(effect, 0);
-    }
+//    public int getStatusEffectDuration(StatusEffects effect) {
+//        return this.statusEffects.getOrDefault(effect, 0);
+//    }
 
     public Map<StatusEffects, Integer> getStatusEffects() {
         return this.statusEffects;
     }
 
-    protected boolean hasStatusEffect(StatusEffects effect) {
+    public boolean hasStatusEffect(StatusEffects effect) {
         return this.statusEffects.containsKey(effect);
     }
 
@@ -172,9 +187,13 @@ public abstract class Character {
             int turnsLeft = effect.getValue() - 1;
 
             switch (statusEffect) {
-                case STRENGTH, INVISIBILITY, VANISH, SHIELD -> { /* nothing needed */ }
-                case HEALING -> this.heal(2);
-                case BLEEDING -> this.hp -= (this.hp * 2 / 100);
+                case HEALING -> this.heal(this.maxHp * 2 / 100);
+                case BLEEDING -> this.hp -= (this.maxHp * 2 / 100);
+
+                //Skeleton
+                case SKELETON_CURSE -> this.hp -= (this.maxHp / 100);
+
+                default -> { /* nothing needed */ }
             }
             this.statusEffects.put(statusEffect, turnsLeft);
             if (turnsLeft == 0) {
@@ -199,22 +218,22 @@ public abstract class Character {
         return this.defenceMultiplier;
     }
 
-
-
-    public int getLevel() {
+    protected int getLevel() {
         return this.level;
     }
-    
-    //TODO: preco tu je protected ?
+
     protected void incrementLevel() {
         this.level++;
     }
 
-    public int getExperience() {
+    protected int getExperience() {
         return this.experience;
     }
 
-    public int getExperienceToNextLevel() {
+    // TODO: Come up with system to lose experience
+    // public void loseExperience(int amount) {}
+
+    protected int getExperienceToNextLevel() {
         return this.experienceToNextLevel;
     }
 
@@ -241,70 +260,13 @@ public abstract class Character {
     }
 
     protected String getBar(int current, int max) {
-        int bars = (int)((double)current / max * 10);
+        int bars = (current * 10) / max;
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < 10; i++) {
             result.append(i < bars ? "█" : "░");
         }
         return result.toString();
     }
-
-    protected void damageAbilitySystemOut(
-            String abilityName,
-            String actionVerb,
-            Character target,
-            int damage,
-            int rawDamage
-    ) {
-        StringBuilder sb = new StringBuilder(80);
-        sb.append(abilityName)
-                .append("! You ")
-                .append(actionVerb)
-                .append(" ")
-                .append(target.getName())
-                .append(" for ")
-                .append(damage)
-                .append(" damage! (")
-                .append(rawDamage)
-                .append(" raw)");
-        System.out.println(sb);
-
-        Utility.enterToContinue();
-    }
-
-    protected void useAbilitySystemOut(String abilityName) {
-        StringBuilder sb = new StringBuilder(50);
-        sb.append("You have used ")
-                .append(abilityName)
-                .append("!");
-
-        Utility.enterToContinue();
-    }
-
-    protected void useAbilitySystemOut(String abilityName, String actionVerb) {
-        StringBuilder sb = new StringBuilder(50);
-        sb.append("You have ")
-                .append(actionVerb)
-                .append(" ")
-                .append(abilityName)
-                .append("!");
-
-        Utility.enterToContinue();
-    }
-
-    protected void noPowerSystemOut(String power) {
-        StringBuilder sb = new StringBuilder(50);
-        sb.append("Not enough ")
-                .append(power)
-                .append(" !");
-
-        System.out.println(sb);
-
-        Utility.enterToContinue();
-    }
-
-// TODO: Come up with system to lose experience
-// public void loseExperience(int amount) {}
 
     private int calculateExperienceToNextLevel() {
         return (int)(100 * Math.pow(1.2, this.level));
@@ -316,4 +278,5 @@ public abstract class Character {
     public abstract void performeBasicAbility(Character target);
     public abstract void performeSpecialAbility(Character target);
 
+    public abstract CombatTag getCombatTag();
 }

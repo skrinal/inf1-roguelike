@@ -2,8 +2,7 @@ package model;
 
 import model.enums.GameState;
 import model.enums.InventoryView;
-import model.enums.ItemType;
-import model.enums.PlayerClass;
+import model.enums.type.ItemType;
 import model.enums.room.RoomType;
 import model.enums.status.StatusEffects;
 import utility.Utility;
@@ -198,7 +197,7 @@ public abstract class Player extends Character {
 
     public void displayStats() {
         System.out.println("╔═════════════════════════════════╗");
-        System.out.println("║  " + this.getName() + " [" + this.getClassType() + "]");
+        System.out.println("║  " + this.getName() + " [" + this.getCombatTag() + "]");
         System.out.println("╠═════════════════════════════════╣");
         System.out.println("║ HP:      [" + this.getHealthBar() + "] " + this.getHp() + "/" + this.getMaxHp());
         System.out.println("║ " + this.getPowerString() + ":    [" + this.getPowerBar() + "] " + this.getPower() + "/" + this.getMaxPower());
@@ -213,6 +212,60 @@ public abstract class Player extends Character {
         System.out.println("╚═════════════════════════════════╝");
     }
 
+    protected void damageAbilitySystemOut(
+            String abilityName,
+            String actionVerb,
+            Character target,
+            int damage,
+            int rawDamage
+    ) {
+        StringBuilder sb = new StringBuilder(80);
+        sb.append(abilityName)
+                .append("! You ")
+                .append(actionVerb)
+                .append(" ")
+                .append(target.getName())
+                .append(" for ")
+                .append(damage)
+                .append(" damage! (")
+                .append(rawDamage)
+                .append(" raw)");
+        System.out.println(sb);
+
+        Utility.enterToContinue();
+    }
+
+    protected void useAbilitySystemOut(String abilityName) {
+        StringBuilder sb = new StringBuilder(50);
+        sb.append("You have used ")
+                .append(abilityName)
+                .append("!");
+
+        Utility.enterToContinue();
+    }
+
+    protected void useAbilitySystemOut(String abilityName, String actionVerb) {
+        StringBuilder sb = new StringBuilder(50);
+        sb.append("You have ")
+                .append(actionVerb)
+                .append(" ")
+                .append(abilityName)
+                .append("!");
+
+        Utility.enterToContinue();
+    }
+
+    protected void noPowerSystemOut(String power) {
+        StringBuilder sb = new StringBuilder(50);
+        sb.append("Not enough ")
+                .append(power)
+                .append(" !");
+
+        System.out.println(sb);
+
+        Utility.enterToContinue();
+    }
+
     public boolean canBeTargetedBy(Enemy attacker) {
         if (this.hasStatusEffect(StatusEffects.INVISIBILITY)) {
             return attacker.canTargetInvisible();
@@ -225,7 +278,6 @@ public abstract class Player extends Character {
     }
 
     public abstract String getPowerString();
-    public abstract PlayerClass getClassType();
     public abstract String getBasicAbilityName();
     public abstract String getSpecialAbilityName();
     public abstract String getUtilityAbilityName();

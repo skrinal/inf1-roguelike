@@ -1,6 +1,11 @@
 package model.enums;
 
-public enum EnemyType {
+public enum CombatTag {
+    MAGE,
+    WARRIOR,
+    ROGUE,
+
+    //Enemy
     SKELETON,
     TROLL,
     ELF,

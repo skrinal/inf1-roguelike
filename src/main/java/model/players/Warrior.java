@@ -3,7 +3,7 @@ package model.players;
 import model.Character;
 import model.Player;
 import model.enums.ClassPower;
-import model.enums.PlayerClass;
+import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
 import utility.Utility;
 
@@ -20,15 +20,14 @@ public class Warrior extends Player {
 
     private final String actionVerb = "slash";
 
-    private final int basicAbilityCost = 50;
+    private final int basicAbilityCost = 20;
     private final int specialAbilityCost = 30;
     private final int utilityAbilityCost = 10;
 
-    private StatusEffects stance;
+    private StatusEffects stance = StatusEffects.BALANCED;
 
     public Warrior(String name) {
         super(name, MAX_HP, ATTACK, DEFENCE, POWER);
-        this.stance = null;
     }
 
     @Override
@@ -37,8 +36,8 @@ public class Warrior extends Player {
     }
 
     @Override
-    public PlayerClass getClassType() {
-        return PlayerClass.WARRIOR;
+    public CombatTag getCombatTag() {
+        return CombatTag.WARRIOR;
     }
 
     @Override
@@ -84,7 +83,7 @@ public class Warrior extends Player {
     public void performeBasicAbility(Character target) {
         if (usePower(this.basicAbilityCost)) {
             int damage = (int)(this.getTotalAttack() * 1.4);
-            int rawDamage = target.takeDamage(damage);
+            int rawDamage = target.takeDamage(damage, this);
 
             this.damageAbilitySystemOut(
                     this.basicAbilityName, this.actionVerb, target, damage, rawDamage
@@ -98,14 +97,15 @@ public class Warrior extends Player {
     public void performeSpecialAbility(Character target) {
         if (usePower(this.specialAbilityCost)) {
             if (this.isBelow15Percent(target.getHp(), target.getMaxHp())) {
-                target.takeDamage(Integer.MAX_VALUE);
+                target.takeTrueDamage(Integer.MAX_VALUE);
 
                 System.out.println(target.getName() + " has been executed");
 
             } else {
                 int damage = (int)(this.getTotalAttack() * 0.4);
-                int rawDamage = target.takeDamage(damage);
+                int rawDamage = target.takeDamage(damage, this);
 
+                System.out.println(target.getName() + " is not under 15% HP");
                 this.damageAbilitySystemOut(
                         this.specialAbilityName, this.actionVerb, target, damage, rawDamage
                 );

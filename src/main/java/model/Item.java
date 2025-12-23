@@ -1,6 +1,6 @@
 package model;
 
-import model.enums.ItemType;
+import model.enums.type.ItemType;
 
 public class Item {
     private final String name;

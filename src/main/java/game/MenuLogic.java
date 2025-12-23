@@ -2,7 +2,7 @@ package game;
 
 import model.Player;
 import model.enums.GameState;
-import model.enums.PlayerClass;
+import model.enums.CombatTag;
 import model.players.Mage;
 import model.players.Rogue;
 import model.players.Warrior;
@@ -27,9 +27,9 @@ public class MenuLogic {
         System.out.println("\n=== CHARACTER CREATION ===\n");
         System.out.print("Name your character: ");
         String name = input.nextLine();
-        PlayerClass playerClass = this.selectedClass(input);
+        CombatTag combatTag = this.selectedClass(input);
 
-        return this.createCharacter(playerClass, name);
+        return this.createCharacter(combatTag, name);
     }
 
 
@@ -41,15 +41,16 @@ public class MenuLogic {
 
     //TODO : showInventoryMenu, handleItemDetail, dropItem, equipItem
 
-    private Player createCharacter(PlayerClass playerClass, String name) {
-        return switch (playerClass) {
+    private Player createCharacter(CombatTag combatTag, String name) {
+        return switch (combatTag) {
             case WARRIOR -> new Warrior(name);
             case MAGE -> new Mage(name);
             case ROGUE -> new Rogue(name);
+            default -> null;
         };
     }
 
-    private PlayerClass selectedClass(Scanner input) {
+    private CombatTag selectedClass(Scanner input) {
         while (true) {
             System.out.println("\n=== CHOOSE CLASS ===");
             System.out.println("\n1. Warrior");
@@ -60,16 +61,15 @@ public class MenuLogic {
 
             switch (choice) {
                 case 1 -> {
-                    return PlayerClass.WARRIOR;
+                    return CombatTag.WARRIOR;
                 }
                 case 2 -> {
-                    return PlayerClass.MAGE;
+                    return CombatTag.MAGE;
                 }
                 case 3 -> {
-                    return PlayerClass.ROGUE;
+                    return CombatTag.ROGUE;
                 }
                 default -> System.out.println("Invalid selection. Try again");
-
             }
         }
     }

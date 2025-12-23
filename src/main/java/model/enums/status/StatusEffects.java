@@ -4,9 +4,22 @@ public enum StatusEffects {
     STRENGTH("Strength +25% Damage"),
     INVISIBILITY("Invisible"),
     VANISH("Untargetable"),
-    SHIELD("Shield +15% HP"),
+    SHIELD("Shield +15% maxHP"),
     HEALING("Healing over time"),
-    BLEEDING("Bleeding -2% HP per turn"),
+    BLEEDING("Bleeding -2% maxHP per turn"),
+    THORNS("Reflecting 5% damage"),
+
+    // Skeleton
+    SKELETON_CURSE("Losing 1% maxHP per turn"),
+
+    // Troll
+
+    // Elf
+    ELF_STRENGTH("Strength +20% Damage"),
+    // Dragon
+
+    // DemonLord
+    DEMONLORD_CURSE("-90% Damage reduction"),
 
     // Warrior Stances as Buff
     AGGRESSIVE("+20% Damage"),
