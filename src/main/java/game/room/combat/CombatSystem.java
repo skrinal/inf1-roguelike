@@ -26,8 +26,10 @@ public class CombatSystem {
 
             player.beforeTurn();
 
-
-            this.handlePlayerTurn(player, enemy);
+            boolean playerTurn = true;
+            while (playerTurn) {
+                playerTurn = this.handlePlayerTurn(player, enemy);
+            }
 
 
             if (!enemy.isAlive()) {
@@ -65,19 +67,18 @@ public class CombatSystem {
     }
 
     private boolean handlePlayerTurn(Player player, Enemy enemy) {
-        boolean turnConsumed = false;
+        this.combatStrings.printCombatMenu(player, enemy);
 
-        while (turnConsumed) {
-
-            this.combatStrings.printCombatMenu(player, enemy);
-            switch (Utility.handleDecision(1, 5)) {
-                case 1 -> player.performeBasicAbility(enemy);
-                case 2 -> player.performeSpecialAbility(enemy);
-                case 3 -> player.performeUtilityAbility();
-                case 4 -> player.heal(3);
-                case 5 -> player.showInventory();
+        switch (Utility.handleDecision(1, 5)) {
+            case 1 -> player.performeBasicAbility(enemy);
+            case 2 -> player.performeSpecialAbility(enemy);
+            case 3 -> player.performeUtilityAbility();
+            case 4 -> player.heal(3);
+            case 5 -> {
+                return player.showInventory();
             }
         }
+        return false;
     }
 
 }
