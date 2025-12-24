@@ -11,6 +11,12 @@ public class CombatStrings {
 
     public CombatStrings() { /* No need to initialize anything */ }
 
+    public void printCombatStart() {
+        System.out.println("\n╔════════════════╗");
+        System.out.println("║  COMBAT START  ║");
+        System.out.println("╚════════════════╝");
+
+    }
     /**
      * Outputs the combat menu to the console.
      * At first we create three panels, each with a fixed width. Which we split into lines.
@@ -125,10 +131,10 @@ public class CombatStrings {
 
 
         ui.append("║")
-                .append(this.padLine("  [4] Rest ", 26))
+                .append(this.padLine(" [4] Rest ", 26))
                 .append("║\n");
         ui.append("║")
-                .append(this.padLine("  [5] Inventory", 26))
+                .append(this.padLine(" [5] Inventory", 26))
                 .append("║\n");
 
         ui.append("╚══════════════════════════╝");

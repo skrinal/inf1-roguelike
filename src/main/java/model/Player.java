@@ -1,10 +1,10 @@
 package model;
 
 import model.enums.GameState;
-import model.enums.InventoryView;
 import model.enums.type.ItemType;
 import model.enums.room.RoomType;
 import model.enums.status.StatusEffects;
+import model.strings.PlayerStrings;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ public abstract class Player extends Character {
     private int gold;
 
     private final HashMap<Item, Integer> inventory;
-    //private HashMap<StatusEffects, Integer> statusEffects;
 
     private List<RoomType> completedRooms;
     private List<RoomType> treasureFound;
@@ -26,9 +25,8 @@ public abstract class Player extends Character {
     private Item equippedWeapon;
     private Item equippedArmor;
 
-    protected Player(String name, int maxHp, int attack, int defence, int maxPower) {
-        super(name, maxHp, attack, defence);
-        //this.statusEffects = new HashMap<>();
+    protected Player(String name, int maxHp, int attack, int defence, int maxPower, int level) {
+        super(name, maxHp, attack, defence, level);
         this.completedRooms = new ArrayList<>();
         this.treasureFound = new ArrayList<>();
         this.maxPower = maxPower;
@@ -75,65 +73,87 @@ public abstract class Player extends Character {
 //        return this.inventory;
 //    }
 
-    public void showInventory() {
+    public boolean showInventory() {
         boolean open = true;
-        while (open) {
-            System.out.println("\n" + "=== Inventory Menu ===");
-            System.out.println("1) Show all items");
-            System.out.println("2) Show consumables");
-            System.out.println("3) Show weapons");
-            System.out.println("4) Show armor");
-            System.out.println("0) Exit Inventory");
 
-            int choice = Utility.handleDecision(0, 4);
+        while (open) {
+            System.out.println(PlayerStrings.PLAYER_INVENTORY_MENU);
+
+            int choice = Utility.handleDecision(0, 3);
 
             switch (choice) {
-                case 1 -> this.showInventory(InventoryView.ALL);
-                case 2 -> this.showInventory(InventoryView.CONSUMABLES);
-                case 3 -> this.showInventory(InventoryView.WEAPONS);
-                case 4 -> this.showInventory(InventoryView.ARMOR);
+                case 1 -> this.handleItemSelection(ItemType.POTION);
+                case 2 -> this.handleItemSelection(ItemType.WEAPON);
+                case 3 -> this.handleItemSelection(ItemType.ARMOR);
                 case 0 -> open = false;
-                default -> System.out.println("Invalid selection. Try again");
+            }
+        }
+        // Inventory never consumes a turn
+        return true;
+    }
+
+    private void handleItemSelection(ItemType type) {
+        List<Item> items = new ArrayList<>();
+
+        for (var entry : this.inventory.entrySet()) {
+            if (entry.getKey().getType() == type) {
+                items.add(entry.getKey());
+            }
+        }
+
+        if (items.isEmpty()) {
+            System.out.println("You don't have any " + type.toString().toLowerCase() + "s!");
+            Utility.enterToContinue();
+            return;
+        }
+
+        System.out.println("Choose an item:");
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            System.out.println((i + 1) + ") " + item.getName());
+        }
+        System.out.println("0) Exit");
+
+        int choice = Utility.handleDecision(0, items.size());
+        if (choice == 0 ) {
+            return;
+        }
+
+        Item selected = items.get(choice - 1);
+
+        this.useOrEquipItem(selected);
+    }
+
+    private void useOrEquipItem(Item item) {
+        switch (item.getType()) {
+            case POTION -> {
+                this.heal(item.getValue());
+                this.consumeItem(item);
+                System.out.println("You used " + item.getName() + "!");
+                Utility.enterToContinue();
+            }
+            case WEAPON -> {
+                this.setEquippedWeapon(item);
+                System.out.println("You equipped " + item.getName() + "!");
+                Utility.enterToContinue();
+            }
+            case ARMOR -> {
+                this.setEquippedArmor(item);
+                System.out.println("You equipped " + item.getName() + "!");
+                Utility.enterToContinue();
             }
         }
     }
 
-    private void showInventory(InventoryView view) {
-        boolean found = false;
+    
 
-        System.out.println("\n" + "Inventory:");
+    private void consumeItem(Item item) {
+        int amount = this.inventory.get(item);
 
-        for (var item : this.inventory.keySet()) {
-
-            switch (view) {
-                case ALL -> {
-                    System.out.println(item.getName() + " (" + item.getType() + ")");
-                    found = true;
-                }
-                case CONSUMABLES -> {
-                    if (item.getType() == ItemType.POTION) {
-                        System.out.println(item.getName() + " (" + item.getValue() + " HP)");
-                        found = true;
-                    }
-                }
-                case WEAPONS -> {
-                    if (item.getType() == ItemType.WEAPON) {
-                        System.out.println(item.getName() + " (" + item.getValue() + " damage)");
-                        found = true;
-                    }
-                }
-                case ARMOR -> {
-                    if (item.getType() == ItemType.ARMOR) {
-                        System.out.println(item.getName() + " (" + item.getValue() + " defense)");
-                        found = true;
-                    }
-                }
-
-                default -> System.out.println("No item found.");
-            }
-            if (!found) {
-                System.out.println("No item found.");
-            }
+        if (amount <= 1) {
+            this.inventory.remove(item);
+        } else {
+            this.inventory.put(item, amount - 1);
         }
     }
 
@@ -172,7 +192,7 @@ public abstract class Player extends Character {
     }
 
     public GameState handleStats() {
-        System.out.println("\n=== STATS ===");
+        System.out.println(PlayerStrings.PLAYER_STATS);
         this.displayStats();
 
         Utility.enterToContinue();
