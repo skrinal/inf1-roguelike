@@ -6,11 +6,11 @@ import model.enums.CombatTag;
 import model.players.Mage;
 import model.players.Rogue;
 import model.players.Warrior;
+import model.strings.MenuStrings;
 
 import java.util.Scanner;
 
 import static utility.Utility.handleDecision;
-import static model.strings.MenuStrings.GAME_TITLE_MENU;
 
 public class MenuLogic {
 
@@ -24,7 +24,7 @@ public class MenuLogic {
     }
 
     public Player handleCharacterCreation(Scanner input) {
-        System.out.println("\n=== CHARACTER CREATION ===\n");
+        System.out.println(MenuStrings.CHARACTER_CREATION);
         System.out.print("Name your character: ");
         String name = input.nextLine();
         CombatTag combatTag = this.selectedClass(input);
@@ -34,7 +34,7 @@ public class MenuLogic {
 
 
     private int showMainMenu(Scanner input) {
-        System.out.println(GAME_TITLE_MENU);
+        System.out.println(MenuStrings.GAME_TITLE_MENU);
 
         return handleDecision(0, 2);
     }
@@ -52,10 +52,10 @@ public class MenuLogic {
 
     private CombatTag selectedClass(Scanner input) {
         while (true) {
-            System.out.println("\n=== CHOOSE CLASS ===");
-            System.out.println("\n1. Warrior");
-            System.out.println("2. Mage");
-            System.out.println("3. Rogue");
+            System.out.println(MenuStrings.CHOOSE_CLASS);
+            System.out.println("1) Warrior");
+            System.out.println("2) Mage");
+            System.out.println("3) Rogue");
 
             int choice = handleDecision(1, 3);
 

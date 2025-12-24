@@ -14,7 +14,7 @@ public class CombatSystem {
     private final Random random = new Random();
 
     public boolean startCombat(Player player, Enemy enemy) {
-        System.out.println("\n=== COMBAT START ===");
+        this.combatStrings.printCombatStart();
 
         while (player.isAlive() && enemy.isAlive()) {
 

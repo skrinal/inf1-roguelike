@@ -9,14 +9,36 @@ public class MenuStrings {
             | | | | | (_) | | | | | | | |_| | | |  __/ | |_/ /  __/ (_| | | | | | | | | | | | | (_| |
             \\_| |_|  \\___/|_| |_| |_|  \\__|_| |_|\\___| \\____/ \\___|\\__, |_|_| |_|_| |_|_|_| |_|\\__, |
                                                                     __/ |                       __/ |
-            ==========================                             |___/                       |___/\s
-            1. Start Game
-            2. Settings - Not implemented yet
-            0. Exit""";
+            ╔══════════════════════════════════════╗               |___/                       |___/\s
+            ║   1) Start Game                      ║
+            ║   2) Settings - Not implemented yet  ║
+            ║   0) Exit                            ║
+            ╚══════════════════════════════════════╝""";
 
-    public static final String  GAME_MENU_OPTIONS = """
-            ======== GAME MENU ========
-            1. Dungeon
-            2. Stats
-            0. Back""";
+    public static final String CHARACTER_CREATION = """
+            
+            ╔══════════════════════╗
+            ║  CHARACTER CREATION  ║
+            ╚══════════════════════╝""";
+
+    public static final String CHOOSE_CLASS = """
+            
+            ╔════════════════╗
+            ║  CHOOSE CLASS  ║
+            ╚════════════════╝""";
+
+
+    public static final String GAME_MENU_OPTIONS = """
+            
+            ╔═════════════╗
+            ║  GAME MENU  ║
+            ╚═════════════╝
+            1) Dungeon
+            2) Stats
+            0) Back""";
+
+    public static final String DUNGEON_TITLE = """
+            ╔═════════════════╗
+            ║  D U N G E O N  ║
+            ╚═════════════════╝""";
 }

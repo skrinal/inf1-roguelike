@@ -7,12 +7,13 @@ import game.room.instance.RoomFactory;
 import model.Player;
 import model.enums.GameState;
 import model.enums.room.RoomType;
+import model.strings.MenuStrings;
+
 import static utility.Utility.handleDecision;
-import static model.strings.MenuStrings.GAME_MENU_OPTIONS;
 
 public class GameLogic {
-    private RoomFactory roomFactory = new RoomFactory();
-    private CombatSystem combat = new CombatSystem();
+    private final RoomFactory roomFactory = new RoomFactory();
+    private final CombatSystem combat = new CombatSystem();
 
     public GameState handleGame() {
         int choice = this.showGameMenu();
@@ -25,7 +26,7 @@ public class GameLogic {
     }
 
     public GameState handleDungeon(Player player) {
-        System.out.println("\n=== DUNGEON ===");
+        System.out.println(MenuStrings.DUNGEON_TITLE);
         GameState result = this.showGameMap(player);
 
         switch (result) {
@@ -42,7 +43,7 @@ public class GameLogic {
     }
 
     private int showGameMenu() {
-        System.out.println("\n" + GAME_MENU_OPTIONS);
+        System.out.println(MenuStrings.GAME_MENU_OPTIONS);
 
         return handleDecision(0, 2);
     }
