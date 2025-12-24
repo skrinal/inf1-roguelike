@@ -6,16 +6,16 @@ import model.enums.CombatTag;
 import model.players.Mage;
 import model.players.Rogue;
 import model.players.Warrior;
+import model.strings.MenuStrings;
 
 import java.util.Scanner;
 
 import static utility.Utility.handleDecision;
-import static model.strings.MenuStrings.GAME_TITLE_MENU;
 
 public class MenuLogic {
 
-    public GameState handleMenu(Scanner input, Player player) {
-        int choice = this.showMainMenu(input);
+    public GameState handleMenu(Player player) {
+        int choice = this.showMainMenu();
         return switch (choice) {
             case 1 -> player == null ? GameState.CHARACTER_CREATION : GameState.GAME;
             case 0 -> GameState.EXIT;
@@ -24,19 +24,19 @@ public class MenuLogic {
     }
 
     public Player handleCharacterCreation(Scanner input) {
-        System.out.println("\n=== CHARACTER CREATION ===\n");
+        System.out.println(MenuStrings.CHARACTER_CREATION);
         System.out.print("Name your character: ");
         String name = input.nextLine();
-        CombatTag combatTag = this.selectedClass(input);
+        CombatTag combatTag = this.selectedClass();
 
         return this.createCharacter(combatTag, name);
     }
 
 
-    private int showMainMenu(Scanner input) {
-        System.out.println(GAME_TITLE_MENU);
+    private int showMainMenu() {
+        System.out.println(MenuStrings.GAME_TITLE_MENU);
 
-        return handleDecision(0, 2);
+        return handleDecision(0, 3);
     }
 
     //TODO : showInventoryMenu, handleItemDetail, dropItem, equipItem
@@ -50,12 +50,12 @@ public class MenuLogic {
         };
     }
 
-    private CombatTag selectedClass(Scanner input) {
+    private CombatTag selectedClass() {
         while (true) {
-            System.out.println("\n=== CHOOSE CLASS ===");
-            System.out.println("\n1. Warrior");
-            System.out.println("2. Mage");
-            System.out.println("3. Rogue");
+            System.out.println(MenuStrings.CHOOSE_CLASS);
+            System.out.println("1) Warrior");
+            System.out.println("2) Mage");
+            System.out.println("3) Rogue");
 
             int choice = handleDecision(1, 3);
 

@@ -4,6 +4,7 @@ import model.enums.GameState;
 import model.enums.type.ItemType;
 import model.enums.room.RoomType;
 import model.enums.status.StatusEffects;
+import model.strings.PlayerStrings;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -78,11 +79,7 @@ public abstract class Player extends Character {
         boolean open = true;
 
         while (open) {
-            System.out.println("\n" + "=== Inventory Menu ===");
-            System.out.println("1) Consumables");
-            System.out.println("2) Weapons");
-            System.out.println("3) Armor");
-            System.out.println("0) Exit Inventory");
+            System.out.println(PlayerStrings.PLAYER_INVENTORY_MENU);
 
             int choice = Utility.handleDecision(0, 3);
 
@@ -197,7 +194,7 @@ public abstract class Player extends Character {
     }
 
     public GameState handleStats() {
-        System.out.println("\n=== STATS ===");
+        System.out.println(PlayerStrings.PLAYER_STATS);
         this.displayStats();
 
         Utility.enterToContinue();
