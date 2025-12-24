@@ -14,8 +14,8 @@ import static utility.Utility.handleDecision;
 
 public class MenuLogic {
 
-    public GameState handleMenu(Scanner input, Player player) {
-        int choice = this.showMainMenu(input);
+    public GameState handleMenu(Player player) {
+        int choice = this.showMainMenu();
         return switch (choice) {
             case 1 -> player == null ? GameState.CHARACTER_CREATION : GameState.GAME;
             case 0 -> GameState.EXIT;
@@ -27,16 +27,16 @@ public class MenuLogic {
         System.out.println(MenuStrings.CHARACTER_CREATION);
         System.out.print("Name your character: ");
         String name = input.nextLine();
-        CombatTag combatTag = this.selectedClass(input);
+        CombatTag combatTag = this.selectedClass();
 
         return this.createCharacter(combatTag, name);
     }
 
 
-    private int showMainMenu(Scanner input) {
+    private int showMainMenu() {
         System.out.println(MenuStrings.GAME_TITLE_MENU);
 
-        return handleDecision(0, 2);
+        return handleDecision(0, 3);
     }
 
     //TODO : showInventoryMenu, handleItemDetail, dropItem, equipItem
@@ -50,7 +50,7 @@ public class MenuLogic {
         };
     }
 
-    private CombatTag selectedClass(Scanner input) {
+    private CombatTag selectedClass() {
         while (true) {
             System.out.println(MenuStrings.CHOOSE_CLASS);
             System.out.println("1) Warrior");

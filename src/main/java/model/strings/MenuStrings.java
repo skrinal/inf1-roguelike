@@ -9,11 +9,12 @@ public class MenuStrings {
             | | | | | (_) | | | | | | | |_| | | |  __/ | |_/ /  __/ (_| | | | | | | | | | | | | (_| |
             \\_| |_|  \\___/|_| |_| |_|  \\__|_| |_|\\___| \\____/ \\___|\\__, |_|_| |_|_| |_|_|_| |_|\\__, |
                                                                     __/ |                       __/ |
-            ╔══════════════════════════════════════╗               |___/                       |___/\s
-            ║   1) Start Game                      ║
-            ║   2) Settings - Not implemented yet  ║
-            ║   0) Exit                            ║
-            ╚══════════════════════════════════════╝""";
+            ╔═══════════════════════════╗                          |___/                       |___/\s
+            ║       1) Start Game       ║
+            ║       2) Load Game        ║
+            ║       3) Save Game        ║
+            ║       0) Exit             ║
+            ╚═══════════════════════════╝""";
 
     public static final String CHARACTER_CREATION = """
             
@@ -38,6 +39,7 @@ public class MenuStrings {
             0) Back""";
 
     public static final String DUNGEON_TITLE = """
+            
             ╔═════════════════╗
             ║  D U N G E O N  ║
             ╚═════════════════╝""";
