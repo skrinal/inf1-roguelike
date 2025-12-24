@@ -24,7 +24,7 @@ public abstract class Character {
     private int experience;
     private int experienceToNextLevel;
 
-    protected Character(String name, int maxHp, int attack, int defence) {
+    protected Character(String name, int maxHp, int attack, int defence, int level) {
         this.name = name;
         this.maxHp = maxHp;
         this.hp = maxHp;
@@ -35,8 +35,42 @@ public abstract class Character {
         this.statusEffects = new HashMap<>();
 
         this.level = 1;
+        if (level > 1) {
+            this.initializeAtLevel(level);
+        }
+
         this.experience = 0;
         this.experienceToNextLevel = this.calculateExperienceToNextLevel();
+    }
+
+    private void initializeAtLevel(int targetedLevel) {
+        for (int i = 1; i < targetedLevel; i++) {
+            this.scaleStats();
+        }
+    }
+
+    private void scaleStats() {
+        if (this instanceof Enemy enemy) {
+            int currentLevel = this.getLevel();
+
+            int newMaxHp = this.getMaxHp() + 15 + (currentLevel * 2);
+            int newAttack = this.getAttack() + 2 + currentLevel;
+            int newDefence = this.getDefence() + 2 + (int)Math.round((double)currentLevel / 2);
+            int newGold = enemy.getGoldReward() + (currentLevel * 10);
+
+            this.setMaxHp(newMaxHp);
+            this.setHp(newMaxHp);
+            this.setAttack(newAttack);
+            this.setDefence(newDefence);
+            enemy.setGoldReward(newGold);
+        } else {
+            this.maxHp += 10 + (this.level * 2);
+            this.hp = this.maxHp;
+            this.attack += 2 + this.level;
+            this.defence += 1 + (int)((double)this.level / 2);
+        }
+
+        this.incrementLevel();
     }
 
     public String getName() {
@@ -159,9 +193,6 @@ public abstract class Character {
         this.statusEffects.clear();
     }
 
-//    public int getStatusEffectDuration(StatusEffects effect) {
-//        return this.statusEffects.getOrDefault(effect, 0);
-//    }
 
     public Map<StatusEffects, Integer> getStatusEffects() {
         return this.statusEffects;
@@ -222,7 +253,7 @@ public abstract class Character {
         return this.level;
     }
 
-    protected void incrementLevel() {
+    private void incrementLevel() {
         this.level++;
     }
 

@@ -31,7 +31,11 @@ public class Rogue extends Player {
     private Random random = new Random();
 
     public Rogue(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER);
+        super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
+    }
+
+    public Rogue(String name, int level) {
+        super(name, MAX_HP, ATTACK, DEFENCE, POWER, level);
     }
 
     @Override
