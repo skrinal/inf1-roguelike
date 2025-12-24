@@ -27,7 +27,11 @@ public class Warrior extends Player {
     private StatusEffects stance = StatusEffects.BALANCED;
 
     public Warrior(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER);
+        super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
+    }
+
+    public Warrior(String name, int level) {
+        super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
     }
 
     @Override

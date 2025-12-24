@@ -18,7 +18,8 @@ public class MenuLogic {
         int choice = this.showMainMenu();
         return switch (choice) {
             case 1 -> player == null ? GameState.CHARACTER_CREATION : GameState.GAME;
-            case 0 -> GameState.EXIT;
+            case 2 -> GameState.LOAD_GAME;
+            case 0 -> GameState.SAVE_GAME;
             default -> GameState.MAIN_MENU;
         };
     }

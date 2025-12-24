@@ -30,7 +30,11 @@ public class Mage extends Player {
     private boolean isInvisible = false;
 
     public Mage(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER);
+        super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
+    }
+
+    public Mage(String name, int level) {
+        super(name, MAX_HP, ATTACK, DEFENCE, POWER, level);
     }
 
     @Override

@@ -18,7 +18,6 @@ public abstract class Player extends Character {
     private int gold;
 
     private final HashMap<Item, Integer> inventory;
-    //private HashMap<StatusEffects, Integer> statusEffects;
 
     private List<RoomType> completedRooms;
     private List<RoomType> treasureFound;
@@ -26,9 +25,8 @@ public abstract class Player extends Character {
     private Item equippedWeapon;
     private Item equippedArmor;
 
-    protected Player(String name, int maxHp, int attack, int defence, int maxPower) {
-        super(name, maxHp, attack, defence);
-        //this.statusEffects = new HashMap<>();
+    protected Player(String name, int maxHp, int attack, int defence, int maxPower, int level) {
+        super(name, maxHp, attack, defence, level);
         this.completedRooms = new ArrayList<>();
         this.treasureFound = new ArrayList<>();
         this.maxPower = maxPower;

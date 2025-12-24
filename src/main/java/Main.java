@@ -15,12 +15,22 @@ void main() {
 
     while (state != GameState.EXIT) {
         switch (state){
-            case MAIN_MENU -> state = menuLogic.handleMenu(input, player);
+            case MAIN_MENU -> state = menuLogic.handleMenu(player);
             case CHARACTER_CREATION -> {
                 player = menuLogic.handleCharacterCreation(input);
                 state = GameState.GAME;
             }
             case GAME -> state = gameLogic.handleGame();
+            case LOAD_GAME -> {
+
+            }
+            case SAVE_GAME -> {
+                if (player != null) {
+
+                } else {
+                    System.out.println("Nothing to be saved");
+                }
+            }
             case DUNGEON -> state = gameLogic.handleDungeon(player);
 
             //case INVENTORY -> state = handleInventory(input, player);
