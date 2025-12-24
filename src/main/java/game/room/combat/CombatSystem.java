@@ -26,15 +26,11 @@ public class CombatSystem {
 
             player.beforeTurn();
 
-            this.combatStrings.printCombatMenu(player, enemy);
-
-            switch (Utility.handleDecision(1, 5)) {
-                case 1 -> player.performeBasicAbility(enemy);
-                case 2 -> player.performeSpecialAbility(enemy);
-                case 3 -> player.performeUtilityAbility();
-                case 4 -> player.heal(3);
-                case 5 -> player.showInventory();
+            boolean playerTurn = true;
+            while (playerTurn) {
+                playerTurn = this.handlePlayerTurn(player, enemy);
             }
+
 
             if (!enemy.isAlive()) {
                 System.out.println("\n" + "Enemy has been defeated !!!");
@@ -68,6 +64,21 @@ public class CombatSystem {
 
         player.removeAllStatusEffects();
         return player.isAlive();
+    }
+
+    private boolean handlePlayerTurn(Player player, Enemy enemy) {
+        this.combatStrings.printCombatMenu(player, enemy);
+
+        switch (Utility.handleDecision(1, 5)) {
+            case 1 -> player.performeBasicAbility(enemy);
+            case 2 -> player.performeSpecialAbility(enemy);
+            case 3 -> player.performeUtilityAbility();
+            case 4 -> player.heal(3);
+            case 5 -> {
+                return player.showInventory();
+            }
+        }
+        return false;
     }
 
 }
