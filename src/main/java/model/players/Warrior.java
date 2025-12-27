@@ -31,7 +31,7 @@ public class Warrior extends Player {
     }
 
     public Warrior(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
+        super(name, MAX_HP, ATTACK, DEFENCE, POWER, level);
     }
 
     @Override
@@ -103,13 +103,13 @@ public class Warrior extends Player {
             if (this.isBelow15Percent(target.getHp(), target.getMaxHp())) {
                 target.takeTrueDamage(Integer.MAX_VALUE);
 
-                System.out.println(target.getName() + " has been executed");
+                this.print(target.getName() + " has been executed");
 
             } else {
                 int damage = (int)(this.getTotalAttack() * 0.4);
                 int rawDamage = target.takeDamage(damage, this);
 
-                System.out.println(target.getName() + " is not under 15% HP");
+                this.print(target.getName() + " is not under 15% HP");
                 this.damageAbilitySystemOut(
                         this.specialAbilityName, this.actionVerb, target, damage, rawDamage
                 );
@@ -126,11 +126,11 @@ public class Warrior extends Player {
     @Override
     public void performeUtilityAbility() {
         if (usePower(this.utilityAbilityCost)) {
-            System.out.println("Current stance: " + this.stance);
-            System.out.println("Choose a stance:");
-            System.out.println("1. Aggressive");
-            System.out.println("2. Defensive");
-            System.out.println("3. Balanced");
+            this.print("Current stance: " + this.stance);
+            this.print("Choose a stance:");
+            this.print("1. Aggressive");
+            this.print("2. Defensive");
+            this.print("3. Balanced");
 
             int choice = Utility.handleDecision(1, 3);
             switch (choice) {
@@ -154,6 +154,6 @@ public class Warrior extends Player {
         this.applyStatusEffect(stance, -1);
         this.removeStatusEffect(previousStance);
 
-        System.out.println("Stance changed to " + this.stance);
+        this.print("Stance changed to " + this.stance);
     }
 }
