@@ -1,37 +1,71 @@
 package model.players;
 
 import model.Enemy;
-import model.Player;
 import model.enemies.DemonLord;
 import model.enums.ClassPower;
-import model.enums.PlayerClass;
+import model.enums.CombatTag;
+import model.enums.status.StatusEffects;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import output.SilentOutput;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MageTest {
 
-    Player magePlayer;
+    Mage magePlayer;
+    Mage magePlayerWithLevel;
+
     Enemy enemy;
 
     @BeforeEach
     void setUp() {
         magePlayer = new Mage("Gandalfos");
+        magePlayerWithLevel = new Mage("GandalfosLevelos", 50);
+
+        magePlayer.setSystemOutput(new SilentOutput());
+        magePlayerWithLevel.setSystemOutput(new SilentOutput());
+
         enemy = new DemonLord("Bengoro", 5);
+        enemy.setSystemOutput(new SilentOutput());
+    }
+
+    @Test
+    void testMageLevelInitialization() {
+        assertNotNull(magePlayerWithLevel);
+        assertEquals(50, magePlayerWithLevel.getLevel());
     }
 
     @Test
     void testMageGetters() {
-        assertNotNull(magePlayer);
-        assertInstanceOf(Mage.class, magePlayer);
-
-        assertTrue(magePlayer.getPower() > 0);
-
-        assertEquals("Gandalfos", magePlayer.getName());
-        assertEquals(100, magePlayer.getMaxPower());
         assertEquals(ClassPower.MANA.toString(), magePlayer.getPowerString());
-        assertEquals(PlayerClass.MAGE, magePlayer.getClassType());
+        assertEquals(CombatTag.MAGE, magePlayer.getCombatTag());
+        assertEquals("Gandalfos", magePlayer.getName());
+        assertEquals(null, magePlayer.getEquippedArmor());
+        assertEquals(null, magePlayer.getEquippedWeapon());
+
+        assertEquals(80, magePlayer.getMaxHp());
+        assertEquals(10, magePlayer.getTotalAttack());
+        assertEquals(3, magePlayer.getTotalDefense());
+        assertEquals(100, magePlayer.getMaxPower());
+    }
+
+    @Test
+    void testMageBeforeTurn() {
+        magePlayer.performeSpecialAbility(enemy);
+
+        magePlayer.beforeTurn();
+
+        assertEquals(65, magePlayer.getPower());
+    }
+
+    @Test
+    void testMageAfterTurnInvisible() {
+        magePlayer.performeUtilityAbility();
+
+        magePlayer.beforeTurn();
+
+        assertEquals(90, magePlayer.getPower());
     }
 
     @Test
@@ -43,20 +77,20 @@ class MageTest {
 
         assertEquals(90, magePlayer.getPower());
         assertEquals(10, magePlayer.getBasicAbilityCost());
-        assertNotEquals(50, enemy.getHp());
+        assertNotEquals(enemy.getMaxHp(), enemy.getHp());
     }
 
     @Test
     void testMageSpecialAbility() {
         magePlayer.performeSpecialAbility(enemy);
 
-        assertEquals("FireBlast", magePlayer.getSpecialAbilityName());
+        assertEquals("Fireblast", magePlayer.getSpecialAbilityName());
         assertEquals(50, magePlayer.getSpecialAbilityCost());
 
         assertEquals(50, magePlayer.getPower());
-        assertEquals(50, magePlayer.getBasicAbilityCost());
+        assertEquals(10, magePlayer.getBasicAbilityCost());
 
-        assertNotEquals(50, enemy.getHp());
+        assertNotEquals(enemy.getMaxHp(), enemy.getHp());
     }
 
     @Test
@@ -66,8 +100,8 @@ class MageTest {
         assertEquals("Cloak of Shadows", magePlayer.getUtilityAbilityName());
         assertEquals(15, magePlayer.getUtilityAbilityCost());
 
-        assertEquals(75, magePlayer.getPower());
+        assertEquals(85, magePlayer.getPower());
         assertEquals(15, magePlayer.getUtilityAbilityCost());
-
+        assertEquals(StatusEffects.INVISIBILITY, magePlayer.getStatusEffects().keySet().toArray()[0]);
     }
 }

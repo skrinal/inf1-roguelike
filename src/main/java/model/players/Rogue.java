@@ -80,11 +80,12 @@ public class Rogue extends Player {
 
     @Override
     public void beforeTurn() {
-        if (!this.isVanished) {
+        if (this.isVanished) {
             this.restorePower(5);
             this.checkVanishStatus();
+        } else {
+            this.restorePower(10);
         }
-        this.restorePower(15);
     }
 
     @Override
@@ -116,7 +117,7 @@ public class Rogue extends Player {
                 this.noPowerSystemOut(this.getPowerString());
             }
         } else {
-            System.out.println("You are already vanished!");
+            this.print("You are already vanished!");
         }
     }
 
@@ -132,13 +133,13 @@ public class Rogue extends Player {
                     this.heal(5);
 
                     this.applyStatusEffect(StatusEffects.HEALING, 2);
-                    System.out.println("Great roll (" + diceRoll + ")");
+                    this.print("Great roll (" + diceRoll + ")");
                 }
                 case 6 -> {
                     this.setDamageMultiplier(1.25);
 
                     this.applyStatusEffect(StatusEffects.STRENGTH, 3);
-                    System.out.println("Perfect roll !! (" + diceRoll + ")");
+                    this.print("Perfect roll !! (" + diceRoll + ")");
                 }
                 default -> { }
             }
@@ -151,11 +152,11 @@ public class Rogue extends Player {
         if (this.isVanished) {
             if (this.random.nextDouble() >= this.vanishChance) {
 
-                System.out.println("You remain untargetable and " + this.actionVerb + " again!");
+                this.print("You remain untargetable and " + this.actionVerb + " again!");
 
                 this.vanishChance -= 0.1; // Increase chance to get out each turn
             } else {
-                System.out.println("You are no longer untargetable.");
+                this.print("You are no longer untargetable.");
 
                 this.removeStatusEffect(StatusEffects.VANISH);
                 this.isVanished = false;

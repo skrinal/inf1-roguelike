@@ -2,6 +2,8 @@ package model;
 
 import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
+import output.ConsoleOutput;
+import output.SystemOutput;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,6 +26,8 @@ public abstract class Character {
     private int experience;
     private int experienceToNextLevel;
 
+    private SystemOutput out;
+
     protected Character(String name, int maxHp, int attack, int defence, int level) {
         this.name = name;
         this.maxHp = maxHp;
@@ -41,6 +45,20 @@ public abstract class Character {
 
         this.experience = 0;
         this.experienceToNextLevel = this.calculateExperienceToNextLevel();
+
+        this.out = new ConsoleOutput();
+    }
+
+    public void setSystemOutput(SystemOutput out) {
+        this.out = out;
+    }
+
+    protected void print(String text) {
+        this.out.println(text);
+    }
+
+    protected void pause() {
+        this.out.pause();
     }
 
     private void initializeAtLevel(int targetedLevel) {
@@ -123,14 +141,14 @@ public abstract class Character {
             if (damage <= this.shield) {
                 this.shield -= damage;
 
-                System.out.println("Shield blocked " + damage + " damage! " + this.shield + " shield left.");
+                this.print("Shield blocked " + damage + " damage! " + this.shield + " shield left.");
                 return 0;
             } else {
                 int absorbedDamage = this.shield;
                 damage -= absorbedDamage;
                 this.shield = 0;
 
-                System.out.println("Shield broken! Absorbed " + absorbedDamage + " damage.");
+                this.print("Shield broken! Absorbed " + absorbedDamage + " damage.");
                 return damage;
             }
         }
@@ -142,9 +160,7 @@ public abstract class Character {
             int reflected = Math.max(1, actualDamage / 4);
             attacker.takeTrueDamage(reflected);
 
-            System.out.println(
-                    attacker.getName() + " is pierced by thorns for " + reflected + " damage!"
-            );
+            this.print(attacker.getName() + " is pierced by thorns for " + reflected + " damage!");
         }
 
         return actualDamage;
@@ -249,7 +265,7 @@ public abstract class Character {
         return this.defenceMultiplier;
     }
 
-    protected int getLevel() {
+    public int getLevel() {
         return this.level;
     }
 

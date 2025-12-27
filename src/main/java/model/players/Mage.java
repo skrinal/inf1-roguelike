@@ -79,12 +79,12 @@ public class Mage extends Player {
 
     @Override
     public void beforeTurn() {
-        if (!this.isInvisible) {
+        if (this.isInvisible) {
             this.restorePower(5);
             this.checkInvisibilityStatus();
-
+        } else {
+            this.restorePower(15);
         }
-        restorePower(15);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class Mage extends Player {
                 this.noPowerSystemOut(this.getPowerString());
             }
         } else {
-            System.out.println("You are already invisible!");
+            this.print("You are already invisible!");
         }
     }
 
@@ -138,17 +138,17 @@ public class Mage extends Player {
         if (this.isInvisible) {
             if (Utility.getRandomDouble() >= this.invisibilityChance) {
 
-                System.out.println("You remain invisible!");
+                this.print("You remain invisible!");
                 this.invisibilityChance -= 0.1;
             } else {
-                System.out.println("You are no longer invisible!");
+                this.print("You are no longer invisible!");
 
                 this.removeStatusEffect(StatusEffects.INVISIBILITY);
                 this.isInvisible = false;
                 this.invisibilityChance = 0.5;
 
                 this.applyStatusEffect(StatusEffects.SHIELD, this.shieldDuration);
-                System.out.println("Small shield applied");
+                this.print("Small shield applied");
             }
         }
     }
