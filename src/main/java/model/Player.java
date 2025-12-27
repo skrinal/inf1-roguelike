@@ -77,7 +77,7 @@ public abstract class Player extends Character {
         boolean open = true;
 
         while (open) {
-            System.out.println(PlayerStrings.PLAYER_INVENTORY_MENU);
+            this.print(PlayerStrings.PLAYER_INVENTORY_MENU);
 
             int choice = Utility.handleDecision(0, 3);
 
@@ -102,17 +102,18 @@ public abstract class Player extends Character {
         }
 
         if (items.isEmpty()) {
-            System.out.println("You don't have any " + type.toString().toLowerCase() + "s!");
-            Utility.enterToContinue();
+            this.print("You don't have any " + type.toString().toLowerCase() + "s!");
+            this.print("You don't have any " + type.toString().toLowerCase() + "s!");
+            this.pause();
             return;
         }
 
-        System.out.println("Choose an item:");
+        this.print("Choose an item:");
         for (int i = 0; i < items.size(); i++) {
             Item item = items.get(i);
-            System.out.println((i + 1) + ") " + item.getName());
+            this.print((i + 1) + ") " + item.getName());
         }
-        System.out.println("0) Exit");
+        this.print("0) Exit");
 
         int choice = Utility.handleDecision(0, items.size());
         if (choice == 0 ) {
@@ -129,23 +130,23 @@ public abstract class Player extends Character {
             case POTION -> {
                 this.heal(item.getValue());
                 this.consumeItem(item);
-                System.out.println("You used " + item.getName() + "!");
-                Utility.enterToContinue();
+                this.print("You used " + item.getName() + "!");
+                this.pause();
             }
             case WEAPON -> {
                 this.setEquippedWeapon(item);
-                System.out.println("You equipped " + item.getName() + "!");
-                Utility.enterToContinue();
+                this.print("You equipped " + item.getName() + "!");
+                this.pause();
             }
             case ARMOR -> {
                 this.setEquippedArmor(item);
-                System.out.println("You equipped " + item.getName() + "!");
-                Utility.enterToContinue();
+                this.print("You equipped " + item.getName() + "!");
+                this.pause();
             }
         }
     }
 
-    
+
 
     private void consumeItem(Item item) {
         int amount = this.inventory.get(item);
@@ -192,10 +193,10 @@ public abstract class Player extends Character {
     }
 
     public GameState handleStats() {
-        System.out.println(PlayerStrings.PLAYER_STATS);
+        this.print(PlayerStrings.PLAYER_STATS);
         this.displayStats();
 
-        Utility.enterToContinue();
+        this.pause();
         return GameState.GAME;
     }
 
@@ -216,20 +217,20 @@ public abstract class Player extends Character {
     }
 
     public void displayStats() {
-        System.out.println("╔═════════════════════════════════╗");
-        System.out.println("║  " + this.getName() + " [" + this.getCombatTag() + "]");
-        System.out.println("╠═════════════════════════════════╣");
-        System.out.println("║ HP:      [" + this.getHealthBar() + "] " + this.getHp() + "/" + this.getMaxHp());
-        System.out.println("║ " + this.getPowerString() + ":    [" + this.getPowerBar() + "] " + this.getPower() + "/" + this.getMaxPower());
-        System.out.println("║ Attack:  " + this.getTotalAttack());
-        System.out.println("║ Defense: " + this.getTotalDefense());
-        System.out.println("║ Gold:    " + this.getGold());
-        System.out.println("║ ");
-        System.out.println("║ Level:   " + this.getLevel() + " - " + this.getExperience() + "/" + this.getExperienceToNextLevel());
-        System.out.println("║ ");
-        System.out.println("║ Armor:   " + (this.getEquippedArmor() == null ? "None" : this.getEquippedArmor().getName() + " + " + this.getEquippedArmor().getValue() + " Armor"));
-        System.out.println("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().getName() + " + " + this.getEquippedWeapon().getValue() + " Damage"));
-        System.out.println("╚═════════════════════════════════╝");
+        this.print("╔═════════════════════════════════╗");
+        this.print("║  " + this.getName() + " [" + this.getCombatTag() + "]");
+        this.print("╠═════════════════════════════════╣");
+        this.print("║ HP:      [" + this.getHealthBar() + "] " + this.getHp() + "/" + this.getMaxHp());
+        this.print("║ " + this.getPowerString() + ":    [" + this.getPowerBar() + "] " + this.getPower() + "/" + this.getMaxPower());
+        this.print("║ Attack:  " + this.getTotalAttack());
+        this.print("║ Defense: " + this.getTotalDefense());
+        this.print("║ Gold:    " + this.getGold());
+        this.print("║ ");
+        this.print("║ Level:   " + this.getLevel() + " - " + this.getExperience() + "/" + this.getExperienceToNextLevel());
+        this.print("║ ");
+        this.print("║ Armor:   " + (this.getEquippedArmor() == null ? "None" : this.getEquippedArmor().getName() + " + " + this.getEquippedArmor().getValue() + " Armor"));
+        this.print("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().getName() + " + " + this.getEquippedWeapon().getValue() + " Damage"));
+        this.print("╚═════════════════════════════════╝");
     }
 
     protected void damageAbilitySystemOut(
@@ -250,9 +251,10 @@ public abstract class Player extends Character {
                 .append(" damage! (")
                 .append(rawDamage)
                 .append(" raw)");
-        System.out.println(sb);
 
-        Utility.enterToContinue();
+        this.print(sb.toString());
+
+        this.pause();
     }
 
     protected void useAbilitySystemOut(String abilityName) {
@@ -260,8 +262,9 @@ public abstract class Player extends Character {
         sb.append("You have used ")
                 .append(abilityName)
                 .append("!");
-
-        Utility.enterToContinue();
+        
+        this.print(sb.toString());
+        this.pause();
     }
 
     protected void useAbilitySystemOut(String abilityName, String actionVerb) {
@@ -272,7 +275,7 @@ public abstract class Player extends Character {
                 .append(abilityName)
                 .append("!");
 
-        Utility.enterToContinue();
+        this.pause();
     }
 
     protected void noPowerSystemOut(String power) {
@@ -281,9 +284,9 @@ public abstract class Player extends Character {
                 .append(power)
                 .append(" !");
 
-        System.out.println(sb);
+        this.print(sb.toString());
 
-        Utility.enterToContinue();
+        this.pause();
     }
 
     public boolean canBeTargetedBy(Enemy attacker) {
