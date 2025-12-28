@@ -39,24 +39,22 @@ public abstract class Enemy extends Character {
         return this.getDefence();
     }
 
-    protected void damageAbilitySystemOut(int damage, boolean isSpectral) {
-        StringBuilder sb = new StringBuilder(80);
-        sb.append(this.returnFormattedText(isSpectral))
-                .append(damage)
-                .append(" damage");
+    public void damageAbilitySystemOut(int damage, boolean isSpectral) {
+        String sb = this.returnFormattedText(isSpectral)
+                + damage
+                + " damage";
 
-        this.print(sb.toString());
+        this.print(sb);
 
         this.pause();
     }
 
-    protected void trueDamageAbilitySystemOut(int damage, boolean isSpectral) {
-        StringBuilder sb = new StringBuilder(80);
-        sb.append(this.returnFormattedText(isSpectral))
-                .append(damage)
-                .append(" true damage");
+    public void trueDamageAbilitySystemOut(int damage, boolean isSpectral) {
+        String sb = this.returnFormattedText(isSpectral)
+                + damage
+                + " true damage";
 
-        this.print(sb.toString());
+        this.print(sb);
 
         this.pause();
     }

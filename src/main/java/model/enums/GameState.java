@@ -11,7 +11,6 @@ public enum GameState {
     DUNGEON,
     STATS,
 
-    COMBAT,
     DEATH,
     COMPLETE,
     EXIT

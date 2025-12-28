@@ -135,7 +135,7 @@ public abstract class Character {
         this.shield = Math.max(0, shield);
     }
 
-    //TODO: UML ZMENA
+    //TODO: EnemyType treba pouzit kde su damagePercenate -> asi fix uz
     public int takeDamage(int damage, Character attacker) {
         if (this.shield > 0) {
             if (damage <= this.shield) {
