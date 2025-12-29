@@ -44,25 +44,13 @@ public class Elf extends Enemy implements SpectralAttacker {
         if (this.isStatusEffectsEmpty()) {
             this.applyStatusEffect(StatusEffects.ELF_STRENGTH, 3);
         } else if (this.chargeCounter <= 2) {
-            this.chargingAbilityOutput();
+            this.print("is charging a strong spell!!");
+            this.chargeCounter++;
         } else {
             this.chargeCounter = 0;
             int damage = target.takeTrueDamage(this.getAttack() * 3);
             this.trueDamageAbilitySystemOut(damage, false);
         }
-    }
-
-    private void chargingAbilityOutput() {
-        StringBuilder sb = new StringBuilder(80);
-        sb.append(this.getName())
-                .append(" is charging a strong spell!!");
-        System.out.println(sb);
-    }
-
-    @Override
-    public void performSpectralDamage(Character target) {
-        int damage = target.takeTrueDamage((int)(this.getTotalAttack() * 0.5));
-        this.trueDamageAbilitySystemOut(damage, false);
     }
 }
 

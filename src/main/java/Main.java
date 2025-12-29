@@ -48,6 +48,10 @@ void main() {
             case COMPLETE -> {
                 //TODO: VICTORY SCREEN
             }
+            default -> {
+                System.out.println("Invalid state");
+                state = GameState.MAIN_MENU;
+            }
         }
     }
 }

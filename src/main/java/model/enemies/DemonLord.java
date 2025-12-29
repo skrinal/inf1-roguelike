@@ -8,10 +8,9 @@ import model.enums.CombatTag;
 import model.enums.status.StatusEffects;
 import model.enums.type.EnemyType;
 import model.interfaces.Boss;
-import model.interfaces.SpectralAttacker;
 import utility.Utility;
 
-public class DemonLord extends Enemy implements SpectralAttacker, Boss {
+public class DemonLord extends Enemy implements Boss {
 
     private static final int MAX_HP = 5;
     private static final int ATTACK = 30;
@@ -51,28 +50,23 @@ public class DemonLord extends Enemy implements SpectralAttacker, Boss {
     public void performeSpecialAbility(Character target) {
         int diceRoll = Utility.getRandom().nextInt(6) + 1;
         switch (diceRoll) {
-            case 1, 3, 5 -> {
-                this.takeTrueDamage(5);
-                System.out.println("The dice turn against the Demon Lord.");
+            case 1, 3 -> {
+                this.takeTrueDamage(10);
+                this.print("The dice turn against the Demon Lord. Taking 10 true damage!");
             }
-            case 2, 4 -> {
+            case 2, 5 -> {
                 target.takeTrueDamage(10);
-                System.out.println("The dice glow red with destructive power!");
+                this.print("The dice glow red with destructive power!");
+            }
+            case 4 -> {
+                int damage = target.takeTrueDamage(this.getAttack() * 2);
+                this.trueDamageAbilitySystemOut(damage, false);
             }
             case 6 -> {
                 this.applyStatusEffect(StatusEffects.THORNS, 4);
-                System.out.println("Perfect roll! Dark power coils around the Demon Lord!");
+                this.print("Perfect roll! Dark power coils around the Demon Lord!");
             }
         }
-        int damage = target.takeTrueDamage(this.getAttack() * 2);
-        this.trueDamageAbilitySystemOut(damage, false);
-    }
-
-    @Override
-    public void performSpectralDamage(Character target) {
-
-        int damage = target.takeDamage((this.getTotalAttack() * this.getEnemyType().getDamagePercentage()) / 100, this); // 50% normal Damage
-        this.damageAbilitySystemOut(damage, true);
     }
 
     @Override
@@ -120,13 +114,13 @@ public class DemonLord extends Enemy implements SpectralAttacker, Boss {
     private void startCasting() {
         this.isCasting = true;
         this.castTurnsRemaining = 2;
-        System.out.println("The Demon Lord begins casting a dark magic...");
+        this.print("The Demon Lord begins casting a dark magic...");
     }
 
     private void continueCasting(Player player) {
         this.castTurnsRemaining--;
         if (this.castTurnsRemaining > 0) {
-            System.out.println("The Demon Lord continues casting...");
+            this.print("The Demon Lord continues casting...");
         } else {
             this.finishCast(player);
         }
@@ -134,7 +128,7 @@ public class DemonLord extends Enemy implements SpectralAttacker, Boss {
 
     private void finishCast(Player player) {
         this.isCasting = false;
-        System.out.println("The Demon Lord unleashes Hellfire!");
+        this.print("The Demon Lord unleashes Hellfire!");
 
         if (!player.isUntargatable() || player.hasStatusEffect(StatusEffects.INVISIBILITY)) {
             int damage = player.takeTrueDamage(this.getTotalAttack() * 3);

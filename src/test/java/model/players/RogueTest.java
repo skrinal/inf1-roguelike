@@ -8,23 +8,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import output.SilentOutput;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RogueTest {
 
-    Rogue roguePlayer;
-    Rogue roguePlayerWithLevel;
+    Rogue rogue;
+    Rogue rogueLevel;
 
     Enemy enemy;
 
     @BeforeEach
     void setUp() {
-        roguePlayer = new Rogue("Rogues");
-        roguePlayerWithLevel = new Rogue("RoguesLevelos", 50);
+        rogue = new Rogue("Rogues");
+        rogueLevel = new Rogue("RoguesLevelos", 50);
 
-        roguePlayer.setSystemOutput(new SilentOutput());
-        roguePlayerWithLevel.setSystemOutput(new SilentOutput());
+        rogue.setSystemOutput(new SilentOutput());
+        rogueLevel.setSystemOutput(new SilentOutput());
 
         enemy = new DemonLord("Bengos", 5);
         enemy.setSystemOutput(new SilentOutput());
@@ -32,40 +31,43 @@ class RogueTest {
 
     @Test
     void testRogueLevelInitialization() {
-        assertNotNull(roguePlayerWithLevel);
-        assertEquals(50, roguePlayerWithLevel.getLevel());
+        assertNotNull(rogueLevel);
+        assertEquals(50, rogueLevel.getLevel());
+
+        assertNotNull(rogue);
+        assertEquals(1, rogue.getLevel());
     }
 
     @Test
     void testRogueGetters() {
-        assertEquals(ClassPower.ENERGY.toString(), roguePlayer.getPowerString());
-        assertEquals(CombatTag.ROGUE, roguePlayer.getCombatTag());
-        assertEquals("Rogues", roguePlayer.getName());
-        assertEquals(null, roguePlayer.getEquippedArmor());
-        assertEquals(null, roguePlayer.getEquippedWeapon());
+        assertEquals(ClassPower.ENERGY.toString(), rogue.getPowerString());
+        assertEquals(CombatTag.ROGUE, rogue.getCombatTag());
+        assertEquals("Rogues", rogue.getName());
+        assertNull(rogue.getEquippedArmor());
+        assertNull(rogue.getEquippedWeapon());
 
-        assertEquals(100, roguePlayer.getMaxHp());
-        assertEquals(8, roguePlayer.getTotalAttack());
-        assertEquals(5, roguePlayer.getTotalDefense());
-        assertEquals(150, roguePlayer.getMaxPower());
+        assertEquals(100, rogue.getMaxHp());
+        assertEquals(8, rogue.getTotalAttack());
+        assertEquals(5, rogue.getTotalDefense());
+        assertEquals(150, rogue.getMaxPower());
     }
 
     @Test
     void testRogueBeforeTurn() {
-        roguePlayer.performeBasicAbility(enemy);
+        rogue.performeBasicAbility(enemy);
 
-        roguePlayer.beforeTurn();
+        rogue.beforeTurn();
 
-        assertEquals(140, roguePlayer.getPower());
+        assertEquals(140, rogue.getPower());
     }
 
     @Test
     void testRogueAfterTurnVanish() {
-        roguePlayer.performeSpecialAbility(enemy);
+        rogue.performeSpecialAbility(enemy);
 
-        roguePlayer.beforeTurn();
+        rogue.beforeTurn();
 
-        assertEquals(90, roguePlayer.getPower());
+        assertEquals(90, rogue.getPower());
     }
 
 

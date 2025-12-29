@@ -39,9 +39,4 @@ public class Dragon extends Enemy implements SpectralAttacker {
     public void performeSpecialAbility(Character target) {
 
     }
-
-    @Override
-    public void performSpectralDamage(Character target) {
-
-    }
 }
