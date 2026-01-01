@@ -240,51 +240,32 @@ public abstract class Player extends Character {
             int damage,
             int rawDamage
     ) {
-        StringBuilder sb = new StringBuilder(80);
-        sb.append(abilityName)
-                .append("! You ")
-                .append(actionVerb)
-                .append(" ")
-                .append(target.getName())
-                .append(" for ")
-                .append(damage)
-                .append(" damage! (")
-                .append(rawDamage)
-                .append(" raw)");
+        String sb = abilityName + "! You " + actionVerb + " " + target.getName() + " for "
+                + damage + " damage! (" + rawDamage + " raw)";
 
-        this.print(sb.toString());
+        this.print(sb);
 
         this.pause();
     }
 
     protected void useAbilitySystemOut(String abilityName) {
-        StringBuilder sb = new StringBuilder(50);
-        sb.append("You have used ")
-                .append(abilityName)
-                .append("!");
+        String sb = "You have used " + abilityName + "!";
         
-        this.print(sb.toString());
+        this.print(sb);
         this.pause();
     }
 
     protected void useAbilitySystemOut(String abilityName, String actionVerb) {
-        StringBuilder sb = new StringBuilder(50);
-        sb.append("You have ")
-                .append(actionVerb)
-                .append(" ")
-                .append(abilityName)
-                .append("!");
+        String sb = "You have " + actionVerb + " " + abilityName + "!";
 
+        this.print(sb);
         this.pause();
     }
 
     protected void noPowerSystemOut(String power) {
-        StringBuilder sb = new StringBuilder(50);
-        sb.append("Not enough ")
-                .append(power)
-                .append(" !");
+        String sb = "Not enough " + power + " !";
 
-        this.print(sb.toString());
+        this.print(sb);
 
         this.pause();
     }

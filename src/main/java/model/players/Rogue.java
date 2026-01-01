@@ -28,7 +28,7 @@ public class Rogue extends Player {
     private double vanishChance = 0.6;
     private boolean isVanished = false;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public Rogue(String name) {
         super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
