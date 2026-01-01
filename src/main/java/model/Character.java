@@ -208,7 +208,22 @@ public abstract class Character {
     }
 
     public void removeAllStatusEffects() {
-        this.statusEffects.clear();
+        for (StatusEffects effect : this.statusEffects.keySet()) {
+            if (!this.checkIfStance(effect)) {
+                this.removeStatusEffect(effect);
+            }
+        }
+    }
+
+    private boolean checkIfStance(StatusEffects stance) {
+        switch (stance) {
+            case AGGRESSIVE, DEFENSIVE, BALANCED -> {
+                return true;
+            }
+            default -> {
+                return false;
+            }
+        }
     }
 
 

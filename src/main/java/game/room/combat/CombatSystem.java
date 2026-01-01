@@ -59,7 +59,6 @@ public class CombatSystem {
 
             player.updateStatusEffects();
             enemy.updateStatusEffects();
-            //Utility.enterToContinue();
         }
 
         player.removeAllStatusEffects();
