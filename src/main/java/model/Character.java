@@ -137,23 +137,25 @@ public abstract class Character {
 
     //TODO: EnemyType treba pouzit kde su damagePercenate -> asi fix uz
     public int takeDamage(int damage, Character attacker) {
-        if (this.shield > 0) {
-            if (damage <= this.shield) {
-                this.shield -= damage;
+        int multiplayerDamage = (int)(attacker.getDamageMultiplier() * damage);
 
-                this.print("Shield blocked " + damage + " damage! " + this.shield + " shield left.");
+        if (this.shield > 0) {
+            if (multiplayerDamage <= this.shield) {
+                this.shield -= multiplayerDamage;
+
+                this.print("Shield blocked " + multiplayerDamage + " damage! " + this.shield + " shield left.");
                 return 0;
             } else {
                 int absorbedDamage = this.shield;
-                damage -= absorbedDamage;
+                multiplayerDamage -= absorbedDamage;
                 this.shield = 0;
 
                 this.print("Shield broken! Absorbed " + absorbedDamage + " damage.");
-                return damage;
+                return multiplayerDamage;
             }
         }
 
-        int actualDamage = Math.max(1, damage - this.getTotalDefense());
+        int actualDamage = Math.max(1, multiplayerDamage - this.getTotalDefense());
         this.setHp(Math.max(0, this.hp - actualDamage));
 
         if (this.hasStatusEffect(StatusEffects.THORNS)) {
