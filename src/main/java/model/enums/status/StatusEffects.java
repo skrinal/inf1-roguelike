@@ -23,7 +23,7 @@ public enum StatusEffects {
 
     // Warrior Stances as Buff
     AGGRESSIVE("+20% Damage"),
-    BALANCED("-50% Ability cost"),
+    BALANCED("+15% Damage & Defence"),
     DEFENSIVE("+20% Defence, Thorn Damage");
 
     private final String description;

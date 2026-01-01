@@ -24,14 +24,16 @@ public class Warrior extends Player {
     private final int specialAbilityCost = 30;
     private final int utilityAbilityCost = 10;
 
-    private StatusEffects stance = StatusEffects.BALANCED;
+    private StatusEffects stance;
 
     public Warrior(String name) {
         super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
+        this.initializeStance();
     }
 
     public Warrior(String name, int level) {
         super(name, MAX_HP, ATTACK, DEFENCE, POWER, level);
+        this.initializeStance();
     }
 
     @Override
@@ -78,8 +80,8 @@ public class Warrior extends Player {
     public void beforeTurn() {
         switch (this.stance) {
             case DEFENSIVE -> this.restorePower(15);
-            case AGGRESSIVE -> this.restorePower(10);
-            case BALANCED -> this.restorePower(20);
+            case AGGRESSIVE -> this.restorePower(5);
+            case BALANCED -> this.restorePower(10);
         }
     }
 
@@ -155,5 +157,10 @@ public class Warrior extends Player {
         this.removeStatusEffect(previousStance);
 
         this.print("Stance changed to " + this.stance);
+    }
+
+    private void initializeStance() {
+        this.stance = StatusEffects.BALANCED;
+        this.applyStatusEffect(this.stance, -1);
     }
 }
