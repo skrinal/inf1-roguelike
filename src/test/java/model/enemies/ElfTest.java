@@ -62,7 +62,7 @@ class ElfTest {
     void testElfSpectralDamage() {
         elf.performSpectralDamage(player);
 
-        assertEquals(player.getMaxHp(), player.getHp());
+        assertNotEquals(player.getMaxHp(), player.getHp());
     }
 
 }

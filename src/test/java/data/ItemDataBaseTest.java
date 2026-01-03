@@ -35,7 +35,7 @@ class ItemDataBaseTest {
         Item item = db.getRandomItem();
 
         assertNotNull(item, "getRandomItem should return an item");
-        assertNotNull(item.getType(), "Item should have a type");
+        assertNotNull(item.type(), "Item should have a type");
     }
 
 }

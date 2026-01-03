@@ -41,8 +41,8 @@ class MageTest {
         assertEquals(ClassPower.MANA.toString(), magePlayer.getPowerString());
         assertEquals(CombatTag.MAGE, magePlayer.getCombatTag());
         assertEquals("Gandalfos", magePlayer.getName());
-        assertEquals(null, magePlayer.getEquippedArmor());
-        assertEquals(null, magePlayer.getEquippedWeapon());
+        assertNull(magePlayer.getEquippedArmor());
+        assertNull(magePlayer.getEquippedWeapon());
 
         assertEquals(80, magePlayer.getMaxHp());
         assertEquals(10, magePlayer.getTotalAttack());

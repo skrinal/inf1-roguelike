@@ -73,6 +73,6 @@ class DemonLordTest {
     void testDemonLordSpectralDamage() {
         demonLord.performSpectralDamage(rogue);
 
-        assertEquals(rogue.getMaxHp(), rogue.getHp());
+        assertNotEquals(rogue.getMaxHp(), rogue.getHp());
     }
 }

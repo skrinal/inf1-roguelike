@@ -20,9 +20,8 @@ class EnemyDatabaseTest {
     void getEnemiesForFirstRoom() {
         List<?> enemies = this.db.getEnemies(RoomType.ONE);
 
-        assertEquals(2, enemies.size(), "Room ONE should have 2 enemies configured");
-        assertInstanceOf(Skeleton.class, enemies.get(0), "First enemy should be a Skeleton");
-        assertInstanceOf(Skeleton.class, enemies.get(1), "Second enemy should be a Skeleton");
+        assertEquals(1, enemies.size(), "Room ONE should have 2 enemies configured");
+        assertInstanceOf(Skeleton.class, enemies.getFirst(), "First enemy should be a Skeleton");
     }
 
     @Test

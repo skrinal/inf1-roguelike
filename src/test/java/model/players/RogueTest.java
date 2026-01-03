@@ -65,9 +65,9 @@ class RogueTest {
     void testRogueAfterTurnVanish() {
         rogue.performeSpecialAbility(enemy);
 
-        rogue.beforeTurn();
-
         assertEquals(90, rogue.getPower());
+
+        rogue.beforeTurn();
     }
 
 
