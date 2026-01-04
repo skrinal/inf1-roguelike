@@ -26,7 +26,7 @@ public class GameLogic {
     }
 
     public GameState handleDungeon(Player player) {
-        System.out.println(MenuStrings.DUNGEON_TITLE);
+        System.out.println(MenuStrings.DUNGEON_TITLE.getText());
         GameState result = this.showGameMap(player);
 
         switch (result) {
@@ -43,7 +43,7 @@ public class GameLogic {
     }
 
     private int showGameMenu() {
-        System.out.println(MenuStrings.GAME_MENU_OPTIONS);
+        System.out.println(MenuStrings.GAME_MENU_OPTIONS.getText());
 
         return handleDecision(0, 2);
     }

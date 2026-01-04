@@ -3,6 +3,7 @@ package model.enums.room;
 public enum RoomMap {
     ROOM_ONE("""
             ╚════════ MAP ════════╝
+            
                      Door
                    /
                  X         ?
@@ -20,9 +21,9 @@ public enum RoomMap {
                      Door
                       |
                       X
-                   /     \\
+
                  X         X
-                   \\     /
+
                      You
             
             ═══════════════════════""",
@@ -36,7 +37,7 @@ public enum RoomMap {
                      Door
             
                  X         ?
-                   \\     /
+            
                      You
             
             ═══════════════════════""",
@@ -46,14 +47,13 @@ public enum RoomMap {
                 There’s only one path forward, leading straight into whatever waits beyond."""
     ), ROOM_FOUR("""
             ╚════════ MAP ════════╝
+            
                      Door
             
                       X
 
-                 X   You   X
+                     You
 
-                      X
-            
             ═══════════════════════""",
             """
                     | You step into a vast arena.

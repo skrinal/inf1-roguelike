@@ -25,7 +25,7 @@ public class MenuLogic {
     }
 
     public Player handleCharacterCreation(Scanner input) {
-        System.out.println(MenuStrings.CHARACTER_CREATION);
+        System.out.println(MenuStrings.CHARACTER_CREATION.getText());
         System.out.print("Name your character: ");
         String name = input.nextLine();
         CombatTag combatTag = this.selectedClass();
@@ -35,7 +35,7 @@ public class MenuLogic {
 
 
     private int showMainMenu() {
-        System.out.println(MenuStrings.GAME_TITLE_MENU);
+        System.out.println(MenuStrings.GAME_TITLE_MENU.getText());
 
         return handleDecision(0, 3);
     }
@@ -53,7 +53,7 @@ public class MenuLogic {
 
     private CombatTag selectedClass() {
         while (true) {
-            System.out.println(MenuStrings.CHOOSE_CLASS);
+            System.out.println(MenuStrings.CHOOSE_CLASS.getText());
             System.out.println("1) Warrior");
             System.out.println("2) Mage");
             System.out.println("3) Rogue");
