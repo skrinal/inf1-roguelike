@@ -3,24 +3,33 @@ package model.enemies;
 import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
+import model.enums.enemy.EnemyStats;
 import model.enums.status.StatusEffects;
 import model.enums.type.EnemyType;
 import model.interfaces.SpectralAttacker;
 
 public class Elf extends Enemy implements SpectralAttacker {
-    //TODO: change values
-    private static final int MAX_HP = 5;
-    private static final int ATTACK = 30;
-    private static final int DEFENCE = 20;
-    private static final int GOLD_REWARD = 100;
 
     private int chargeCounter = 0;
 
     public Elf(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD);
+        super(name,
+                EnemyStats.ELF.getBaseMaxHp(),
+                EnemyStats.ELF.getBaseAttack(),
+                EnemyStats.ELF.getBaseDefence(),
+                EnemyStats.ELF.getGoldReward(),
+                EnemyStats.ELF.getXpReward()
+        );
     }
     public Elf(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD, level);
+        super(name,
+                EnemyStats.ELF.getBaseMaxHp(),
+                EnemyStats.ELF.getBaseAttack(),
+                EnemyStats.ELF.getBaseDefence(),
+                EnemyStats.ELF.getGoldReward(),
+                EnemyStats.ELF.getXpReward(),
+                level
+        );
     }
 
     @Override

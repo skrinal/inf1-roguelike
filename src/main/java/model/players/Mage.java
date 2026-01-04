@@ -4,14 +4,11 @@ import model.Character;
 import model.Player;
 import model.enums.ClassPower;
 import model.enums.CombatTag;
+import model.enums.players.PlayerStats;
 import model.enums.status.StatusEffects;
 import utility.Utility;
 
 public class Mage extends Player {
-    private static final int MAX_HP = 80;
-    private static final int ATTACK = 10;
-    private static final int DEFENCE = 3;
-    private static final int POWER = 100;
 
     private final String basicAbilityName = "Frostbolt";
     private final String specialAbilityName = "Fireblast";
@@ -20,6 +17,9 @@ public class Mage extends Player {
     private final int basicAbilityCost = 10;
     private final int specialAbilityCost = 50;
     private final int utilityAbilityCost = 15;
+
+    private final double basicAbilityMultiplayer = 1.3;
+    private final double specialAbilityMultiplayer = 2.5;
 
     private final int invisibilityDuration = -1;
     private final int shieldDuration = 1;
@@ -30,11 +30,23 @@ public class Mage extends Player {
     private boolean isInvisible = false;
 
     public Mage(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
+        super(name,
+                PlayerStats.MAGE.getBaseMaxHp(),
+                PlayerStats.MAGE.getBaseAttack(),
+                PlayerStats.MAGE.getBaseDefence(),
+                PlayerStats.MAGE.getBasePower(),
+                1
+        );
     }
 
     public Mage(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER, level);
+        super(name,
+                PlayerStats.MAGE.getBaseMaxHp(),
+                PlayerStats.MAGE.getBaseAttack(),
+                PlayerStats.MAGE.getBaseDefence(),
+                PlayerStats.MAGE.getBasePower(),
+                level
+        );
     }
 
     @Override
@@ -90,7 +102,7 @@ public class Mage extends Player {
     @Override
     public void performeBasicAbility(Character target) {
         if (usePower(this.basicAbilityCost)) {
-            int rawDamage = (int)(this.getTotalAttack() * 1.3);
+            int rawDamage = (int)(this.getTotalAttack() * this.basicAbilityMultiplayer);
             int damage = target.takeDamage(rawDamage, this);
 
             this.damageAbilitySystemOut(
@@ -105,7 +117,7 @@ public class Mage extends Player {
     @Override
     public void performeSpecialAbility(Character target) {
         if (usePower(this.specialAbilityCost)) {
-            int rawDamage = (int)(this.getTotalAttack() * 2.5);
+            int rawDamage = (int)(this.getTotalAttack() * this.specialAbilityMultiplayer);
             int damage = target.takeDamage(rawDamage, this);
 
             this.damageAbilitySystemOut(
@@ -145,7 +157,7 @@ public class Mage extends Player {
 
                 this.removeStatusEffect(StatusEffects.INVISIBILITY);
                 this.isInvisible = false;
-                this.invisibilityChance = 0.5;
+                this.invisibilityChance = 0.4;
 
                 this.applyStatusEffect(StatusEffects.SHIELD, this.shieldDuration);
                 this.print("Small shield applied");

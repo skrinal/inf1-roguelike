@@ -5,17 +5,13 @@ import model.Enemy;
 import model.Player;
 import model.enums.BossPhase;
 import model.enums.CombatTag;
+import model.enums.enemy.EnemyStats;
 import model.enums.status.StatusEffects;
 import model.enums.type.EnemyType;
 import model.interfaces.Boss;
 import utility.Utility;
 
 public class DemonLord extends Enemy implements Boss {
-
-    private static final int MAX_HP = 5;
-    private static final int ATTACK = 30;
-    private static final int DEFENCE = 20;
-    private static final int GOLD_REWARD = 100;
 
     private BossPhase phase = BossPhase.PHASE_ONE;
     private int castTurnsRemaining = 2;
@@ -24,10 +20,23 @@ public class DemonLord extends Enemy implements Boss {
     private int currentTurn = 0;
 
     public DemonLord(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD);
+        super(name,
+                EnemyStats.DEMON_LORD.getBaseMaxHp(),
+                EnemyStats.DEMON_LORD.getBaseAttack(),
+                EnemyStats.DEMON_LORD.getBaseDefence(),
+                EnemyStats.DEMON_LORD.getGoldReward(),
+                EnemyStats.DEMON_LORD.getXpReward()
+        );
     }
     public DemonLord(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD, level);
+        super(name,
+                EnemyStats.DEMON_LORD.getBaseMaxHp(),
+                EnemyStats.DEMON_LORD.getBaseAttack(),
+                EnemyStats.DEMON_LORD.getBaseDefence(),
+                EnemyStats.DEMON_LORD.getGoldReward(),
+                EnemyStats.DEMON_LORD.getXpReward(),
+                level
+        );
     }
 
     @Override

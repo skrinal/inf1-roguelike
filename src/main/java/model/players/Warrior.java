@@ -4,15 +4,11 @@ import model.Character;
 import model.Player;
 import model.enums.ClassPower;
 import model.enums.CombatTag;
+import model.enums.players.PlayerStats;
 import model.enums.status.StatusEffects;
 import utility.Utility;
 
 public class Warrior extends Player {
-
-    private static final int MAX_HP = 100;
-    private static final int ATTACK = 7;
-    private static final int DEFENCE = 6;
-    private static final int POWER = 120;
 
     private final String basicAbilityName = "Bloodthirst";
     private final String specialAbilityName = "Execute";
@@ -24,15 +20,30 @@ public class Warrior extends Player {
     private final int specialAbilityCost = 30;
     private final int utilityAbilityCost = 10;
 
+    private final double basicAbilityMultiplayer = 1.4;
+    private final double specialAbilityMultiplayer = 0.4;
+
     private StatusEffects stance;
 
     public Warrior(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
+        super(name,
+                PlayerStats.WARRIOR.getBaseMaxHp(),
+                PlayerStats.WARRIOR.getBaseAttack(),
+                PlayerStats.WARRIOR.getBaseDefence(),
+                PlayerStats.WARRIOR.getBasePower(),
+                1
+        );
         this.initializeStance();
     }
 
     public Warrior(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER, level);
+        super(name,
+                PlayerStats.WARRIOR.getBaseMaxHp(),
+                PlayerStats.WARRIOR.getBaseAttack(),
+                PlayerStats.WARRIOR.getBaseDefence(),
+                PlayerStats.WARRIOR.getBasePower(),
+                level
+        );
         this.initializeStance();
     }
 
@@ -88,7 +99,7 @@ public class Warrior extends Player {
     @Override
     public void performeBasicAbility(Character target) {
         if (usePower(this.basicAbilityCost)) {
-            int damage = (int)(this.getTotalAttack() * 1.4);
+            int damage = (int)(this.getTotalAttack() * this.basicAbilityMultiplayer);
             int rawDamage = target.takeDamage(damage, this);
 
             this.damageAbilitySystemOut(
@@ -108,7 +119,7 @@ public class Warrior extends Player {
                 this.print(target.getName() + " has been executed");
 
             } else {
-                int damage = (int)(this.getTotalAttack() * 0.4);
+                int damage = (int)(this.getTotalAttack() * this.specialAbilityMultiplayer);
                 int rawDamage = target.takeDamage(damage, this);
 
                 this.print(target.getName() + " is not under 15% HP");

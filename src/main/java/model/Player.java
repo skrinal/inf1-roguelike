@@ -25,6 +25,10 @@ public abstract class Player extends Character {
     private Item equippedWeapon;
     private Item equippedArmor;
 
+    private int experience;
+    private int experienceToNextLevel;
+
+
     protected Player(String name, int maxHp, int attack, int defence, int maxPower, int level) {
         super(name, maxHp, attack, defence, level);
         this.completedRooms = new ArrayList<>();
@@ -35,6 +39,60 @@ public abstract class Player extends Character {
         this.inventory = new HashMap<>();
         this.equippedArmor = null;
         this.equippedWeapon = null;
+
+        this.experience = 0;
+        this.experienceToNextLevel = this.calculateExperienceToNextLevel();
+    }
+
+    protected int getExperience() {
+        return this.experience;
+    }
+
+    protected int getExperienceToNextLevel() {
+        return this.experienceToNextLevel;
+    }
+
+    public void gainExperience(int amount) {
+        this.experience += amount;
+        while (this.experience >= this.experienceToNextLevel) {
+            this.levelUp();
+        }
+    }
+
+    private void levelUp() {
+        this.experience -= this.experienceToNextLevel;
+        this.incrementLevel();
+        this.experienceToNextLevel = this.calculateExperienceToNextLevel();
+
+        this.setMaxHp(this.levelUpHp());
+        this.setHp(this.resetHp());
+        this.setAttack(this.levelUpAttack());
+        this.setDefence(this.levelUpDefence());
+        this.power = this.resetPower();
+    }
+
+    private int levelUpHp() {
+        return this.getMaxHp() + (10 + (this.getLevel() * 2));
+    }
+
+    private int resetHp() {
+        return this.getMaxHp();
+    }
+
+    private int resetPower() {
+        return this.getMaxPower();
+    }
+
+    private int levelUpAttack() {
+        return this.getAttack() + 2 + this.getLevel();
+    }
+
+    private int levelUpDefence() {
+        return this.getDefence() + (int)((double)this.getLevel() / 2);
+    }
+
+    private int calculateExperienceToNextLevel() {
+        return (int)(100 * Math.pow(1.2, this.getLevel()));
     }
 
     public List<RoomType> getCompletedRooms() {
@@ -69,10 +127,6 @@ public abstract class Player extends Character {
         this.gold += amount;
     }
 
-//    public HashMap<Item, Integer> getInventory() {
-//        return this.inventory;
-//    }
-
     public boolean showInventory() {
         boolean open = true;
 
@@ -96,7 +150,7 @@ public abstract class Player extends Character {
         List<Item> items = new ArrayList<>();
 
         for (var entry : this.inventory.entrySet()) {
-            if (entry.getKey().getType() == type) {
+            if (entry.getKey().type() == type) {
                 items.add(entry.getKey());
             }
         }
@@ -111,7 +165,7 @@ public abstract class Player extends Character {
         this.print("Choose an item:");
         for (int i = 0; i < items.size(); i++) {
             Item item = items.get(i);
-            this.print((i + 1) + ") " + item.getName());
+            this.print((i + 1) + ") " + item.name());
         }
         this.print("0) Exit");
 
@@ -126,21 +180,21 @@ public abstract class Player extends Character {
     }
 
     private void useOrEquipItem(Item item) {
-        switch (item.getType()) {
+        switch (item.type()) {
             case POTION -> {
-                this.heal(item.getValue());
+                this.heal(item.value());
                 this.consumeItem(item);
-                this.print("You used " + item.getName() + "!");
+                this.print("You used " + item.name() + "!");
                 this.pause();
             }
             case WEAPON -> {
                 this.setEquippedWeapon(item);
-                this.print("You equipped " + item.getName() + "!");
+                this.print("You equipped " + item.name() + "!");
                 this.pause();
             }
             case ARMOR -> {
                 this.setEquippedArmor(item);
-                this.print("You equipped " + item.getName() + "!");
+                this.print("You equipped " + item.name() + "!");
                 this.pause();
             }
         }
@@ -183,13 +237,13 @@ public abstract class Player extends Character {
     @Override
     public int getTotalAttack() {
         return (int)((this.getAttack() + (
-                this.equippedWeapon != null ? this.equippedWeapon.getValue() : 0)) * this.getDamageMultiplier());
+                this.equippedWeapon != null ? this.equippedWeapon.value() : 0)) * this.getDamageMultiplier());
     }
 
     @Override
     public int getTotalDefense() {
         return (int)(
-                (this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.getValue() : 0)) * this.getDefenceMultiplier());
+                (this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.value() : 0)) * this.getDefenceMultiplier());
     }
 
     public GameState handleStats() {
@@ -198,6 +252,10 @@ public abstract class Player extends Character {
 
         this.pause();
         return GameState.GAME;
+    }
+
+    public void restoreMaxPower() {
+        this.power = this.maxPower;
     }
 
     public Item getEquippedWeapon() {
@@ -228,8 +286,8 @@ public abstract class Player extends Character {
         this.print("║ ");
         this.print("║ Level:   " + this.getLevel() + " - " + this.getExperience() + "/" + this.getExperienceToNextLevel());
         this.print("║ ");
-        this.print("║ Armor:   " + (this.getEquippedArmor() == null ? "None" : this.getEquippedArmor().getName() + " + " + this.getEquippedArmor().getValue() + " Armor"));
-        this.print("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().getName() + " + " + this.getEquippedWeapon().getValue() + " Damage"));
+        this.print("║ Armor:   " + (this.getEquippedArmor() == null ? "None" : this.getEquippedArmor().name() + " + " + this.getEquippedArmor().value() + " Armor"));
+        this.print("║ Weapon:  " + (this.getEquippedWeapon() == null ? "None" : this.getEquippedWeapon().name() + " + " + this.getEquippedWeapon().value() + " Damage"));
         this.print("╚═════════════════════════════════╝");
     }
 

@@ -4,21 +4,32 @@ import model.enums.type.EnemyType;
 
 public abstract class Enemy extends Character {
     private int goldReward;
+    private int xpReward;
 
     /**
      * Constructor for enemy without an assigned level at creation.
      */
-    protected Enemy(String name, int maxHp, int attack, int defence, int goldReward) {
+    protected Enemy(String name, int maxHp, int attack, int defence, int goldReward, int baseXpReward) {
         super(name, maxHp, attack, defence, 1);
         this.goldReward = goldReward;
+        this.xpReward = baseXpReward;
     }
 
     /**
      * Constructor for enemy with an assigned level at creation.
      */
-    protected Enemy(String name, int maxHp, int attack, int defence, int goldReward, int level) {
+    protected Enemy(String name, int maxHp, int attack, int defence, int goldReward, int baseXpReward, int level) {
         super(name, maxHp, attack, defence, level);
         this.goldReward = goldReward;
+        this.xpReward = baseXpReward;
+    }
+
+    public int getXpReward() {
+        return this.xpReward;
+    }
+
+    protected void setXpReward(int xpReward) {
+        this.xpReward = xpReward;
     }
 
     public int getGoldReward() {

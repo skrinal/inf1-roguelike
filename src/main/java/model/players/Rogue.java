@@ -4,24 +4,22 @@ import model.Character;
 import model.Player;
 import model.enums.ClassPower;
 import model.enums.CombatTag;
+import model.enums.players.PlayerStats;
 import model.enums.status.StatusEffects;
 
 import java.util.Random;
 
 public class Rogue extends Player {
 
-    private static final int MAX_HP = 100;
-    private static final int ATTACK = 8;
-    private static final int DEFENCE = 5;
-    private static final int POWER = 150;
-
     private final String basicAbilityName = "Sinister Strike";
     private final String specialAbilityName = "Vanish";
     private final String utilityAbilityName = "Dice roll";
 
-    private final int basicAbilityCost = 25;
+    private final int basicAbilityCost = 20;
     private final int specialAbilityCost = 60;
     private final int utilityAbilityCost = 10;
+
+    private final double basicAbilityMultiplayer = 1.5;
 
     private final String actionVerb = "stab";
 
@@ -31,11 +29,23 @@ public class Rogue extends Player {
     private final Random random = new Random();
 
     public Rogue(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
+        super(name,
+                PlayerStats.ROGUE.getBaseMaxHp(),
+                PlayerStats.ROGUE.getBaseAttack(),
+                PlayerStats.ROGUE.getBaseDefence(),
+                PlayerStats.ROGUE.getBasePower(),
+                1
+        );
     }
 
     public Rogue(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER, level);
+        super(name,
+                PlayerStats.ROGUE.getBaseMaxHp(),
+                PlayerStats.ROGUE.getBaseAttack(),
+                PlayerStats.ROGUE.getBaseDefence(),
+                PlayerStats.ROGUE.getBasePower(),
+                level
+        );
     }
 
     @Override
@@ -91,7 +101,7 @@ public class Rogue extends Player {
     @Override
     public void performeBasicAbility(Character target) {
         if (usePower(this.basicAbilityCost)) {
-            int rawDamage = (int)(this.getTotalAttack() * 1.5);
+            int rawDamage = (int)(this.getTotalAttack() * this.basicAbilityMultiplayer);
             int actualDamage = target.takeDamage(rawDamage, this);
 
             this.damageAbilitySystemOut(

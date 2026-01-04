@@ -3,21 +3,30 @@ package model.enemies;
 import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
+import model.enums.enemy.EnemyStats;
 import model.enums.type.EnemyType;
 import utility.Utility;
 
 public class Troll extends Enemy {
-    //TODO Change values
-    private static final int MAX_HP = 5;
-    private static final int ATTACK = 30;
-    private static final int DEFENCE = 20;
-    private static final int GOLD_REWARD = 100;
 
     public Troll(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD);
+        super(name,
+                EnemyStats.TROLL.getBaseMaxHp(),
+                EnemyStats.TROLL.getBaseAttack(),
+                EnemyStats.TROLL.getBaseDefence(),
+                EnemyStats.TROLL.getGoldReward(),
+                EnemyStats.TROLL.getXpReward()
+        );
     }
     public Troll(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD, level);
+        super(name,
+                EnemyStats.TROLL.getBaseMaxHp(),
+                EnemyStats.TROLL.getBaseAttack(),
+                EnemyStats.TROLL.getBaseDefence(),
+                EnemyStats.TROLL.getGoldReward(),
+                EnemyStats.TROLL.getXpReward(),
+                level
+        );
     }
 
     @Override
