@@ -18,9 +18,8 @@ public class CombatSystem {
 
         while (player.isAlive() && enemy.isAlive()) {
 
-            if (!enemy.isAlive()) {
-                System.out.println("\n" + "Enemy has been defeated !!!");
-                Utility.enterToContinue();
+            if (this.checkIfEnemyDead(enemy)) {
+                this.getXp(player, enemy);
                 break;
             }
 
@@ -32,9 +31,8 @@ public class CombatSystem {
             }
 
 
-            if (!enemy.isAlive()) {
-                System.out.println("\n" + "Enemy has been defeated !!!");
-                Utility.enterToContinue();
+            if (this.checkIfEnemyDead(enemy)) {
+                this.getXp(player, enemy);
                 break;
             }
 
@@ -62,6 +60,7 @@ public class CombatSystem {
         }
 
         player.removeAllStatusEffects();
+        player.restoreMaxPower();
         return player.isAlive();
     }
 
@@ -72,12 +71,25 @@ public class CombatSystem {
             case 1 -> player.performeBasicAbility(enemy);
             case 2 -> player.performeSpecialAbility(enemy);
             case 3 -> player.performeUtilityAbility();
-            case 4 -> player.heal(3);
+            case 4 -> player.heal(5 + player.getLevel());
             case 5 -> {
                 return player.showInventory();
             }
         }
         return false;
+    }
+
+    private boolean checkIfEnemyDead(Enemy enemy) {
+        if (!enemy.isAlive()) {
+            System.out.println("\n" + "Enemy has been defeated !!!");
+            Utility.enterToContinue();
+            return true;
+        }
+        return false;
+    }
+
+    private void getXp(Player player, Enemy enemy) {
+        player.gainExperience(enemy.getXpReward());
     }
 
 }
