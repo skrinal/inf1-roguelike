@@ -23,8 +23,6 @@ public abstract class Character {
     private double defenceMultiplier = 1.0;
 
     private int level;
-    private int experience;
-    private int experienceToNextLevel;
 
     private SystemOutput out;
 
@@ -43,11 +41,9 @@ public abstract class Character {
             this.initializeAtLevel(level);
         }
 
-        this.experience = 0;
-        this.experienceToNextLevel = this.calculateExperienceToNextLevel();
-
         this.out = new ConsoleOutput();
     }
+
 
     public void setSystemOutput(SystemOutput out) {
         this.out = out;
@@ -75,12 +71,14 @@ public abstract class Character {
             int newAttack = this.getAttack() + 2 + currentLevel;
             int newDefence = this.getDefence() + 2 + (int)Math.round((double)currentLevel / 2);
             int newGold = enemy.getGoldReward() + (currentLevel * 10);
+            int newXpReward = enemy.getXpReward() + (currentLevel * 10);
 
             this.setMaxHp(newMaxHp);
             this.setHp(newMaxHp);
             this.setAttack(newAttack);
             this.setDefence(newDefence);
             enemy.setGoldReward(newGold);
+            enemy.setXpReward(newXpReward);
         } else {
             this.maxHp += 10 + (this.level * 2);
             this.hp = this.maxHp;
@@ -226,7 +224,6 @@ public abstract class Character {
         }
     }
 
-
     public Map<StatusEffects, Integer> getStatusEffects() {
         return this.statusEffects;
     }
@@ -286,37 +283,8 @@ public abstract class Character {
         return this.level;
     }
 
-    private void incrementLevel() {
+    protected void incrementLevel() {
         this.level++;
-    }
-
-    protected int getExperience() {
-        return this.experience;
-    }
-
-    // TODO: Come up with system to lose experience
-    // public void loseExperience(int amount) {}
-
-    protected int getExperienceToNextLevel() {
-        return this.experienceToNextLevel;
-    }
-
-    public void gainExperience(int amount) {
-        this.experience += amount;
-        while (this.experience >= this.experienceToNextLevel) {
-            this.levelUp();
-        }
-    }
-
-    private void levelUp() {
-        this.experience -= this.experienceToNextLevel;
-        this.level++;
-        this.experienceToNextLevel = this.calculateExperienceToNextLevel();
-
-        this.maxHp += 10 + (this.level * 2);
-        this.hp = this.maxHp;
-        this.attack += 2 + this.level;
-        this.defence += 1 + (int)((double)this.level / 2);
     }
 
     public String getHealthBar() {
@@ -330,10 +298,6 @@ public abstract class Character {
             result.append(i < bars ? "█" : "░");
         }
         return result.toString();
-    }
-
-    private int calculateExperienceToNextLevel() {
-        return (int)(100 * Math.pow(1.2, this.level));
     }
 
     public abstract int getTotalAttack();
