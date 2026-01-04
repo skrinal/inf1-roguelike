@@ -109,37 +109,31 @@ public class CombatStrings {
     }
 
     private String createCenterPanel(Player player) {
-        StringBuilder ui = new StringBuilder();
-        ui.append("╔══════════════════════════╗\n");
 
 
-        ui.append("║")
-                .append(this.padLine(
-                    String.format(" [1] %s (%s)", player.getBasicAbilityName(), player.getBasicAbilityCost()), 26))
-                .append("║\n");
+        String ui = "╔══════════════════════════╗\n" +
+                "║" +
+                this.padLine(
+                        String.format(" [1] %s (%s)", player.getBasicAbilityName(), player.getBasicAbilityCost()), 26) +
+                "║\n" +
+                "║" +
+                this.padLine(
+                        String.format(" [2] %s (%s)", player.getSpecialAbilityName(), player.getSpecialAbilityCost()), 26) +
+                "║\n" +
+                "║" +
+                this.padLine(
+                        String.format(" [3] %s (%s)", player.getUtilityAbilityName(), player.getUtilityAbilityCost()
+                        ), 26) +
+                "║\n" +
+                "║" +
+                this.padLine(" [4] Rest ", 26) +
+                "║\n" +
+                "║" +
+                this.padLine(" [5] Inventory", 26) +
+                "║\n" +
+                "╚══════════════════════════╝";
 
-        ui.append("║")
-                .append(this.padLine(
-                    String.format(" [2] %s (%s)", player.getSpecialAbilityName(), player.getSpecialAbilityCost()), 26))
-                .append("║\n");
-
-        ui.append("║")
-                .append(this.padLine(
-                    String.format(" [3] %s (%s)", player.getUtilityAbilityName(), player.getUtilityAbilityCost()
-                ), 26))
-                .append("║\n");
-
-
-        ui.append("║")
-                .append(this.padLine(" [4] Rest ", 26))
-                .append("║\n");
-        ui.append("║")
-                .append(this.padLine(" [5] Inventory", 26))
-                .append("║\n");
-
-        ui.append("╚══════════════════════════╝");
-
-        return ui.toString();
+        return ui;
     }
 
     private String createRightPanel(Enemy enemy) {
