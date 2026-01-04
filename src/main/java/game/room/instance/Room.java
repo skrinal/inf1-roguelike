@@ -145,7 +145,7 @@ public class Room {
     }
 
     private void itemOptions(Item item) {
-        switch (item.getType()) {
+        switch (item.type()) {
             case WEAPON, ARMOR -> {
                 System.out.println("1. Equip");
                 System.out.println("2. Keep");
@@ -159,7 +159,7 @@ public class Room {
 
         switch (handleDecision(1, 2)) {
             case 1 -> {
-                switch (item.getType()) {
+                switch (item.type()) {
                     case WEAPON -> {
                         this.player.setEquippedWeapon(item);
                         System.out.println("\n" + "Item has been equipped.");
@@ -169,7 +169,7 @@ public class Room {
                         System.out.println("\n" + "Item has been equipped.");
                     }
                     case POTION -> {
-                        this.player.restorePower(item.getValue());
+                        this.player.restorePower(item.value());
                         System.out.println("\n" + "Potion has been used.");
                     }
                     default -> System.out.println("Invalid selection. Try again");
