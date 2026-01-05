@@ -1,5 +1,6 @@
 package model.enemies;
 
+import data.Items;
 import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
@@ -18,7 +19,8 @@ public class Elf extends Enemy implements SpectralAttacker {
                 EnemyStats.ELF.getBaseAttack(),
                 EnemyStats.ELF.getBaseDefence(),
                 EnemyStats.ELF.getGoldReward(),
-                EnemyStats.ELF.getXpReward()
+                EnemyStats.ELF.getXpReward(),
+                Items.HEALTH_VIAL.getItem()
         );
     }
     public Elf(String name, int level) {
@@ -28,7 +30,8 @@ public class Elf extends Enemy implements SpectralAttacker {
                 EnemyStats.ELF.getBaseDefence(),
                 EnemyStats.ELF.getGoldReward(),
                 EnemyStats.ELF.getXpReward(),
-                level
+                level,
+                Items.HEALTH_VIAL.getItem()
         );
     }
 

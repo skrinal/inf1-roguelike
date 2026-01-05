@@ -1,5 +1,6 @@
 package model.enemies;
 
+import data.Items;
 import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
@@ -16,7 +17,9 @@ public class Skeleton extends Enemy {
                 EnemyStats.SKELETON.getBaseAttack(),
                 EnemyStats.SKELETON.getBaseDefence(),
                 EnemyStats.SKELETON.getGoldReward(),
-                EnemyStats.SKELETON.getXpReward()
+                EnemyStats.SKELETON.getXpReward(),
+                Items.HEALTH_POTION.getItem()
+
         );
     }
 
@@ -27,7 +30,8 @@ public class Skeleton extends Enemy {
                 EnemyStats.SKELETON.getBaseDefence(),
                 EnemyStats.SKELETON.getGoldReward(),
                 EnemyStats.SKELETON.getXpReward(),
-                level
+                level,
+                Items.HEALTH_POTION.getItem()
         );
     }
 

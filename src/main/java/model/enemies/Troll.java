@@ -1,5 +1,6 @@
 package model.enemies;
 
+import data.Items;
 import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
@@ -15,7 +16,9 @@ public class Troll extends Enemy {
                 EnemyStats.TROLL.getBaseAttack(),
                 EnemyStats.TROLL.getBaseDefence(),
                 EnemyStats.TROLL.getGoldReward(),
-                EnemyStats.TROLL.getXpReward()
+                EnemyStats.TROLL.getXpReward(),
+                Items.HEALTH_POTION.getItem()
+
         );
     }
     public Troll(String name, int level) {
@@ -25,7 +28,8 @@ public class Troll extends Enemy {
                 EnemyStats.TROLL.getBaseDefence(),
                 EnemyStats.TROLL.getGoldReward(),
                 EnemyStats.TROLL.getXpReward(),
-                level
+                level,
+                Items.HEALTH_POTION.getItem()
         );
     }
 

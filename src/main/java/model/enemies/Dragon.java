@@ -1,5 +1,6 @@
 package model.enemies;
 
+import data.Items;
 import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
@@ -15,7 +16,8 @@ public class Dragon extends Enemy implements SpectralAttacker {
                 EnemyStats.DRAGON.getBaseAttack(),
                 EnemyStats.DRAGON.getBaseDefence(),
                 EnemyStats.DRAGON.getGoldReward(),
-                EnemyStats.DRAGON.getXpReward()
+                EnemyStats.DRAGON.getXpReward(),
+                Items.HEALTH_CHALICE.getItem()
         );
     }
     public Dragon(String name, int level) {
@@ -25,7 +27,8 @@ public class Dragon extends Enemy implements SpectralAttacker {
                 EnemyStats.DRAGON.getBaseDefence(),
                 EnemyStats.DRAGON.getGoldReward(),
                 EnemyStats.DRAGON.getXpReward(),
-                level
+                level,
+                Items.HEALTH_CHALICE.getItem()
         );
     }
 
@@ -43,7 +46,7 @@ public class Dragon extends Enemy implements SpectralAttacker {
     public void performeBasicAbility(Character target) {
 
     }
-
+    //TODO FINIS METHODS
     @Override
     public void performeSpecialAbility(Character target) {
 

@@ -1,5 +1,6 @@
 package model.enemies;
 
+import data.Items;
 import model.Character;
 import model.Enemy;
 import model.Player;
@@ -25,7 +26,8 @@ public class DemonLord extends Enemy implements Boss {
                 EnemyStats.DEMON_LORD.getBaseAttack(),
                 EnemyStats.DEMON_LORD.getBaseDefence(),
                 EnemyStats.DEMON_LORD.getGoldReward(),
-                EnemyStats.DEMON_LORD.getXpReward()
+                EnemyStats.DEMON_LORD.getXpReward(),
+                Items.HEALTH_CHALICE.getItem()
         );
     }
     public DemonLord(String name, int level) {
@@ -35,7 +37,8 @@ public class DemonLord extends Enemy implements Boss {
                 EnemyStats.DEMON_LORD.getBaseDefence(),
                 EnemyStats.DEMON_LORD.getGoldReward(),
                 EnemyStats.DEMON_LORD.getXpReward(),
-                level
+                level,
+                Items.HEALTH_CHALICE.getItem()
         );
     }
 
@@ -75,6 +78,7 @@ public class DemonLord extends Enemy implements Boss {
                 this.applyStatusEffect(StatusEffects.THORNS, 4);
                 this.print("Perfect roll! Dark power coils around the Demon Lord!");
             }
+            default -> this.print("The dice lands on " + diceRoll + "!");
         }
     }
 
@@ -91,10 +95,12 @@ public class DemonLord extends Enemy implements Boss {
             this.startCasting();
         }
 
-        switch (this.phase) {
-            case PHASE_ONE -> this.phaseOne(player);
-            case PHASE_TWO -> this.phaseTwo(player);
+        if (this.phase == BossPhase.PHASE_ONE) {
+            this.phaseOne(player);
+        } else {
+            this.phaseTwo(player);
         }
+
         //Demon lord casting bal bla output
     }
 
@@ -139,7 +145,7 @@ public class DemonLord extends Enemy implements Boss {
         this.isCasting = false;
         this.print("The Demon Lord unleashes Hellfire!");
 
-        if (!player.isUntargatable() || player.hasStatusEffect(StatusEffects.INVISIBILITY)) {
+        if (!player.isUntargetable() || player.hasStatusEffect(StatusEffects.INVISIBILITY)) {
             int damage = player.takeTrueDamage(this.getTotalAttack() * 3);
             this.trueDamageAbilitySystemOut(damage, true);
             return;
