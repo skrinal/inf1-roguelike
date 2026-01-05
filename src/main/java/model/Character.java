@@ -7,6 +7,7 @@ import output.SystemOutput;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Character {
@@ -17,7 +18,7 @@ public abstract class Character {
     private int defence;
     private int shield;
 
-    private HashMap<StatusEffects, Integer> statusEffects;
+    private final HashMap<StatusEffects, Integer> statusEffects;
 
     private double damageMultiplier = 1.0;
     private double defenceMultiplier = 1.0;
@@ -133,7 +134,6 @@ public abstract class Character {
         this.shield = Math.max(0, shield);
     }
 
-    //TODO: EnemyType treba pouzit kde su damagePercenate -> asi fix uz
     public int takeDamage(int damage, Character attacker) {
         int multiplayerDamage = (int)(attacker.getDamageMultiplier() * damage);
 
@@ -206,10 +206,16 @@ public abstract class Character {
     }
 
     public void removeAllStatusEffects() {
+        List<StatusEffects> toRemove = new ArrayList<>();
+
         for (StatusEffects effect : this.statusEffects.keySet()) {
             if (!this.checkIfStance(effect)) {
-                this.removeStatusEffect(effect);
+                toRemove.add(effect);
             }
+        }
+
+        for (StatusEffects effect : toRemove) {
+            this.removeStatusEffect(effect);
         }
     }
 
