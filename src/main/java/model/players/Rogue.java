@@ -20,10 +20,13 @@ public class Rogue extends Player {
     private final int utilityAbilityCost = 10;
 
     private final double basicAbilityMultiplayer = 1.5;
+    private final double basicAbilityBackStabMultiplier = 2.2;
+    private final double specialAbilityDamageMultiplier = 2.9;
 
     private final String actionVerb = "stab";
 
     private double vanishChance = 0.6;
+    private int vanishTurns = 0;
     private boolean isVanished = false;
 
     private final Random random = new Random();
@@ -100,6 +103,21 @@ public class Rogue extends Player {
 
     @Override
     public void performeBasicAbility(Character target) {
+        if (this.isVanished && this.random.nextBoolean()) {
+            if (usePower(this.basicAbilityCost)) {
+                int rawDamage = (int)(this.getTotalAttack() * this.basicAbilityBackStabMultiplier);
+                int actualDamage = target.takeDamage(rawDamage, this);
+
+                this.damageAbilitySystemOut(
+                        this.basicAbilityName, "back stabed", target, actualDamage, rawDamage
+                );
+
+            } else {
+                this.noPowerSystemOut(this.getPowerString());
+            }
+            return;
+        }
+
         if (usePower(this.basicAbilityCost)) {
             int rawDamage = (int)(this.getTotalAttack() * this.basicAbilityMultiplayer);
             int actualDamage = target.takeDamage(rawDamage, this);
@@ -123,6 +141,13 @@ public class Rogue extends Player {
 
                 this.isVanished = true;
 
+                int rawDamage = (int)(this.getTotalAttack() * this.specialAbilityDamageMultiplier);
+                int actualDamage = target.takeTrueDamage(rawDamage);
+
+                this.damageAbilitySystemOut(
+                        this.basicAbilityName, "back stabed", target, actualDamage, rawDamage
+                );
+
             } else {
                 this.noPowerSystemOut(this.getPowerString());
             }
@@ -138,18 +163,25 @@ public class Rogue extends Player {
             int diceRoll = this.random.nextInt(6) + 1;
 
             switch (diceRoll) {
-                case 1, 3, 5 -> { /* No buff */ }
+                case 1, 3, 5 -> {
+                    this.print("Bad roll (" + diceRoll + ")");
+                    this.pause();
+                }
                 case 2, 4 -> {
                     this.heal(5);
 
                     this.applyStatusEffect(StatusEffects.HEALING, 2);
                     this.print("Great roll (" + diceRoll + ")");
+                    this.print("Week over time healing for 2 rounds");
+                    this.pause();
                 }
                 case 6 -> {
                     this.setDamageMultiplier(1.25);
 
                     this.applyStatusEffect(StatusEffects.STRENGTH, 3);
                     this.print("Perfect roll !! (" + diceRoll + ")");
+                    this.print("Increased damage for 3 rounds");
+                    this.pause();
                 }
                 default -> { }
             }
@@ -160,9 +192,17 @@ public class Rogue extends Player {
 
     private void checkVanishStatus() {
         if (this.isVanished) {
+            this.vanishTurns++;
+
+            if (this.vanishTurns <= 2) {
+                this.print("You remain untargetable!");
+                return;
+            }
+
             if (this.random.nextDouble() >= this.vanishChance) {
 
-                this.print("You remain untargetable and " + this.actionVerb + " again!");
+                this.print("You remain untargetable!");
+                this.print("");
 
                 this.vanishChance -= 0.1; // Increase chance to get out each turn
             } else {
@@ -176,7 +216,7 @@ public class Rogue extends Player {
     }
 
     @Override
-    public boolean isUntargatable() {
+    public boolean isUntargetable() {
         return this.isVanished;
     }
 }
