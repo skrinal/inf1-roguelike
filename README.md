@@ -20,7 +20,7 @@ If you're on Windows, you'll need to figure it out (or switch to Linux :P).
 
 ✔️ Enemies with unique behavior
 
-⚠️ Saving/loading (still resolving some issues)
+⚠️ Saving/loading
 
 ## Requirments
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Java 25](https://www.oracle.com/java/technologies/downloads/) 
@@ -53,12 +53,13 @@ java main.main.java
 Each class in the main.main.java.game has unique stats and abilities. 
 All classes share the same core mechanics (HP, Attack, Defence, Power), but their abilities define their playstyle.
 
-| Stats   | Rogue | Mage | Warrior | x | Skeleton | DemonLord |
-|:--------|:-----:|:----:|:-------:|---|----------|-----------|
-| HP      |  100  |  80  |   100   | x |          |           |
-| Attack  |   8   |  10  |    7    | x |          |           |
-| Defence |   5   |  3   |    6    | x |          |           |
-| Power   |  150  | 100  |   120   | x |          |           |
+| Stats    | Rogue | Mage | Warrior | x | Skeleton | Troll | Elf | Dragon | DemonLord |
+|:---------|:-----:|:----:|:-------:|---|:--------:|:-----:|:---:|:------:|:---------:|
+| HP       |  100  |  80  |   100   | x |   100    |  160  | 140 |  190   |    500    |
+| Attack   |   8   |  10  |    7    | x |    10    |  13   | 16  |   8    |    24     |
+| Defence  |   5   |  3   |    6    | x |    5     |  10   | 20  |   15   |    19     |
+| Power    |  150  | 100  |   120   | x |    x     |   x   |  x  |   x    |     x     |
+| xpReward |   x   |  x   |    x    | x |   120    |  200  | 300 |  500   |   1500    |
 
 ## 🗡️ Rogue
 A fast and agile damage-dealer focused on burst attacks and evasive maneuvers

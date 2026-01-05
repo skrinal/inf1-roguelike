@@ -19,7 +19,7 @@ class TrollTest {
     @BeforeEach
     void setUp() {
         player = new Rogue("Rogues", 5);
-        troll = new Troll("Trolls");
+        troll = new Troll("Trolls", 5);
         trollWithLevel = new Troll("TrollsLevelos", 50);
 
         player.setSystemOutput(new SilentOutput());
@@ -43,16 +43,16 @@ class TrollTest {
 
     @Test
     void testTrollBasicAbility() {
-        troll.performeBasicAbility(player);
+        troll.performBasicAbility(player);
 
-        assertEquals(player.getMaxHp(), player.getHp());
+        assertNotEquals(player.getMaxHp(), player.getHp());
     }
 
     @Test
     void testTrollSpecialAbility() {
-        troll.performeSpecialAbility(player);
+        troll.performSpecialAbility(player);
 
-        assertEquals(player.getMaxHp(), player.getHp());
+        assertNotEquals(player.getMaxHp(), player.getHp());
     }
 
 

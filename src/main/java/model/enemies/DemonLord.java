@@ -1,21 +1,31 @@
 package model.enemies;
 
+import data.Items;
 import model.Character;
 import model.Enemy;
 import model.Player;
 import model.enums.BossPhase;
 import model.enums.CombatTag;
+import model.enums.enemy.EnemyStats;
 import model.enums.status.StatusEffects;
 import model.enums.type.EnemyType;
 import model.interfaces.Boss;
 import utility.Utility;
 
-public class DemonLord extends Enemy implements Boss {
+import java.util.Random;
 
-    private static final int MAX_HP = 5;
-    private static final int ATTACK = 30;
-    private static final int DEFENCE = 20;
-    private static final int GOLD_REWARD = 100;
+/**
+ * Represents the Demon Lord, a boss-type enemy in a combat system. The Demon Lord
+ * features unique combat behaviors, including multiple phases, random dice-based abilities,
+ * and a powerful casting mechanism.
+ *
+ * The Demon Lord is initialized with predefined attributes such as health, attack, defense,
+ * and rewards, which are derived from the EnemyStats configuration. Additionally, it has
+ * a natural progression to Phase Two when health decreases below certain thresholds.
+ *
+ * The boss phases and casting mechanics add dynamic gameplay.
+ */
+public class DemonLord extends Enemy implements Boss {
 
     private BossPhase phase = BossPhase.PHASE_ONE;
     private int castTurnsRemaining = 2;
@@ -23,11 +33,37 @@ public class DemonLord extends Enemy implements Boss {
 
     private int currentTurn = 0;
 
+    /**
+     * Constructs a new DemonLord instance with the specified name.
+     * The Demon Lord uses pre-defined attributes such as maximum health, attack, defense, and rewards
+     * from the EnemyStats for a Demon Lord. Additionally, it assigns a consumable item drop.
+     */
     public DemonLord(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD);
+        super(name,
+                EnemyStats.DEMON_LORD.getBaseMaxHp(),
+                EnemyStats.DEMON_LORD.getBaseAttack(),
+                EnemyStats.DEMON_LORD.getBaseDefence(),
+                EnemyStats.DEMON_LORD.getGoldReward(),
+                EnemyStats.DEMON_LORD.getXpReward(),
+                Items.HEALTH_CHALICE.getItem()
+        );
     }
+
+    /**
+     * Constructs a new DemonLord instance with the specified name and level.
+     * The Demon Lord uses pre-defined attributes such as maximum health, attack, defense, and rewards
+     * from the EnemyStats for a Demon Lord. Additionally, it assigns a consumable item drop.
+     */
     public DemonLord(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD, level);
+        super(name,
+                EnemyStats.DEMON_LORD.getBaseMaxHp(),
+                EnemyStats.DEMON_LORD.getBaseAttack(),
+                EnemyStats.DEMON_LORD.getBaseDefence(),
+                EnemyStats.DEMON_LORD.getGoldReward(),
+                EnemyStats.DEMON_LORD.getXpReward(),
+                level,
+                Items.HEALTH_CHALICE.getItem()
+        );
     }
 
     @Override
@@ -40,15 +76,24 @@ public class DemonLord extends Enemy implements Boss {
         return EnemyType.BOSS;
     }
 
+    /**
+     * Performs the Demon Lord's basic ability by dealing damage to the target character.
+     */
     @Override
-    public void performeBasicAbility(Character target) {
+    public void performBasicAbility(Character target) {
         int damage = target.takeDamage((int)(this.getTotalAttack() * 1.5), this);
         this.damageAbilitySystemOut(damage, false);
     }
 
+    /**
+     * Executes the Demon Lord's special ability based on a random dice roll ranging from 1 to 6.
+     * Each dice result triggers a specific action that either affects the Demon Lord or the target character.
+     */
     @Override
-    public void performeSpecialAbility(Character target) {
-        int diceRoll = Utility.getRandom().nextInt(6) + 1;
+    public void performSpecialAbility(Character target) {
+        Random random = new Random();
+        int diceRoll = random.nextInt(6) + 1;
+
         switch (diceRoll) {
             case 1, 3 -> {
                 this.takeTrueDamage(10);
@@ -66,9 +111,14 @@ public class DemonLord extends Enemy implements Boss {
                 this.applyStatusEffect(StatusEffects.THORNS, 4);
                 this.print("Perfect roll! Dark power coils around the Demon Lord!");
             }
+            default -> this.print("The dice lands on " + diceRoll + "!");
         }
     }
 
+    /**
+     * Executes the actions performed by the boss during its turn.
+     * The behavior depends on the current phase of the boss and whether it is casting an ability.
+     */
     @Override
     public void onBossTurn(Player player) {
         this.currentTurn++;
@@ -82,10 +132,12 @@ public class DemonLord extends Enemy implements Boss {
             this.startCasting();
         }
 
-        switch (this.phase) {
-            case PHASE_ONE -> this.phaseOne(player);
-            case PHASE_TWO -> this.phaseTwo(player);
+        if (this.phase == BossPhase.PHASE_ONE) {
+            this.phaseOne(player);
+        } else {
+            this.phaseTwo(player);
         }
+
         //Demon lord casting bal bla output
     }
 
@@ -95,19 +147,19 @@ public class DemonLord extends Enemy implements Boss {
         }
 
         if (this.currentTurn % 2 == 0) {
-            this.performeSpecialAbility(player);
+            this.performSpecialAbility(player);
         } else {
-            this.performeBasicAbility(player);
+            this.performBasicAbility(player);
         }
     }
 
     private void phaseTwo(Player player) {
         if (!player.hasStatusEffect(StatusEffects.DEMONLORD_CURSE)) {
-            player.applyStatusEffect(StatusEffects.DEMONLORD_CURSE, 3);
+            player.applyStatusEffect(StatusEffects.DEMONLORD_CURSE, 2);
         } else if (this.isCasting) {
-            this.performeBasicAbility(player);
+            this.performBasicAbility(player);
         } else {
-            this.performeSpecialAbility(player);
+            this.performSpecialAbility(player);
         }
     }
 
@@ -130,7 +182,7 @@ public class DemonLord extends Enemy implements Boss {
         this.isCasting = false;
         this.print("The Demon Lord unleashes Hellfire!");
 
-        if (!player.isUntargatable() || player.hasStatusEffect(StatusEffects.INVISIBILITY)) {
+        if (player.isUntargetable() || player.hasStatusEffect(StatusEffects.INVISIBILITY)) {
             int damage = player.takeTrueDamage(this.getTotalAttack() * 3);
             this.trueDamageAbilitySystemOut(damage, true);
             return;

@@ -1,23 +1,35 @@
 package model.enemies;
 
+import data.Items;
 import model.Character;
 import model.Enemy;
 import model.enums.CombatTag;
+import model.enums.enemy.EnemyStats;
 import model.enums.type.EnemyType;
 import model.interfaces.SpectralAttacker;
 
 public class Dragon extends Enemy implements SpectralAttacker {
-    //TODO change values
-    private static final int MAX_HP = 5;
-    private static final int ATTACK = 30;
-    private static final int DEFENCE = 20;
-    private static final int GOLD_REWARD = 100;
 
     public Dragon(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD);
+        super(name,
+                EnemyStats.DRAGON.getBaseMaxHp(),
+                EnemyStats.DRAGON.getBaseAttack(),
+                EnemyStats.DRAGON.getBaseDefence(),
+                EnemyStats.DRAGON.getGoldReward(),
+                EnemyStats.DRAGON.getXpReward(),
+                Items.HEALTH_CHALICE.getItem()
+        );
     }
     public Dragon(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, GOLD_REWARD, level);
+        super(name,
+                EnemyStats.DRAGON.getBaseMaxHp(),
+                EnemyStats.DRAGON.getBaseAttack(),
+                EnemyStats.DRAGON.getBaseDefence(),
+                EnemyStats.DRAGON.getGoldReward(),
+                EnemyStats.DRAGON.getXpReward(),
+                level,
+                Items.HEALTH_CHALICE.getItem()
+        );
     }
 
     @Override
@@ -31,12 +43,12 @@ public class Dragon extends Enemy implements SpectralAttacker {
     }
 
     @Override
-    public void performeBasicAbility(Character target) {
+    public void performBasicAbility(Character target) {
 
     }
-
+    //TODO FINIS METHODS
     @Override
-    public void performeSpecialAbility(Character target) {
+    public void performSpecialAbility(Character target) {
 
     }
 }

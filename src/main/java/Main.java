@@ -2,6 +2,7 @@ import game.GameLogic;
 import game.MenuLogic;
 import model.Player;
 import model.enums.GameState;
+import model.strings.MenuStrings;
 import utility.Utility;
 
 void main() {
@@ -21,32 +22,35 @@ void main() {
                 state = GameState.GAME;
             }
             case GAME -> state = gameLogic.handleGame();
-            case LOAD_GAME -> {
-
-            }
-            case SAVE_GAME -> {
-                if (player != null) {
-
-                } else {
-                    System.out.println("Nothing to be saved");
-                }
-            }
+//            case LOAD_GAME -> {
+//
+//            }
+//            case SAVE_GAME -> {
+//                if (player != null) {
+//
+//                } else {
+//                    System.out.println("Nothing to be saved");
+//                }
+//            }
             case DUNGEON -> state = gameLogic.handleDungeon(player);
-
-            //case INVENTORY -> state = handleInventory(input, player);
 
             case STATS -> state = player.handleStats();
             case DEATH -> {
                 player = null;
                 state = GameState.MAIN_MENU;
 
-                System.out.println("\n=== GAME OVER ===");
-                System.out.println("You have died!");
+                System.out.println(MenuStrings.GAME_OVER.getText());
 
                 Utility.enterToContinue();
             }
             case COMPLETE -> {
-                //TODO: VICTORY SCREEN
+                System.out.println(MenuStrings.VICTORY.getText());
+                Utility.enterToContinue();
+
+                System.out.println(MenuStrings.MORE_TO_COME.getText());
+                Utility.enterToContinue();
+
+                state = GameState.MAIN_MENU;
             }
             default -> {
                 System.out.println("Invalid state");

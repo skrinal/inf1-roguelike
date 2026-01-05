@@ -4,19 +4,39 @@ import model.Enemy;
 import model.Player;
 import model.enums.status.StatusEffects;
 
+/**
+ * A utility class for generating and displaying combat-related textual interfaces.
+ * This class provides methods to print styled combat messages and menus to the console.
+ */
 public class CombatStrings {
-    private static final int LEFT_PANEL_WIDTH = 37;
-    private static final int CENTER_PANEL_WIDTH = 30;
-    private static final int RIGHT_PANEL_WIDTH = 37;
+    private final int leftPanelWidth = 36;
+    private final int centerPanelWidth = 26;
+    private final int rightPanelWidth = 36;
+    private final int paddingInBetween = 4;
 
     public CombatStrings() { /* No need to initialize anything */ }
 
+    /**
+     * Outputs an message to the console indicating the start of a combat sequence.
+     */
     public void printCombatStart() {
         System.out.println("\n╔════════════════╗");
         System.out.println("║  COMBAT START  ║");
         System.out.println("╚════════════════╝");
 
     }
+
+    /**
+     * Outputs a message to the console indicating that an enemy has been defeated.
+     */
+    public void printEnemyDefeated() {
+        System.out.println("╔══════════════════════════════════╗");
+        System.out.println("║                                  ║");
+        System.out.println("║    Enemy has been defeated !!!   ║");
+        System.out.println("║                                  ║");
+        System.out.println("╚══════════════════════════════════╝");
+    }
+
     /**
      * Outputs the combat menu to the console.
      * At first we create three panels, each with a fixed width. Which we split into lines.
@@ -38,11 +58,11 @@ public class CombatStrings {
             String right = i < rightPanel.length ? rightPanel[i] : "";
 
             // Pad each panel to its fixed width
-            combinedUI.append(this.padToWidth(left, LEFT_PANEL_WIDTH));
+            combinedUI.append(this.padToWidth(left, this.leftPanelWidth + this.paddingInBetween));
             combinedUI.append(" "); // Spacer
-            combinedUI.append(this.padToWidth(center, CENTER_PANEL_WIDTH));
+            combinedUI.append(this.padToWidth(center, this.centerPanelWidth + this.paddingInBetween));
             combinedUI.append(" "); // Spacer
-            combinedUI.append(this.padToWidth(right, RIGHT_PANEL_WIDTH));
+            combinedUI.append(this.padToWidth(right, this.rightPanelWidth + this.paddingInBetween));
             combinedUI.append("\n");
         }
 
@@ -60,23 +80,22 @@ public class CombatStrings {
         StringBuilder ui = new StringBuilder();
 
         // Top border
-        ui.append("╔═════════════════════════════════╗\n");
+        ui.append("╔").append("═".repeat(this.leftPanelWidth)).append("╗\n");
 
-        //TODO: Rewrite to one function as its duplicated in createRightPanel
-        // Name and class line - padded to fit within the box
-        String nameClass = "  " + player.getName().toUpperCase() + " [" + player.getCombatTag() + "]";
+        // Name and class line + level
+        String nameClass = "  " + player.getName().toUpperCase() + " [" + player.getCombatTag() + "]" + " Level " + player.getLevel();
         ui.append("║")
-                .append(this.padLine(nameClass, 33))
+                .append(this.padLine(nameClass, this.leftPanelWidth))
                 .append("║\n");
 
         // Separator
-        ui.append("╠═════════════════════════════════╣\n");
+        ui.append("╠").append("═".repeat(this.leftPanelWidth)).append("╣\n");
 
         // HP line
         String hpText = " HP:      [" + player.getHealthBar() + "] " +
                 player.getHp() + "/" + player.getMaxHp();
         ui.append("║")
-                .append(this.padLine(hpText, 33))
+                .append(this.padLine(hpText, this.leftPanelWidth))
                 .append("║\n");
 
         // Power line (Mana/Energy/Rage)
@@ -84,60 +103,49 @@ public class CombatStrings {
                 player.getPowerBar() + "] " +
                 player.getPower() + "/" + player.getMaxPower();
         ui.append("║")
-                .append(this.padLine(powerText, 33))
+                .append(this.padLine(powerText, this.leftPanelWidth))
                 .append("║\n");
 
 
         ui.append("║")
-                .append(this.padLine("", 33))
+                .append(this.padLine("", this.leftPanelWidth))
                 .append("║\n");
         ui.append("║")
-                .append(this.padLine(" Effects:", 33))
+                .append(this.padLine(" Effects:", this.leftPanelWidth))
                 .append("║\n");
 
         if (!player.isStatusEffectsEmpty()) {
             for (StatusEffects status : player.getStatusEffects().keySet()) {
-                String statusText = " " + status.toString() + " - " + status.getDescription();
-                ui.append("║").append(this.padLine(statusText, 33)).append("║\n");
+                String statusText = " " + status.getName() + " - " + status.getDescription();
+                ui.append("║").append(this.padLine(statusText, this.leftPanelWidth)).append("║\n");
             }
         }
 
         // Bottom border
-        ui.append("╚═════════════════════════════════╝");
+        ui.append("╚").append("═".repeat(this.leftPanelWidth)).append("╝");
 
         return ui.toString();
     }
 
     private String createCenterPanel(Player player) {
         StringBuilder ui = new StringBuilder();
-        ui.append("╔══════════════════════════╗\n");
 
+        ui.append("╔").append("═".repeat(this.centerPanelWidth)).append("╗\n");
 
-        ui.append("║")
-                .append(this.padLine(
-                    String.format(" [1] %s (%s)", player.getBasicAbilityName(), player.getBasicAbilityCost()), 26))
-                .append("║\n");
+        ui.append("║").append(this.padLine(
+                String.format(" [1] %s (%s)", player.getBasicAbilityName(), player.getBasicAbilityCost()), this.centerPanelWidth)).append("║\n");
 
-        ui.append("║")
-                .append(this.padLine(
-                    String.format(" [2] %s (%s)", player.getSpecialAbilityName(), player.getSpecialAbilityCost()), 26))
-                .append("║\n");
+        ui.append("║").append(this.padLine(
+                String.format(" [2] %s (%s)", player.getSpecialAbilityName(), player.getSpecialAbilityCost()), this.centerPanelWidth)).append("║\n");
 
-        ui.append("║")
-                .append(this.padLine(
-                    String.format(" [3] %s (%s)", player.getUtilityAbilityName(), player.getUtilityAbilityCost()
-                ), 26))
-                .append("║\n");
+        ui.append("║").append(this.padLine(
+                String.format(" [3] %s (%s)", player.getUtilityAbilityName(), player.getUtilityAbilityCost()), this.centerPanelWidth)).append("║\n");
 
+        ui.append("║").append(this.padLine(" [4] Rest ", this.centerPanelWidth)).append("║\n");
 
-        ui.append("║")
-                .append(this.padLine(" [4] Rest ", 26))
-                .append("║\n");
-        ui.append("║")
-                .append(this.padLine(" [5] Inventory", 26))
-                .append("║\n");
+        ui.append("║").append(this.padLine(" [5] Inventory", this.centerPanelWidth)).append("║\n");
 
-        ui.append("╚══════════════════════════╝");
+        ui.append("╚").append("═".repeat(this.centerPanelWidth)).append("╝");
 
         return ui.toString();
     }
@@ -146,39 +154,47 @@ public class CombatStrings {
         StringBuilder ui = new StringBuilder();
 
         // Top border
-        ui.append("╔═════════════════════════════════╗\n");
+        ui.append("╔").append("═".repeat(this.rightPanelWidth)).append("╗\n");
 
         // Name and type line
-        String nameType = "  " + enemy.getName().toUpperCase() + " [" + enemy.getCombatTag() + "]";
+        String nameType = "  " + enemy.getName().toUpperCase() + " [" + enemy.getCombatTag() + "]" + " Level " + enemy.getLevel();
         ui.append("║")
-                .append(this.padLine(nameType, 33))
+                .append(this.padLine(nameType, this.rightPanelWidth))
                 .append("║\n");
 
         // Separator
-        ui.append("╠═════════════════════════════════╣\n");
+        ui.append("╠").append("═".repeat(this.rightPanelWidth)).append("╣\n");
 
         // HP line
         String hpText = " HP:      [" + enemy.getHealthBar() + "] " +
                 enemy.getHp() + "/" + enemy.getMaxHp();
-        ui.append("║").append(this.padLine(hpText, 33)).append("║\n");
+        ui.append("║").append(this.padLine(hpText, this.rightPanelWidth)).append("║\n");
 
         // Defense line
         String defText = " Defense: " + enemy.getTotalDefense();
-        ui.append("║").append(this.padLine(defText, 33)).append("║\n");
+        ui.append("║").append(this.padLine(defText, this.rightPanelWidth)).append("║\n");
+        ui.append("║")
+                .append(this.padLine("", this.leftPanelWidth))
+                .append("║\n");
+        ui.append("║")
+                .append(this.padLine(" Effects:", this.rightPanelWidth))
+                .append("║\n");
 
+        if (!enemy.isStatusEffectsEmpty()) {
+            for (StatusEffects status : enemy.getStatusEffects().keySet()) {
+                String statusText = " " + status.getName() + " - " + status.getDescription();
+                ui.append("║").append(this.padLine(statusText, this.rightPanelWidth)).append("║\n");
+            }
+        }
         // Bottom border
-        ui.append("╚═════════════════════════════════╝");
+        ui.append("╚").append("═".repeat(this.rightPanelWidth)).append("╝\n");
 
         return ui.toString();
     }
 
-    /**
-     * Pads a line to exact width (for content inside box borders)
-     * The width should be panel width - 2 (for the borders)
-     */
     private String padLine(String text, int width) {
         if (text.length() >= width) {
-            return text.substring(0, width); // Truncate if too long
+            return text.substring(0, width);
         }
         return text + " ".repeat(width - text.length());
     }

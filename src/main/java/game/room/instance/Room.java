@@ -1,6 +1,5 @@
 package game.room.instance;
 
-
 import data.ItemDatabase;
 import game.room.RoomOutCome;
 import game.room.combat.CombatSystem;
@@ -10,12 +9,17 @@ import model.Player;
 import model.enums.room.RoomMap;
 import model.enums.room.RoomResult;
 import model.enums.room.RoomType;
-import utility.Utility;
+import output.ConsoleOutput;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static utility.Utility.handleDecision;
 
+/**
+ * Represents a game room with specified attributes and functionalities.
+ * The Room class manages what happens in a room, including enemies and treasure.
+ */
 public class Room {
     private final RoomType roomType;
     private final Player player;
@@ -25,8 +29,19 @@ public class Room {
     private final ArrayList<Enemy> enemies;
     private final ItemDatabase itemDatabase;
     private final boolean isTreasurePresent;
+    private ConsoleOutput out = new ConsoleOutput();
 
-    public Room(RoomType roomType, Player player, CombatSystem combat, RoomMap display, ArrayList<Enemy> enemies, boolean treasurePresent) {
+    /**
+     * Constructs a Room object with the specified parameters.
+     *
+     * @param roomType the type of the room
+     * @param player the player entering the room
+     * @param combat the combat system used in the room
+     * @param display the map display of the room
+     * @param enemies the list of enemies present in the room (can be null)
+     * @param treasurePresent indicates if treasure is present in the room
+     */
+    public Room(RoomType roomType, Player player, CombatSystem combat, RoomMap display, List<Enemy> enemies, boolean treasurePresent) {
         this.roomType = roomType;
         this.player = player;
         this.playerHasTreasure = this.player.getTreasureFound().contains(roomType);
@@ -43,77 +58,97 @@ public class Room {
         }
     }
 
-    private Item getTreasure() {
-        return this.itemDatabase.getRandomItem();
+    /**
+     * Sets the output stream for the room.
+     */
+    public void setOut(ConsoleOutput out) {
+        this.out = out;
     }
 
     /**
-     * Method to handle the room interaction.
+     * Handles the room interaction.
      * Output of the description and map of the room with available options.
      * Checks if the player has already cleared the room (Enemies and Treasure),
      * if yes, he is redirected to the next room.
      * If no, then he needs to clear the room.
-     *
-     * @return
      */
-    // TODO: Refactor this method -> too big for one method ( nesting )
     public RoomOutCome enter() {
         while (true) {
             this.showRoomInfo();
 
             if (this.player.getCompletedRooms().contains(this.roomType) && this.playerHasTreasure) {
-
-                System.out.println("\n" + "You have already cleared this room.");
-                System.out.println("\n" + "Move to another room...");
-                Utility.enterToContinue();
-                return new RoomOutCome(RoomResult.COMPLETED, RoomType.TWO);
+                return this.nextRoom();
             }
 
-            System.out.println("1. Investigate 'X' marking " + (this.allEnemiesKilled() ? "(cleared)" : ""));
+            this.out.println("1. Investigate 'X' marking " + (this.allEnemiesKilled() ? "(cleared)" : ""));
 
             int choice = this.userInput();
 
             switch (choice) {
-                case 0 -> { // Back to menu
-                    if (this.allEnemiesKilled() && this.isTreasureFound()) {
-                        if (this.player.getCompletedRooms().contains(this.roomType)) {
-                            return new RoomOutCome(RoomResult.EXIT, null); // back to menu
-                        }
-                        this.player.addCompletedRoom(this.roomType);
-                    }
-                    return new RoomOutCome(RoomResult.EXIT, null); // back to menu
+                case 0 -> {
+                    return this.backToMenu();
                 }
-                case 1 -> { // Enemy
-                    if (!this.allEnemiesKilled()) {
-                        if (this.combat.startCombat(this.player, this.enemies.getFirst())) {
-                            this.enemies.removeFirst();
-                        } else {
-                            return new RoomOutCome(RoomResult.DEATH, null);
-                        }
-                    } else {
-                        System.out.println("\n" + "All enemies has been defeated.");
-                        Utility.enterToContinue();
+                case 1 -> {
+                    RoomOutCome result = this.fightEnemy();
+                    if (result != null) {
+                        return result;
                     }
                 }
-                case 2 -> this.treasureFound(); // Treasure
-                case 3 -> { // Proceed to the next room
-                    this.player.addCompletedRoom(this.roomType);
-                    return new RoomOutCome(RoomResult.COMPLETED, RoomType.TWO);
+                case 2 -> this.treasureFound();
+                case 3 -> {
+                    return this.nextRoom(this.roomType);
                 }
                 default -> {
-                    System.out.println("Invalid selection. Try again");
-                    Utility.enterToContinue();
+                    this.out.println("Invalid selection. Try again");
+                    this.out.pause();
                 }
             }
         }
     }
 
-    private void showRoomInfo() {
-        System.out.println("\n" + this.display.getDescription());
-        System.out.println("╔═════════════════════╗");
-        System.out.println("║ You are in room " + this.roomType.name() + " ║");
+    private RoomOutCome nextRoom() {
+        this.out.println("\n" + "You have already cleared this room.");
+        this.out.println("\n" + "Move to another room...");
+        this.out.pause();
+        return new RoomOutCome(RoomResult.COMPLETED, RoomType.TWO);
+    }
 
-        System.out.println(this.display.getMap());
+    private RoomOutCome backToMenu() {
+        if (this.allEnemiesKilled() && this.isTreasureFound()) {
+            if (this.player.getCompletedRooms().contains(this.roomType)) {
+                return new RoomOutCome(RoomResult.EXIT, null); // back to menu
+            }
+            this.player.addCompletedRoom(this.roomType);
+        }
+        return new RoomOutCome(RoomResult.EXIT, null);
+    }
+
+    private RoomOutCome fightEnemy() {
+        if (this.allEnemiesKilled()) {
+            this.out.println("\n" + "All enemies has been defeated.");
+            this.out.pause();
+            return null;
+        }
+
+        if (this.combat.startCombat(this.player, this.enemies.getFirst())) {
+            this.enemies.removeFirst();
+            return null;
+        } else {
+            return new RoomOutCome(RoomResult.DEATH, null);
+        }
+    }
+
+    private RoomOutCome nextRoom(RoomType roomType) {
+        this.player.addCompletedRoom(this.roomType);
+        return new RoomOutCome(RoomResult.COMPLETED, roomType.next());
+    }
+
+    private void showRoomInfo() {
+        this.out.println("\n" + this.display.getDescription());
+        this.out.println("╔═════════════════════╗");
+        this.out.println("║ You are in room " + this.roomType.name() + " ║");
+
+        this.out.println(this.display.getMap());
     }
 
     private boolean allEnemiesKilled() {
@@ -124,11 +159,10 @@ public class Room {
         return this.playerHasTreasure;
     }
 
-
     private void treasureFound() {
         if (this.isTreasureFound()) {
-            System.out.println("\n" + "You already found this treasure.");
-            Utility.enterToContinue();
+            this.out.println("\n" + "You already found this treasure.");
+            this.out.pause();
         } else {
             this.playerHasTreasure = this.player.addTreasureFound(this.roomType);
 
@@ -140,48 +174,52 @@ public class Room {
             this.player.addItem(item);
             this.itemOutput(item);
 
-            Utility.enterToContinue();
+            this.out.pause();
         }
     }
 
+    private Item getTreasure() {
+        return this.itemDatabase.getRandomItem();
+    }
+
     private void itemOptions(Item item) {
-        switch (item.getType()) {
+        switch (item.type()) {
             case WEAPON, ARMOR -> {
-                System.out.println("1. Equip");
-                System.out.println("2. Keep");
+                this.out.println("1. Equip");
+                this.out.println("2. Keep");
             }
             case POTION -> {
-                System.out.println("1. Use");
-                System.out.println("2. Keep");
+                this.out.println("1. Use");
+                this.out.println("2. Keep");
             }
             default -> System.out.println("Invalid selection. Try again");
         }
 
         switch (handleDecision(1, 2)) {
             case 1 -> {
-                switch (item.getType()) {
+                switch (item.type()) {
                     case WEAPON -> {
                         this.player.setEquippedWeapon(item);
-                        System.out.println("\n" + "Item has been equipped.");
+                        this.out.println("\n" + "Item has been equipped.");
                     }
                     case ARMOR -> {
                         this.player.setEquippedArmor(item);
-                        System.out.println("\n" + "Item has been equipped.");
+                        this.out.println("\n" + "Item has been equipped.");
                     }
                     case POTION -> {
-                        this.player.restorePower(item.getValue());
-                        System.out.println("\n" + "Potion has been used.");
+                        this.player.restorePower(item.value());
+                        this.out.println("\n" + "Potion has been used.");
                     }
                     default -> System.out.println("Invalid selection. Try again");
                 }
             }
-            case 2 -> item.displayInfo();
+            case 2 -> this.out.println("Item has been kept.");
             default -> System.out.println("Invalid selection. Try again");
         }
     }
 
     private void itemOutput(Item item) {
-        System.out.println("\n" + "You have found");
+        this.out.println("\n" + "You have found");
         item.displayInfo();
         this.itemOptions(item);
     }
@@ -190,17 +228,17 @@ public class Room {
         int maxChoice = 1;
         if (this.isTreasurePresent) {
             maxChoice = 2;
-            System.out.println("2. Investigate '?' marking " + (this.isTreasureFound() ? "(found)" : ""));
+            this.out.println("2. Investigate '?' marking " + (this.isTreasureFound() ? "(found)" : ""));
         }
 
         if (this.allEnemiesKilled()) {
             maxChoice = 3;
-            System.out.println("3. Proceed to next room");
-            System.out.println("0. Back to menu");
+            this.out.println("3. Proceed to next room");
+            this.out.println("0. Back to menu");
             return handleDecision(0, maxChoice);
         }
 
-        System.out.println("0. Back to menu");
+        this.out.println("0. Back to menu");
         return handleDecision(0, maxChoice);
     }
 }

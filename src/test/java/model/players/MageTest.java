@@ -41,8 +41,8 @@ class MageTest {
         assertEquals(ClassPower.MANA.toString(), magePlayer.getPowerString());
         assertEquals(CombatTag.MAGE, magePlayer.getCombatTag());
         assertEquals("Gandalfos", magePlayer.getName());
-        assertEquals(null, magePlayer.getEquippedArmor());
-        assertEquals(null, magePlayer.getEquippedWeapon());
+        assertNull(magePlayer.getEquippedArmor());
+        assertNull(magePlayer.getEquippedWeapon());
 
         assertEquals(80, magePlayer.getMaxHp());
         assertEquals(10, magePlayer.getTotalAttack());
@@ -52,11 +52,11 @@ class MageTest {
 
     @Test
     void testMageBeforeTurn() {
-        magePlayer.performeSpecialAbility(enemy);
+        magePlayer.performSpecialAbility(enemy);
 
         magePlayer.beforeTurn();
 
-        assertEquals(65, magePlayer.getPower());
+        assertEquals(85, magePlayer.getPower());
     }
 
     @Test
@@ -70,7 +70,7 @@ class MageTest {
 
     @Test
     void testMageBasicAbility() {
-        magePlayer.performeBasicAbility(enemy);
+        magePlayer.performBasicAbility(enemy);
 
         assertEquals("Frostbolt", magePlayer.getBasicAbilityName());
         assertEquals(10, magePlayer.getBasicAbilityCost());
@@ -82,12 +82,12 @@ class MageTest {
 
     @Test
     void testMageSpecialAbility() {
-        magePlayer.performeSpecialAbility(enemy);
+        magePlayer.performSpecialAbility(enemy);
 
         assertEquals("Fireblast", magePlayer.getSpecialAbilityName());
-        assertEquals(50, magePlayer.getSpecialAbilityCost());
+        assertEquals(30, magePlayer.getSpecialAbilityCost());
 
-        assertEquals(50, magePlayer.getPower());
+        assertEquals(70, magePlayer.getPower());
         assertEquals(10, magePlayer.getBasicAbilityCost());
 
         assertNotEquals(enemy.getMaxHp(), enemy.getHp());

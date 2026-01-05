@@ -1,46 +1,91 @@
 package model.strings;
 
-public class MenuStrings {
-    public static final String GAME_TITLE_MENU = """
-            ______                     _   _           ______            _             _            \s
-            |  ___|                   | | | |          | ___ \\          (_)           (_)           \s
-            | |_ _ __ ___  _ __ ___   | |_| |__   ___  | |_/ / ___  __ _ _ _ __  _ __  _ _ __   __ _\s
+public enum MenuStrings {
+
+    GAME_TITLE_MENU("""
+            ______                     _   _           ______            _             _
+            |  ___|                   | | | |          | ___ \\          (_)           (_)
+            | |_ _ __ ___  _ __ ___   | |_| |__   ___  | |_/ / ___  __ _ _ _ __  _ __  _ _ __   __ _
             |  _| '__/ _ \\| '_ ` _ \\  | __| '_ \\ / _ \\ | ___ \\/ _ \\/ _` | | '_ \\| '_ \\| | '_ \\ / _` |
             | | | | | (_) | | | | | | | |_| | | |  __/ | |_/ /  __/ (_| | | | | | | | | | | | | (_| |
             \\_| |_|  \\___/|_| |_| |_|  \\__|_| |_|\\___| \\____/ \\___|\\__, |_|_| |_|_| |_|_|_| |_|\\__, |
                                                                     __/ |                       __/ |
-            ╔═══════════════════════════╗                          |___/                       |___/\s
+            ╔═══════════════════════════╗                          |___/                       |___/
             ║       1) Start Game       ║
-            ║       2) Load Game        ║
-            ║       3) Save Game        ║
             ║       0) Exit             ║
-            ╚═══════════════════════════╝""";
+            ╚═══════════════════════════╝
+            """),
 
-    public static final String CHARACTER_CREATION = """
+    CHARACTER_CREATION("""
             
             ╔══════════════════════╗
             ║  CHARACTER CREATION  ║
-            ╚══════════════════════╝""";
+            ╚══════════════════════╝
+            """),
 
-    public static final String CHOOSE_CLASS = """
+    CHOOSE_CLASS("""
             
             ╔════════════════╗
             ║  CHOOSE CLASS  ║
-            ╚════════════════╝""";
+            ╚════════════════╝
+            """),
 
-
-    public static final String GAME_MENU_OPTIONS = """
+    GAME_MENU_OPTIONS("""
             
             ╔═════════════╗
             ║  GAME MENU  ║
             ╚═════════════╝
             1) Dungeon
             2) Stats
-            0) Back""";
+            0) Back
+            """),
 
-    public static final String DUNGEON_TITLE = """
+    DUNGEON_TITLE("""
             
             ╔═════════════════╗
             ║  D U N G E O N  ║
-            ╚═════════════════╝""";
+            ╚═════════════════╝
+            """),
+
+    GAME_OVER("""
+            
+            ╔═══════════════════╗
+            ║     GAME OVER     ║
+            ║   You have died!  ║
+            ╚═══════════════════╝
+            """),
+
+    VICTORY("""
+            
+            ╔════════════════════════════════════════════╗
+            ║                                            ║
+            ║                CONGRATULATIONS!            ║
+            ║                                            ║
+            ║    You have Managed to escape the dungeon  ║
+            ║            and managed to kill             ║
+            ║                                            ║
+            ║             The Ashen Warden !!            ║
+            ║                                            ║
+            ║                                            ║
+            ╚════════════════════════════════════════════╝
+            """),
+
+    MORE_TO_COME("""
+            
+            ╔════════════════════════════════════╗
+            ║                                    ║
+            ║     More content coming soon!      ║
+            ║                                    ║
+            ╚════════════════════════════════════╝
+            """);
+
+    private final String text;
+
+    MenuStrings(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return this.text;
+    }
 }

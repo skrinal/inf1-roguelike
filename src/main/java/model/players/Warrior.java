@@ -4,15 +4,22 @@ import model.Character;
 import model.Player;
 import model.enums.ClassPower;
 import model.enums.CombatTag;
+import model.enums.players.PlayerStats;
 import model.enums.status.StatusEffects;
 import utility.Utility;
 
+/**
+ * The Warrior class represents a warrior-type player in the game. It extends the Player class,
+ * providing unique abilities, stances, and behaviors specific to the Warrior archetype.
+ * Warriors utilize rage power to execute their abilities and manage their stances strategically
+ * during combat.
+ *
+ * Key features of the Warrior include:
+ *  * - Basic Ability: Bloodthirst, which is the main kit of his demage.
+ *  * - Special Ability: Execute, a really powerful ability if the target is under 15% HP.
+ *  * - Utility Ability: War Stance, makes warior change pre-defined stances.
+ */
 public class Warrior extends Player {
-
-    private static final int MAX_HP = 100;
-    private static final int ATTACK = 7;
-    private static final int DEFENCE = 6;
-    private static final int POWER = 120;
 
     private final String basicAbilityName = "Bloodthirst";
     private final String specialAbilityName = "Execute";
@@ -24,71 +31,135 @@ public class Warrior extends Player {
     private final int specialAbilityCost = 30;
     private final int utilityAbilityCost = 10;
 
+    private final double basicAbilityMultiplayer = 1.4;
+    private final double specialAbilityMultiplayer = 0.4;
+
     private StatusEffects stance;
 
+    /**
+     * Constructs a new Warrior instance with the specified name, initializing its
+     * attributes based on the predefined Warrior class statistics.
+     *
+     * @param name the name of the Warrior to be created
+     */
     public Warrior(String name) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER, 1);
+        super(name,
+                PlayerStats.WARRIOR.getBaseMaxHp(),
+                PlayerStats.WARRIOR.getBaseAttack(),
+                PlayerStats.WARRIOR.getBaseDefence(),
+                PlayerStats.WARRIOR.getBasePower(),
+                1
+        );
         this.initializeStance();
     }
 
+    /**
+     * Constructs a new Warrior instance with the specified name and level, initializing its
+     * attributes based on the predefined Warrior class statistics.
+     *
+     * @param name the name of the Warrior to be created
+     * @param level the starting level of the Warrior
+     */
     public Warrior(String name, int level) {
-        super(name, MAX_HP, ATTACK, DEFENCE, POWER, level);
+        super(name,
+                PlayerStats.WARRIOR.getBaseMaxHp(),
+                PlayerStats.WARRIOR.getBaseAttack(),
+                PlayerStats.WARRIOR.getBaseDefence(),
+                PlayerStats.WARRIOR.getBasePower(),
+                level
+        );
         this.initializeStance();
     }
 
+    /**
+     * Returns the string representation of the Warrior's power type.
+     */
     @Override
     public String getPowerString() {
         return ClassPower.RAGE.toString();
     }
 
+    /**
+     * Returns the combat tag associated with the Warrior class.
+     */
     @Override
     public CombatTag getCombatTag() {
         return CombatTag.WARRIOR;
     }
 
+    /**
+     * Returns the name of the Warrior's basic ability. (Mainly for testing purposes.)
+     */
     @Override
     public String getBasicAbilityName() {
         return this.basicAbilityName;
     }
 
+    /**
+     * Returns the name of the Warrior's special ability. (Mainly for testing purposes.)
+     */
     @Override
     public String getSpecialAbilityName() {
         return this.specialAbilityName;
     }
 
+    /**
+     * Returns the name of the Warrior's utility ability. (Mainly for testing purposes.)
+     */
     @Override
     public String getUtilityAbilityName() {
         return this.utilityAbilityName;
     }
 
+    /**
+     * Returns the cost of the Warrior's basic ability. (Mainly for testing purposes.)
+     */
     @Override
     public int getBasicAbilityCost() {
         return this.basicAbilityCost;
     }
 
+    /**
+     * Returns the cost of the Warrior's special ability. (Mainly for testing purposes.)
+     */
     @Override
     public int getSpecialAbilityCost() {
         return this.specialAbilityCost;
     }
 
+    /**
+     * Returns the cost of the Warrior's utility ability. (Mainly for testing purposes.)
+     */
     @Override
     public int getUtilityAbilityCost() {
         return this.utilityAbilityCost;
     }
 
+    /**
+     * Restores the player's power based on their current stance.
+     */
     @Override
     public void beforeTurn() {
         switch (this.stance) {
             case DEFENSIVE -> this.restorePower(15);
             case AGGRESSIVE -> this.restorePower(5);
             case BALANCED -> this.restorePower(10);
+            default -> {
+
+            }
         }
     }
 
+    /**
+     * Executes the basic ability of the Warrior on a specific target.
+     * Simple check if enough power is available to cast the ability.
+     * Target takes damage. Output to console.
+     * If there is not enough power, informs the player.
+     */
     @Override
-    public void performeBasicAbility(Character target) {
+    public void performBasicAbility(Character target) {
         if (usePower(this.basicAbilityCost)) {
-            int damage = (int)(this.getTotalAttack() * 1.4);
+            int damage = (int)(this.getTotalAttack() * this.basicAbilityMultiplayer);
             int rawDamage = target.takeDamage(damage, this);
 
             this.damageAbilitySystemOut(
@@ -99,8 +170,13 @@ public class Warrior extends Player {
         }
     }
 
+    /**
+     * Executes the special ability of the Warrior on a specific target. The ability deals significant damage,
+     * executing the target instantly if their health is below 15% or otherwise inflicting damage based on the Warrior's
+     * attributes. The execution of this ability depends on the availability of sufficient power.
+     */
     @Override
-    public void performeSpecialAbility(Character target) {
+    public void performSpecialAbility(Character target) {
         if (usePower(this.specialAbilityCost)) {
             if (this.isBelow15Percent(target.getHp(), target.getMaxHp())) {
                 target.takeTrueDamage(Integer.MAX_VALUE);
@@ -108,7 +184,7 @@ public class Warrior extends Player {
                 this.print(target.getName() + " has been executed");
 
             } else {
-                int damage = (int)(this.getTotalAttack() * 0.4);
+                int damage = (int)(this.getTotalAttack() * this.specialAbilityMultiplayer);
                 int rawDamage = target.takeDamage(damage, this);
 
                 this.print(target.getName() + " is not under 15% HP");
@@ -125,6 +201,14 @@ public class Warrior extends Player {
         return enemyHp <= (enemyMaxHp * 0.15);
     }
 
+    /**
+     * Executes the utility ability for the Warrior, allowing the player to select a new stance:
+     * Aggressive, Defensive, or Balanced. The ability costs a certain amount of power to execute.
+     *
+     * If the player has sufficient power, the method provides available stance options and prompts the player
+     * to select one. The selected stance is then applied, and a confirmation message is displayed. If the player
+     * lacks sufficient power, a message indicating insufficient power is displayed instead.
+     */
     @Override
     public void performeUtilityAbility() {
         if (usePower(this.utilityAbilityCost)) {

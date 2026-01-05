@@ -12,20 +12,32 @@ import java.util.Scanner;
 
 import static utility.Utility.handleDecision;
 
+/**
+ * Handles the main menu and character creation.
+ */
 public class MenuLogic {
 
+    /**
+     * Handles the main menu and returns the next state of the game.
+     * @param player
+     * @return
+     */
     public GameState handleMenu(Player player) {
         int choice = this.showMainMenu();
         return switch (choice) {
             case 1 -> player == null ? GameState.CHARACTER_CREATION : GameState.GAME;
-            case 2 -> GameState.LOAD_GAME;
-            case 0 -> GameState.SAVE_GAME;
+            case 0 -> GameState.EXIT;
             default -> GameState.MAIN_MENU;
         };
     }
 
+    /**
+     * Handles the character creation flow.
+     * @param input
+     * @return
+     */
     public Player handleCharacterCreation(Scanner input) {
-        System.out.println(MenuStrings.CHARACTER_CREATION);
+        System.out.println(MenuStrings.CHARACTER_CREATION.getText());
         System.out.print("Name your character: ");
         String name = input.nextLine();
         CombatTag combatTag = this.selectedClass();
@@ -35,12 +47,10 @@ public class MenuLogic {
 
 
     private int showMainMenu() {
-        System.out.println(MenuStrings.GAME_TITLE_MENU);
+        System.out.println(MenuStrings.GAME_TITLE_MENU.getText());
 
         return handleDecision(0, 3);
     }
-
-    //TODO : showInventoryMenu, handleItemDetail, dropItem, equipItem
 
     private Player createCharacter(CombatTag combatTag, String name) {
         return switch (combatTag) {
@@ -53,7 +63,7 @@ public class MenuLogic {
 
     private CombatTag selectedClass() {
         while (true) {
-            System.out.println(MenuStrings.CHOOSE_CLASS);
+            System.out.println(MenuStrings.CHOOSE_CLASS.getText());
             System.out.println("1) Warrior");
             System.out.println("2) Mage");
             System.out.println("3) Rogue");

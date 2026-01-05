@@ -46,14 +46,14 @@ class ElfTest {
 
     @Test
     void testElfBasicAbility() {
-        elf.performeBasicAbility(player);
+        elf.performBasicAbility(player);
 
         assertNotEquals(player.getMaxHp(), player.getHp());
     }
 
     @Test
     void testElfSpecialAbility() {
-        elf.performeSpecialAbility(player);
+        elf.performSpecialAbility(player);
 
         assertTrue(elf.getStatusEffects().containsKey(StatusEffects.ELF_STRENGTH));
     }
@@ -62,7 +62,7 @@ class ElfTest {
     void testElfSpectralDamage() {
         elf.performSpectralDamage(player);
 
-        assertEquals(player.getMaxHp(), player.getHp());
+        assertNotEquals(player.getMaxHp(), player.getHp());
     }
 
 }

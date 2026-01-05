@@ -5,8 +5,8 @@ public enum GameState {
     CHARACTER_CREATION,
     GAME,
 
-    LOAD_GAME,
-    SAVE_GAME,
+//    LOAD_GAME,
+//    SAVE_GAME,
 
     DUNGEON,
     STATS,

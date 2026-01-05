@@ -3,6 +3,7 @@ package model.enums.room;
 public enum RoomMap {
     ROOM_ONE("""
             ╚════════ MAP ════════╝
+            
                      Door
                    /
                  X         ?
@@ -20,9 +21,9 @@ public enum RoomMap {
                      Door
                       |
                       X
-                   /     \\
+
                  X         X
-                   \\     /
+
                      You
             
             ═══════════════════════""",
@@ -30,13 +31,14 @@ public enum RoomMap {
                     | You step into a dim, shadowed chamber.
                 Strange “X” markings cover the walls on every side.
                 There’s only one path forward — and beyond it, whatever waits forces you to fight."""
-    ), ROOM_TREE("""
+    ),
+    ROOM_TREE("""
             ╚════════ MAP ════════╝
             
                      Door
             
                  X         ?
-                   \\     /
+            
                      You
             
             ═══════════════════════""",
@@ -44,22 +46,25 @@ public enum RoomMap {
                     | You step into a shadowed chamber.
                 Strange markings catch your eye — an “X” here, a “?” there, scattered across the walls.
                 There’s only one path forward, leading straight into whatever waits beyond."""
-    ), ROOM_FOUR("""
+    ),
+    ROOM_FOUR("""
             ╚════════ MAP ════════╝
+            
                      Door
             
-                      X
-
-                 X   You   X
-
-                      X
+                      ?
             
+                      X
+
+                     You
+
             ═══════════════════════""",
             """
                     | You step into a vast arena.
                 Before you can react, four guards emerge from the shadows, blocking every exit.
                 There’s no escape — you must face them all."""
-    ), ROOM_FIVE("""
+    ),
+    ROOM_FIVE("""
             ╚════════ MAP ════════╝
             
                     B O S S
