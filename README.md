@@ -11,17 +11,6 @@
 If you're on Linux(dnf), just run the commands below. <br>
 If you're on Windows, you'll need to figure it out (or switch to Linux :P).
 
-## Features
-✔️ Multiple player classes (Warrior, Rogue, Mage)
-
-✔️ Turn-based combat
-
-✔️ Inventory + Items
-
-✔️ Enemies with unique behavior
-
-⚠️ Saving/loading
-
 ## Requirments
 To clone and run this application, you'll need [Git](https://git-scm.com) and [Java 25](https://www.oracle.com/java/technologies/downloads/) 
 ```bash
@@ -49,6 +38,18 @@ cd inf1-roguelike/src
 # Run the main.main.java.game
 java main.main.java
 ```
+
+## Features
+✔️ Multiple player classes (Warrior, Rogue, Mage)
+
+✔️ Turn-based combat
+
+✔️ Inventory + Items
+
+✔️ Enemies with unique behavior
+
+⚠️ Saving/loading
+
 ## Player Classes & Enemies
 Each class in the main.main.java.game has unique stats and abilities. 
 All classes share the same core mechanics (HP, Attack, Defence, Power), but their abilities define their playstyle.
@@ -84,15 +85,15 @@ A strong and resilient frontline fighter focused on sustained damage and absorbi
 - **Utility ability: Warstance**
     - The warrior shifts their stance to adapt to battle.
       - Defensive stance: Reduce incoming damage
-      - Balanced stance: Slight healing over time
+      - Balanced stance: Both from defensive and offensive
       - Aggressive stance: Increase attack power
 
 ## 🪄 Mage
 A fragile but deadly spellcaster focused on high burst damage and quick spell combos
-- **Basic ability: Smite**
+- **Basic ability: Frostbolt**
 - **Special ability: Fireblast**
     - Unleashes a fiery strike that can critically hit for high damage
     - Has a chance to apply a damage-over-time effect, burning the target over time
-- **Utility ability: Ember Surge**
+- **Utility ability: Cloak of Shadows**
     - Ignites the mage’s weapon with fire, enhancing attacks
         - A Small chance to deal bonus critical damage and apply a burning DoT on enemies

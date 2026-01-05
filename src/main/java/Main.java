@@ -7,6 +7,22 @@ import utility.Utility;
 
 import java.util.Scanner;
 
+/**
+ * The Main class serves as the entry point for the application,
+ * managing the game's main loop and transitioning between various game states.
+ * It handles the flow of the program by instances of MenuLogic and GameLogic,
+ * as well as transitioning the player through different states based on their interactions.
+ *
+ * The game states managed by this class include:
+ * - MAIN_MENU: The main menu of the game.
+ * - CHARACTER_CREATION: The state for player character creation.
+ * - GAME: The primary gameplay loop.
+ * - DUNGEON: The dungeon exploration state.
+ * - STATS: The state for viewing and managing player statistics.
+ * - DEATH: The state triggered when the player character dies.
+ * - COMPLETE: The state indicating game completion.
+ * - EXIT: The state to terminate the game.
+ */
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
