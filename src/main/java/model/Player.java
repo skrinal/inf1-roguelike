@@ -11,7 +11,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * The Player class represents a playable character in the game.
+ * It extends the Character class and introduces additional properties and methods
+ * specific to player actions and progression within the game.
+ */
 public abstract class Player extends Character {
     private final int maxPower;
     private int power;
@@ -27,6 +31,8 @@ public abstract class Player extends Character {
 
     private int experience;
     private int experienceToNextLevel;
+
+    private final int boxWidth = 44;
 
 
     protected Player(String name, int maxHp, int attack, int defence, int maxPower, int level) {
@@ -44,6 +50,15 @@ public abstract class Player extends Character {
         this.experienceToNextLevel = this.calculateExperienceToNextLevel();
     }
 
+    /**
+     * Heals the player by 5 + level and restores 15 power.
+     * Method is used as the 4th option in the combat menu.
+     */
+    public void resting() {
+        this.heal(5 + this.getLevel());
+        this.restorePower(15);
+    }
+
     protected int getExperience() {
         return this.experience;
     }
@@ -52,6 +67,11 @@ public abstract class Player extends Character {
         return this.experienceToNextLevel;
     }
 
+    /**
+     * Method to gain experience.
+     * Which runs levelUp() method in While function till there is not enough experience
+     * to next level.
+     */
     public void gainExperience(int amount) {
         this.experience += amount;
         while (this.experience >= this.experienceToNextLevel) {
@@ -64,11 +84,47 @@ public abstract class Player extends Character {
         this.incrementLevel();
         this.experienceToNextLevel = this.calculateExperienceToNextLevel();
 
+        int oldMaxHp = this.getMaxHp();
+        int oldAttack = this.getAttack();
+        int oldDefence = this.getDefence();
+
+
         this.setMaxHp(this.levelUpHp());
         this.setHp(this.resetHp());
         this.setAttack(this.levelUpAttack());
         this.setDefence(this.levelUpDefence());
         this.power = this.resetPower();
+
+        this.levelUpOutput(oldMaxHp, oldAttack, oldDefence);
+    }
+
+    private void levelUpOutput(int oldMaxHp, int oldAttack, int oldDefence) {
+        String level = "You have leveled up to level " + this.getLevel() + "!";
+        String hp = "HP: " + oldMaxHp + " -> " + this.getMaxHp();
+        String attack = "Attack: " + oldAttack + " -> " + this.getAttack();
+        String defence = "Defence: " + oldDefence + " -> " + this.getDefence();
+
+        System.out.println("╔" + "═".repeat(this.boxWidth) + "╗");
+
+        this.printCenter("", this.boxWidth);
+        this.printCenter(level, this.boxWidth);
+        this.printCenter("", this.boxWidth);
+        this.printCenter(hp, this.boxWidth);
+        this.printCenter(attack, this.boxWidth);
+        this.printCenter(defence, this.boxWidth);
+        this.printCenter("", this.boxWidth);
+
+        System.out.println("╚" + "═".repeat(this.boxWidth) + "╝");
+
+        this.pause();
+    }
+
+    private void printCenter(String text, int width) {
+        int padding = width - text.length();
+        int left = padding / 2;
+        int right = padding - left;
+
+        this.print("║" + " ".repeat(left) + text + " ".repeat(right) + "║");
     }
 
     private int levelUpHp() {
@@ -95,18 +151,30 @@ public abstract class Player extends Character {
         return (int)(100 * Math.pow(1.2, this.getLevel()));
     }
 
+    /**
+     * Returns player's completed rooms.
+     */
     public List<RoomType> getCompletedRooms() {
         return this.completedRooms;
     }
 
+    /**
+     * Adds room to completed rooms.
+     */
     public void addCompletedRoom(RoomType roomType) {
         this.completedRooms.add(roomType);
     }
 
+    /**
+     * Returns player's treasure found.
+     */
     public List<RoomType> getTreasureFound() {
         return this.treasureFound;
     }
 
+    /**
+     * Adds room to treasure found.
+     */
     public boolean addTreasureFound(RoomType roomType) {
         return this.treasureFound.add(roomType);
     }
@@ -127,6 +195,13 @@ public abstract class Player extends Character {
         this.gold += amount;
     }
 
+    /**
+     * Displays the player's inventory menu and allows the player to interact with categorized items.
+     * The player can choose to view and handle items from specific categories such as consumables, weapons, or armor.
+     * Choosing an option triggers the use or equipment of items.
+     * The inventory menu remains open until the player chooses to exit.
+     * Returns always returns true as interacting with the inventory does not consume a turn.
+     */
     public boolean showInventory() {
         boolean open = true;
 
@@ -156,7 +231,6 @@ public abstract class Player extends Character {
         }
 
         if (items.isEmpty()) {
-            this.print("You don't have any " + type.toString().toLowerCase() + "s!");
             this.print("You don't have any " + type.toString().toLowerCase() + "s!");
             this.pause();
             return;
@@ -213,14 +287,26 @@ public abstract class Player extends Character {
     }
 
     //TODO: Refactor later
+
+    /**
+     * Adds item to inventory.
+     */
     public void addItem(Item item) {
         this.inventory.put(item, this.inventory.getOrDefault(item, 0) + 1);
     }
 
+    /**
+     * Restores power by amount.
+     */
     public void restorePower(int amount) {
         this.power = Math.min(this.maxPower, this.power + amount);
     }
 
+    /**
+     * Checks if player has enough power to use ability.
+     * If yes remove the power from player and return true.
+     * If no return false.
+     */
     public boolean usePower(int amount) {
         if (this.power >= amount) {
             this.power -= amount;
@@ -230,6 +316,9 @@ public abstract class Player extends Character {
         return true;
     }
 
+    /**
+     * Returns a visual bar representing the player's current power.
+     */
     public String getPowerBar() {
         return this.getBar(this.getPower(), this.getMaxPower());
     }
@@ -246,6 +335,10 @@ public abstract class Player extends Character {
                 (this.getDefence() + (this.equippedArmor != null ? this.equippedArmor.value() : 0)) * this.getDefenceMultiplier());
     }
 
+    /**
+     * OutPuts player's stats and waits for the player to press enter
+     * to continue to the game.
+     */
     public GameState handleStats() {
         this.print(PlayerStrings.PLAYER_STATS);
         this.displayStats();
@@ -254,26 +347,52 @@ public abstract class Player extends Character {
         return GameState.GAME;
     }
 
+    /**
+     * Restores player's max power to its current value.
+     */
     public void restoreMaxPower() {
         this.power = this.maxPower;
     }
 
+    /**
+     * Return current equipped weapon.
+     */
     public Item getEquippedWeapon() {
         return this.equippedWeapon;
     }
 
+    /**
+     * Sets Item from parameter as an equipped weapon.
+     */
     public void setEquippedWeapon(Item equippedWeapon) {
         this.equippedWeapon = equippedWeapon;
     }
 
+    /**
+     * Return current equipped armor.
+     */
     public Item getEquippedArmor() {
         return this.equippedArmor;
     }
 
+    /**
+     * Sets Item from parameter as an equipped armor.
+     */
     public void setEquippedArmor(Item equippedArmor) {
         this.equippedArmor = equippedArmor;
     }
 
+    /**
+     * Displays the current statistics of the player in a formatted layout.
+     * The displayed information includes:
+     * - Player's name and combat tag
+     * - Current and maximum HP (health points) along with visual representation
+     * - Current and maximum power along with visual representation and power type
+     * - Total attack and defense values, considering equipped items
+     * - Current amount of gold
+     * - Player's level and experience progress toward the next level
+     * - Details of equipped armor and weapon, showing item names and respective bonuses
+     */
     public void displayStats() {
         this.print("╔═════════════════════════════════╗");
         this.print("║  " + this.getName() + " [" + this.getCombatTag() + "]");
@@ -328,6 +447,9 @@ public abstract class Player extends Character {
         this.pause();
     }
 
+    /**
+     * Determines if the player can be targeted by a specific enemy attacker.
+     */
     public boolean canBeTargetedBy(Enemy attacker) {
         if (this.hasStatusEffect(StatusEffects.INVISIBILITY)) {
             return attacker.canTargetInvisible();
@@ -335,7 +457,10 @@ public abstract class Player extends Character {
         return false;
     }
 
-    public boolean isUntargatable() {
+    /**
+     * Returns if the player is untargetable.
+     */
+    public boolean isUntargetable() {
         return false;
     }
 
