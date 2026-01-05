@@ -51,9 +51,34 @@ public enum MenuStrings {
 
     GAME_OVER("""
             
-            ╔═══════════╗
-            ║ GAME OVER ║
-            ╚═══════════╝
+            ╔═══════════════════╗
+            ║     GAME OVER     ║
+            ║   You have died!  ║
+            ╚═══════════════════╝
+            """),
+
+    VICTORY("""
+            
+            ╔════════════════════════════════════════════╗
+            ║                                            ║
+            ║                CONGRATULATIONS!            ║
+            ║                                            ║
+            ║    You have Managed to escape the dungeon  ║
+            ║            and managed to kill             ║
+            ║                                            ║
+            ║             The Ashen Warden !!            ║
+            ║                                            ║
+            ║                                            ║
+            ╚════════════════════════════════════════════╝
+            """),
+
+    MORE_TO_COME("""
+            
+            ╔════════════════════════════════════╗
+            ║                                    ║
+            ║     More content coming soon!      ║
+            ║                                    ║
+            ╚════════════════════════════════════╝
             """);
 
     private final String text;
