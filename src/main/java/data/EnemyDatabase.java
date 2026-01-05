@@ -30,14 +30,14 @@ public class EnemyDatabase {
     }
 
     private void loadEnemies() {
-        //TODO: change Names
+        //TODO: change levels
         ArrayList<Enemy> roomOneEnemies = new ArrayList<>();
         roomOneEnemies.add(new Skeleton("Maximus"));
 
         ArrayList<Enemy> roomTwoEnemies = new ArrayList<>();
         roomTwoEnemies.add(new Skeleton("Rotting Guard"));
         roomTwoEnemies.add(new Skeleton("Bonecrusher"));
-        roomTwoEnemies.add(new Troll("Cave Troll"));
+        roomTwoEnemies.add(new Troll("Cave Troll", 2));
 
         ArrayList<Enemy> roomThreeEnemies = new ArrayList<>();
         roomTwoEnemies.add(new Elf("Elite Guard"));
