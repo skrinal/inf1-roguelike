@@ -43,18 +43,18 @@ public class EnemyDatabase {
         ArrayList<Enemy> roomTwoEnemies = new ArrayList<>();
         roomTwoEnemies.add(new Skeleton("Rotting Guard", 2));
         roomTwoEnemies.add(new Skeleton("Bonecrusher", 2));
-        roomTwoEnemies.add(new Troll("Cave Troll", 2));
+        roomTwoEnemies.add(new Troll("Cave Troll", 5));
 
         ArrayList<Enemy> roomThreeEnemies = new ArrayList<>();
-        roomThreeEnemies.add(new Elf("Elite Guard", 3));
+        roomThreeEnemies.add(new Elf("Elite Guard", 6));
 
 
         ArrayList<Enemy> roomFourEnemies = new ArrayList<>();
-        roomFourEnemies.add(new Dragon("Gatekeeper", 4));
+        roomFourEnemies.add(new Dragon("Gatekeeper", 7));
 
 
         ArrayList<Enemy> roomFiveEnemies = new ArrayList<>();
-        roomFiveEnemies.add(new DemonLord("The Ashen Warden", 5));
+        roomFiveEnemies.add(new DemonLord("The Ashen Warden", 9));
 
 
         this.enemies.put(RoomType.ONE, roomOneEnemies);

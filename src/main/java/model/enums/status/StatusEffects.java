@@ -108,7 +108,7 @@ public enum StatusEffects {
     },
 
     // Skeleton
-    SKELETON_CURSE("Skeleton Curse", "Losing 1% maxHP per turn") {
+    SKELETON_CURSE("Skeleton Curse", "Losing 1% maxHP") {
         @Override
         public void onTick(Character target) {
             target.takeTrueDamage((target.getMaxHp() / 100));

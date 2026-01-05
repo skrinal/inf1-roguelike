@@ -10,6 +10,7 @@ import utility.Utility;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Player class represents a playable character in the game.
@@ -104,7 +105,7 @@ public abstract class Player extends Character {
         String attack = "Attack: " + oldAttack + " -> " + this.getAttack();
         String defence = "Defence: " + oldDefence + " -> " + this.getDefence();
 
-        System.out.println("╔" + "═".repeat(this.boxWidth) + "╗");
+        this.print("╔" + "═".repeat(this.boxWidth) + "╗");
 
         this.printCenter("", this.boxWidth);
         this.printCenter(level, this.boxWidth);
@@ -114,7 +115,7 @@ public abstract class Player extends Character {
         this.printCenter(defence, this.boxWidth);
         this.printCenter("", this.boxWidth);
 
-        System.out.println("╚" + "═".repeat(this.boxWidth) + "╝");
+        this.print("╚" + "═".repeat(this.boxWidth) + "╝");
 
         this.pause();
     }
@@ -177,6 +178,13 @@ public abstract class Player extends Character {
      */
     public boolean addTreasureFound(RoomType roomType) {
         return this.treasureFound.add(roomType);
+    }
+
+    /**
+     * Returns the player's inventory.
+     */
+    public Map<Item, Integer> getInventory() {
+        return this.inventory;
     }
 
     /**
@@ -262,28 +270,36 @@ public abstract class Player extends Character {
 
         Item selected = items.get(choice - 1);
 
-        this.useOrEquipItem(selected);
+        this.useOrEquip(selected);
+        this.pause();
     }
 
-    private void useOrEquipItem(Item item) {
+    /**
+     * Uses or equips an item from the player's inventory or when found.
+     * @param item The item to use or equip.
+     */
+    public void useOrEquip(Item item) {
         switch (item.type()) {
-            case POTION -> {
-                this.heal(item.value());
-                this.consumeItem(item);
-                this.print("You used " + item.name() + "!");
-                this.pause();
-            }
-            case WEAPON -> {
-                this.setEquippedWeapon(item);
-                this.print("You equipped " + item.name() + "!");
-                this.pause();
-            }
-            case ARMOR -> {
-                this.setEquippedArmor(item);
-                this.print("You equipped " + item.name() + "!");
-                this.pause();
-            }
+            case POTION -> this.usePotion(item);
+            case WEAPON -> this.equipWeapon(item);
+            case ARMOR -> this.equipArmor(item);
         }
+    }
+
+    private void usePotion(Item item) {
+        this.heal(item.value());
+        this.consumeItem(item);
+        this.print("You used " + item.name() + "!");
+    }
+
+    private void equipWeapon(Item item) {
+        this.setEquippedWeapon(item);
+        this.print("You equipped " + item.name() + "!");
+    }
+
+    private void equipArmor(Item item) {
+        this.setEquippedArmor(item);
+        this.print("You equipped " + item.name() + "!");
     }
 
     private void consumeItem(Item item) {

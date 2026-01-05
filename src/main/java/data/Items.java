@@ -13,8 +13,8 @@ import java.util.List;
  */
 public enum Items {
     //GENERAL POTIONS
-    HEALTH_CHALICE("Health Chalice", ItemType.TREASURE, 100, null),
-    HEALTH_VIAL("Health_Vial", ItemType.POTION, 50, null),
+    HEALTH_CHALICE("Health Chalice", ItemType.POTION, 100, null),
+    HEALTH_VIAL("Health Vial", ItemType.POTION, 50, null),
     HEALTH_POTION("Health Potion", ItemType.POTION, 25, null),
 
     //MAGE

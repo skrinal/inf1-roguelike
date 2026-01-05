@@ -110,13 +110,18 @@ public class CombatSystem {
         player.removeAllStatusEffects();
         player.restoreMaxPower();
 
+        player.print("Gold gained: " + enemy.getGoldReward());
         player.addGold(enemy.getGoldReward());
-        player.gainExperience(enemy.getXpReward());
 
         Item item = enemy.getConsumableDrop();
         if (item != null) {
+            player.print("Enemy dropped: " + item.name());
             player.addItem(item);
+            Utility.enterToContinue();
         }
+
+        player.print("Experience gained: " + enemy.getXpReward());
+        player.gainExperience(enemy.getXpReward());
     }
 
 }
