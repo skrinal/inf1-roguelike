@@ -9,7 +9,7 @@ import model.enums.status.StatusEffects;
  * This class provides methods to print styled combat messages and menus to the console.
  */
 public class CombatStrings {
-    private final int leftPanelWidth = 36;
+    private final int leftPanelWidth = 40;
     private final int centerPanelWidth = 26;
     private final int rightPanelWidth = 36;
     private final int paddingInBetween = 4;
@@ -174,7 +174,7 @@ public class CombatStrings {
         String defText = " Defense: " + enemy.getTotalDefense();
         ui.append("║").append(this.padLine(defText, this.rightPanelWidth)).append("║\n");
         ui.append("║")
-                .append(this.padLine("", this.leftPanelWidth))
+                .append(this.padLine("", this.rightPanelWidth))
                 .append("║\n");
         ui.append("║")
                 .append(this.padLine(" Effects:", this.rightPanelWidth))

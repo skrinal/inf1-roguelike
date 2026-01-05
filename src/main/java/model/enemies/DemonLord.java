@@ -10,7 +10,6 @@ import model.enums.enemy.EnemyStats;
 import model.enums.status.StatusEffects;
 import model.enums.type.EnemyType;
 import model.interfaces.Boss;
-import utility.Utility;
 
 import java.util.Random;
 
@@ -97,7 +96,7 @@ public class DemonLord extends Enemy implements Boss {
         switch (diceRoll) {
             case 1, 3 -> {
                 this.takeTrueDamage(10);
-                this.print("The dice turn against the Demon Lord. Taking 10 true damage!");
+                this.print("The dice turn against " + this.getName() + ". Taking 10 true damage!");
             }
             case 2, 5 -> {
                 target.takeTrueDamage(10);
@@ -109,7 +108,7 @@ public class DemonLord extends Enemy implements Boss {
             }
             case 6 -> {
                 this.applyStatusEffect(StatusEffects.THORNS, 4);
-                this.print("Perfect roll! Dark power coils around the Demon Lord!");
+                this.print("Perfect roll! Dark power coils around " + this.getName() + "!");
             }
             default -> this.print("The dice lands on " + diceRoll + "!");
         }
@@ -166,13 +165,13 @@ public class DemonLord extends Enemy implements Boss {
     private void startCasting() {
         this.isCasting = true;
         this.castTurnsRemaining = 2;
-        this.print("The Demon Lord begins casting a dark magic...");
+        this.print(this.getName() + " begins casting a dark magic...");
     }
 
     private void continueCasting(Player player) {
         this.castTurnsRemaining--;
         if (this.castTurnsRemaining > 0) {
-            this.print("The Demon Lord continues casting...");
+            this.print(this.getName() + " continues casting... (" + this.castTurnsRemaining + " turns left!)");
         } else {
             this.finishCast(player);
         }
@@ -180,7 +179,7 @@ public class DemonLord extends Enemy implements Boss {
 
     private void finishCast(Player player) {
         this.isCasting = false;
-        this.print("The Demon Lord unleashes Hellfire!");
+        this.print(this.getName() + " unleashes Hellfire!");
 
         if (player.isUntargetable() || player.hasStatusEffect(StatusEffects.INVISIBILITY)) {
             int damage = player.takeTrueDamage(this.getTotalAttack() * 3);

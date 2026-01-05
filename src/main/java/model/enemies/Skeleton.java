@@ -7,7 +7,6 @@ import model.enums.CombatTag;
 import model.enums.enemy.EnemyStats;
 import model.enums.status.StatusEffects;
 import model.enums.type.EnemyType;
-import utility.Utility;
 
 public class Skeleton extends Enemy {
 

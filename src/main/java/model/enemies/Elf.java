@@ -56,7 +56,7 @@ public class Elf extends Enemy implements SpectralAttacker {
         if (this.isStatusEffectsEmpty()) {
             this.applyStatusEffect(StatusEffects.ELF_STRENGTH, 3);
         } else if (this.chargeCounter <= 2) {
-            this.print(this.getCombatTag().toString().toUpperCase() + " is charging a strong spell!!");
+            this.print(this.getName() + " is charging a strong spell... " + (3 - this.chargeCounter) + " turns left!");
             this.chargeCounter++;
         } else {
             this.chargeCounter = 0;

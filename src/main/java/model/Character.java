@@ -339,6 +339,7 @@ public abstract class Character {
         }
 
         List<StatusEffects> toRemove = new ArrayList<>();
+        Map<StatusEffects, Integer> updates = new HashMap<>();
 
         for (var entry : this.statusEffects.entrySet()) {
 
@@ -352,9 +353,13 @@ public abstract class Character {
                 if (turnsLeft == 0) {
                     toRemove.add(statusEffect);
                 } else {
-                    this.statusEffects.put(statusEffect, turnsLeft);
+                    updates.put(statusEffect, turnsLeft);
                 }
             }
+        }
+
+        for (var update : updates.entrySet()) {
+            this.statusEffects.put(update.getKey(), update.getValue());
         }
 
         for (StatusEffects expired : toRemove) {

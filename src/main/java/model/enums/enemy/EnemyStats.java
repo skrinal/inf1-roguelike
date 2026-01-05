@@ -1,7 +1,5 @@
 package model.enums.enemy;
 
-//TODO: Fix values
-
 /**
  * The EnemyStats enum represents predefined statistical attributes
  * for various enemy types in the game.

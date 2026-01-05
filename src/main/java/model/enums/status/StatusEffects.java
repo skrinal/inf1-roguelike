@@ -130,6 +130,23 @@ public enum StatusEffects {
         }
     },
     // Dragon
+    DRAGON_MIGHT("Dragon Might", "+50% Damage") {
+        @Override
+        public void onApply(Character target) {
+            target.setDamageMultiplier(target.getDamageMultiplier() + 0.5);
+        }
+
+        @Override
+        public void onRemove(Character target) {
+            target.setDamageMultiplier(target.getDamageMultiplier() - 0.5);
+        }
+    },
+    BURN("Burn", "-5% maxHP per turn") {
+        @Override
+        public void onTick(Character target) {
+            target.takeTrueDamage((target.getMaxHp() / 100) * 5);
+        }
+    },
 
     // DemonLord
     DEMONLORD_CURSE("DemonLord Curse", "-20% Damage reduction") {

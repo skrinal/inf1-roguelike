@@ -36,25 +36,25 @@ public class EnemyDatabase {
     }
 
     private void loadEnemies() {
-        //TODO: change levels
+        // Scaling enemies for progression: Easy earlier, challenging boss.
         ArrayList<Enemy> roomOneEnemies = new ArrayList<>();
-        roomOneEnemies.add(new Skeleton("Maximus"));
+        roomOneEnemies.add(new Skeleton("Maximus", 1));
 
         ArrayList<Enemy> roomTwoEnemies = new ArrayList<>();
-        roomTwoEnemies.add(new Skeleton("Rotting Guard"));
-        roomTwoEnemies.add(new Skeleton("Bonecrusher"));
+        roomTwoEnemies.add(new Skeleton("Rotting Guard", 2));
+        roomTwoEnemies.add(new Skeleton("Bonecrusher", 2));
         roomTwoEnemies.add(new Troll("Cave Troll", 2));
 
         ArrayList<Enemy> roomThreeEnemies = new ArrayList<>();
-        roomThreeEnemies.add(new Elf("Elite Guard"));
+        roomThreeEnemies.add(new Elf("Elite Guard", 3));
 
 
         ArrayList<Enemy> roomFourEnemies = new ArrayList<>();
-        roomFourEnemies.add(new Dragon("Gatekeeper"));
+        roomFourEnemies.add(new Dragon("Gatekeeper", 4));
 
 
         ArrayList<Enemy> roomFiveEnemies = new ArrayList<>();
-        roomFiveEnemies.add(new DemonLord("The Ashen Warden"));
+        roomFiveEnemies.add(new DemonLord("The Ashen Warden", 5));
 
 
         this.enemies.put(RoomType.ONE, roomOneEnemies);

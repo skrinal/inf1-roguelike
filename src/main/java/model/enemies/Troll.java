@@ -6,7 +6,6 @@ import model.Enemy;
 import model.enums.CombatTag;
 import model.enums.enemy.EnemyStats;
 import model.enums.type.EnemyType;
-import utility.Utility;
 
 /**
  * The Troll class represents a specific type of enemy in the game derived from the Enemy class.
