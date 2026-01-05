@@ -17,6 +17,15 @@ public class CombatStrings {
         System.out.println("╚════════════════╝");
 
     }
+
+    public void printEnemyDefeated() {
+        System.out.println("╔══════════════════════════════════╗");
+        System.out.println("║                                  ║");
+        System.out.println("║    Enemy has been defeated !!!   ║");
+        System.out.println("║                                  ║");
+        System.out.println("╚══════════════════════════════════╝");
+    }
+
     /**
      * Outputs the combat menu to the console.
      * At first we create three panels, each with a fixed width. Which we split into lines.
