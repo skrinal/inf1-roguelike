@@ -43,12 +43,12 @@ public class Dragon extends Enemy implements SpectralAttacker {
     }
 
     @Override
-    public void performeBasicAbility(Character target) {
+    public void performBasicAbility(Character target) {
 
     }
     //TODO FINIS METHODS
     @Override
-    public void performeSpecialAbility(Character target) {
+    public void performSpecialAbility(Character target) {
 
     }
 }

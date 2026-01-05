@@ -78,15 +78,15 @@ public class GameLogic {
                     return GameState.DEATH;
                 }
                 case COMPLETED -> {
-                    currentRoom = outCome.nextRoom();
-                    if (currentRoom == RoomType.FIVE) {
+                    if (outCome.nextRoom() == null) {
                         return GameState.COMPLETE;
                     }
+                    currentRoom = outCome.nextRoom();
                 }
                 default -> inDungeon = false;
             }
         }
-        return GameState.COMPLETE; // Completed dungeon
+        return GameState.COMPLETE;
     }
 
     private Room createRoom(RoomType type, Player player) {

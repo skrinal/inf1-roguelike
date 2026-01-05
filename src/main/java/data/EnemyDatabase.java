@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * EnemyDatabase is a singleton class responsible for managing and storing enemies for
+ * different room types in the game.
+ * Possible change to normal class in the future.
+ * If adding multiple players, this will be a problem.
+ */
 public class EnemyDatabase {
     private final Map<RoomType, ArrayList<Enemy>> enemies;
     private static EnemyDatabase instance;
@@ -40,15 +46,15 @@ public class EnemyDatabase {
         roomTwoEnemies.add(new Troll("Cave Troll", 2));
 
         ArrayList<Enemy> roomThreeEnemies = new ArrayList<>();
-        roomTwoEnemies.add(new Elf("Elite Guard"));
+        roomThreeEnemies.add(new Elf("Elite Guard"));
 
 
         ArrayList<Enemy> roomFourEnemies = new ArrayList<>();
-        roomTwoEnemies.add(new Dragon("Gatekeeper"));
+        roomFourEnemies.add(new Dragon("Gatekeeper"));
 
 
         ArrayList<Enemy> roomFiveEnemies = new ArrayList<>();
-        roomTwoEnemies.add(new DemonLord("The Ashen Warden"));
+        roomFiveEnemies.add(new DemonLord("The Ashen Warden"));
 
 
         this.enemies.put(RoomType.ONE, roomOneEnemies);

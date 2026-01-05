@@ -58,16 +58,15 @@ public class Room {
         }
     }
 
+    /**
+     * Sets the output stream for the room.
+     */
     public void setOut(ConsoleOutput out) {
         this.out = out;
     }
 
-    private Item getTreasure() {
-        return this.itemDatabase.getRandomItem();
-    }
-
     /**
-     * Method to handle the room interaction.
+     * Handles the room interaction.
      * Output of the description and map of the room with available options.
      * Checks if the player has already cleared the room (Enemies and Treasure),
      * if yes, he is redirected to the next room.
@@ -179,6 +178,10 @@ public class Room {
         }
     }
 
+    private Item getTreasure() {
+        return this.itemDatabase.getRandomItem();
+    }
+
     private void itemOptions(Item item) {
         switch (item.type()) {
             case WEAPON, ARMOR -> {
@@ -210,7 +213,7 @@ public class Room {
                     default -> System.out.println("Invalid selection. Try again");
                 }
             }
-            case 2 -> item.displayInfo();
+            case 2 -> this.out.println("Item has been kept.");
             default -> System.out.println("Invalid selection. Try again");
         }
     }

@@ -22,19 +22,17 @@ void main() {
                 state = GameState.GAME;
             }
             case GAME -> state = gameLogic.handleGame();
-            case LOAD_GAME -> {
-
-            }
-            case SAVE_GAME -> {
-                if (player != null) {
-
-                } else {
-                    System.out.println("Nothing to be saved");
-                }
-            }
+//            case LOAD_GAME -> {
+//
+//            }
+//            case SAVE_GAME -> {
+//                if (player != null) {
+//
+//                } else {
+//                    System.out.println("Nothing to be saved");
+//                }
+//            }
             case DUNGEON -> state = gameLogic.handleDungeon(player);
-
-            //case INVENTORY -> state = handleInventory(input, player);
 
             case STATS -> state = player.handleStats();
             case DEATH -> {

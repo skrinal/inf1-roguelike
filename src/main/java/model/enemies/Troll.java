@@ -8,6 +8,11 @@ import model.enums.enemy.EnemyStats;
 import model.enums.type.EnemyType;
 import utility.Utility;
 
+/**
+ * The Troll class represents a specific type of enemy in the game derived from the Enemy class.
+ * Trolls are hostile creatures with distinct attributes, behaviors, and abilities.
+ * This class provides the implementation of the Troll's specific stats, abilities, and type information.
+ */
 public class Troll extends Enemy {
 
     public Troll(String name) {
@@ -44,13 +49,13 @@ public class Troll extends Enemy {
     }
 
     @Override
-    public void performeBasicAbility(Character target) {
+    public void performBasicAbility(Character target) {
         int damage = target.takeDamage((int)(this.getTotalAttack() * 1.3), this);
         this.damageAbilitySystemOut(damage, false);
     }
 
     @Override
-    public void performeSpecialAbility(Character target) {
+    public void performSpecialAbility(Character target) {
         if (Utility.getRandomDouble() <= 0.4) {
             int damage = target.takeTrueDamage((int)(this.getTotalAttack() * 1.2));
             this.damageAbilitySystemOut(damage, false);

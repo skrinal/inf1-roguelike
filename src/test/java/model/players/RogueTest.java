@@ -54,7 +54,7 @@ class RogueTest {
 
     @Test
     void testRogueBeforeTurn() {
-        rogue.performeBasicAbility(enemy);
+        rogue.performBasicAbility(enemy);
 
         rogue.beforeTurn();
 
@@ -63,7 +63,7 @@ class RogueTest {
 
     @Test
     void testRogueAfterTurnVanish() {
-        rogue.performeSpecialAbility(enemy);
+        rogue.performSpecialAbility(enemy);
 
         assertEquals(90, rogue.getPower());
 

@@ -52,7 +52,7 @@ class MageTest {
 
     @Test
     void testMageBeforeTurn() {
-        magePlayer.performeSpecialAbility(enemy);
+        magePlayer.performSpecialAbility(enemy);
 
         magePlayer.beforeTurn();
 
@@ -70,7 +70,7 @@ class MageTest {
 
     @Test
     void testMageBasicAbility() {
-        magePlayer.performeBasicAbility(enemy);
+        magePlayer.performBasicAbility(enemy);
 
         assertEquals("Frostbolt", magePlayer.getBasicAbilityName());
         assertEquals(10, magePlayer.getBasicAbilityCost());
@@ -82,7 +82,7 @@ class MageTest {
 
     @Test
     void testMageSpecialAbility() {
-        magePlayer.performeSpecialAbility(enemy);
+        magePlayer.performSpecialAbility(enemy);
 
         assertEquals("Fireblast", magePlayer.getSpecialAbilityName());
         assertEquals(50, magePlayer.getSpecialAbilityCost());

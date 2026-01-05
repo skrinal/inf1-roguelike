@@ -55,8 +55,8 @@ public class CombatSystem {
         this.combatStrings.printCombatMenu(player, enemy);
 
         switch (Utility.handleDecision(1, 5)) {
-            case 1 -> player.performeBasicAbility(enemy);
-            case 2 -> player.performeSpecialAbility(enemy);
+            case 1 -> player.performBasicAbility(enemy);
+            case 2 -> player.performSpecialAbility(enemy);
             case 3 -> player.performeUtilityAbility();
             case 4 -> player.resting();
             case 5 -> {
@@ -91,9 +91,9 @@ public class CombatSystem {
         }
 
         if (this.random.nextBoolean()) {
-            enemy.performeSpecialAbility(player);
+            enemy.performSpecialAbility(player);
         } else {
-            enemy.performeBasicAbility(player);
+            enemy.performBasicAbility(player);
         }
     }
 
@@ -110,6 +110,7 @@ public class CombatSystem {
         player.removeAllStatusEffects();
         player.restoreMaxPower();
 
+        player.addGold(enemy.getGoldReward());
         player.gainExperience(enemy.getXpReward());
 
         Item item = enemy.getConsumableDrop();

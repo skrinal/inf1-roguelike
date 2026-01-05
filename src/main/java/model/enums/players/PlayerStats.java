@@ -1,5 +1,10 @@
 package model.enums.players;
 
+/**
+ * An enum that defines the base statistics for various player classes.
+ * Each player class is defined with specific values for maximum health points (maxHp),
+ * attack, defense, and power.
+ */
 public enum PlayerStats {
     ROGUE(100, 8, 5, 150),
     WARRIOR(100, 7, 6, 120),

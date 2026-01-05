@@ -46,13 +46,13 @@ public class Skeleton extends Enemy {
     }
 
     @Override
-    public void performeBasicAbility(Character target) {
+    public void performBasicAbility(Character target) {
         int damage = target.takeDamage(this.getTotalAttack(), this);
         this.damageAbilitySystemOut(damage, false);
     }
 
     @Override
-    public void performeSpecialAbility(Character target) {
+    public void performSpecialAbility(Character target) {
         int damage = target.takeDamage(this.getTotalAttack(), this);
         this.damageAbilitySystemOut(damage, false);
 

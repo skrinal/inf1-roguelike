@@ -7,6 +7,12 @@ import utility.Utility;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Singleton class responsible for managing and storing items in the game.
+ * Possible change to normal class in the future.
+ * If adding multiple players, this will be a problem as
+ * each player should have their own loot table.
+ */
 public class ItemDatabase {
     private static ItemDatabase instance;
 
@@ -14,11 +20,15 @@ public class ItemDatabase {
     private final Random random;
 
     private ItemDatabase(Player player) {
-
         this.random = new Random();
         this.lootTable = new ArrayList<>(Items.getAvailableLoot(player));
     }
 
+    /**
+     * Provides access to the singleton instance of the ItemDatabase class.
+     * If an instance does not already exist, it initializes the ItemDatabase
+     * with the provided player and returns it.
+     */
     public static ItemDatabase getInstance(Player player) {
         if (instance == null) {
             instance = new ItemDatabase(player);

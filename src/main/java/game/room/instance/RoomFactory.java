@@ -10,15 +10,31 @@ import model.enums.room.RoomType;
 import java.util.ArrayList;
 
 /**
- *
+ * The class is responsible for creating instances of Room
+ * based on specified room types.
  */
 public class RoomFactory {
+
+    /**
+     * Constructs a new instance of the RoomFactory class.
+     * This constructor initializes a factory for creating Room objects
+     * based on specific room types, players, and associated attributes.
+     * Needed for possible other types of rooms in the future.
+     */
     public RoomFactory() {
         // x
     }
 
     /**
-     * This method creates a room based on the roomType parameter.
+     * Creates a new Room instance based on the specified room type, player,
+     * and combat system. The method retrieves the relevant list of enemies
+     * and other attributes required to initialize the room.
+     *
+     * @param roomType the type of the room to be created
+     * @param player the player who will interact with the room
+     * @param combat the combat system to be used within the room
+     * @return the newly created Room instance, or null if the room type
+     *         is not recognized
      */
     public Room createRoom(RoomType roomType, Player player, CombatSystem combat) {
         EnemyDatabase db = EnemyDatabase.getInstance();

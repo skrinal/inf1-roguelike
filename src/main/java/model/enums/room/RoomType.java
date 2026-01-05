@@ -1,5 +1,9 @@
 package model.enums.room;
 
+/**
+ * An enum representing different types of rooms in a system.
+ * Each type corresponds to a specific level.
+ */
 public enum RoomType {
     ONE,
     TWO,

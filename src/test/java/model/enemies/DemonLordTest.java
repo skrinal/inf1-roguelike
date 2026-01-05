@@ -54,7 +54,7 @@ class DemonLordTest {
 
     @Test
     void testDemonLordBasicAbility() {
-        demonLord.performeBasicAbility(rogue);
+        demonLord.performBasicAbility(rogue);
 
         assertNotEquals(rogue.getMaxHp(), rogue.getHp());
     }

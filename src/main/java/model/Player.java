@@ -179,18 +179,30 @@ public abstract class Player extends Character {
         return this.treasureFound.add(roomType);
     }
 
+    /**
+     * Returns the player's power.
+     */
     public int getPower() {
         return this.power;
     }
 
+    /**
+     * Returns the player's maximum power.
+     */
     public int getMaxPower() {
         return this.maxPower;
     }
 
+    /**
+     * Returns the player's gold amount.
+     */
     public int getGold() {
         return this.gold;
     }
 
+    /**
+     * Adds gold to player's account.
+     */
     public void addGold(int amount) {
         this.gold += amount;
     }
@@ -206,7 +218,7 @@ public abstract class Player extends Character {
         boolean open = true;
 
         while (open) {
-            this.print(PlayerStrings.PLAYER_INVENTORY_MENU);
+            this.print(PlayerStrings.PLAYER_INVENTORY_MENU.getMenu());
 
             int choice = Utility.handleDecision(0, 3);
 
@@ -274,8 +286,6 @@ public abstract class Player extends Character {
         }
     }
 
-
-
     private void consumeItem(Item item) {
         int amount = this.inventory.get(item);
 
@@ -285,8 +295,6 @@ public abstract class Player extends Character {
             this.inventory.put(item, amount - 1);
         }
     }
-
-    //TODO: Refactor later
 
     /**
      * Adds item to inventory.
@@ -323,12 +331,26 @@ public abstract class Player extends Character {
         return this.getBar(this.getPower(), this.getMaxPower());
     }
 
+    /**
+     * Calculates and returns the total attack value of this character.
+     * The total attack takes into account the character's base attack
+     * value, any applied status effects, relevant multipliers, and item bonuses.
+     *
+     * @return the total attack value of the character as an integer
+     */
     @Override
     public int getTotalAttack() {
         return (int)((this.getAttack() + (
                 this.equippedWeapon != null ? this.equippedWeapon.value() : 0)) * this.getDamageMultiplier());
     }
 
+    /**
+     * Calculates and returns the total defense value of this character.
+     * The total defense takes into account the character's base defense
+     * value, any applied status effects, relevant multipliers, and item bonuses.
+     *
+     * @return the total defense value of the character as an integer
+     */
     @Override
     public int getTotalDefense() {
         return (int)(
@@ -340,7 +362,7 @@ public abstract class Player extends Character {
      * to continue to the game.
      */
     public GameState handleStats() {
-        this.print(PlayerStrings.PLAYER_STATS);
+        this.print(PlayerStrings.PLAYER_STATS.getMenu());
         this.displayStats();
 
         this.pause();
@@ -464,13 +486,64 @@ public abstract class Player extends Character {
         return false;
     }
 
+    /**
+     * Returns a descriptive string representing the player's power type.
+     *
+     * @return a string that describes the type of the player's power
+     */
     public abstract String getPowerString();
+
+    /**
+     * Returns the name of the player's basic ability.
+     *
+     * @return the name of the basic ability as a string
+     */
     public abstract String getBasicAbilityName();
+
+    /**
+     * Returns the name of the player's special ability.
+     */
     public abstract String getSpecialAbilityName();
+
+    /**
+     * Returns the name of the player's utility ability.
+     */
     public abstract String getUtilityAbilityName();
+
+    /**
+     * Returns the cost of the player's basic ability.
+     */
     public abstract int getBasicAbilityCost();
+
+    /**
+     * Returns the cost of the player's special ability.
+     */
     public abstract int getSpecialAbilityCost();
+
+    /**
+     * Returns the cost of the player's utility ability.
+     */
     public abstract int getUtilityAbilityCost();
+
+    /**
+     * Executes the player's utility ability.
+     * This method is intended to be implemented by subclasses to define the specific
+     * behavior of the player's utility ability. Each subclass can define a unique
+     * utility ability, which may help the player in various ways during the game,
+     * such as providing buffs, healing, or executing strategic non-damaging actions.
+     *
+     * The specific effects of the utility ability, as well as its cost (if applicable),
+     * are determined by the subclass implementation.
+     */
     public abstract void performeUtilityAbility();
+
+    /**
+     * Performs pre-turn logic for the player.
+     * This method is intended to be implemented by subclasses to define
+     * any specific actions or state updates that should occur at the beginning
+     * of the player's turn before any other actions are taken.
+     *
+     * The specific behavior of this method depends on the subclass.
+     */
     public abstract void beforeTurn();
 }

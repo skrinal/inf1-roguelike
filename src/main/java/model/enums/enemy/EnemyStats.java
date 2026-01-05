@@ -2,6 +2,12 @@ package model.enums.enemy;
 
 //TODO: Fix values
 
+/**
+ * The EnemyStats enum represents predefined statistical attributes
+ * for various enemy types in the game.
+ * Each enemy has a unique set of stats, which include maximum health points,
+ * attack strength, defense value, gold reward for defeating the enemy, and experience reward.
+ */
 public enum EnemyStats {
     SKELETON(100, 10, 5, 25, 120),
     TROLL(160, 13, 10, 50, 200),

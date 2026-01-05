@@ -3,6 +3,9 @@ package model.interfaces;
 import model.Character;
 import model.enums.type.EnemyType;
 
+/**
+ * Interface for enemies that can perform spectral damage.
+ */
 public interface SpectralAttacker {
 
     int getTotalAttack();

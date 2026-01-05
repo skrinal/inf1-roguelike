@@ -43,14 +43,14 @@ class TrollTest {
 
     @Test
     void testTrollBasicAbility() {
-        troll.performeBasicAbility(player);
+        troll.performBasicAbility(player);
 
         assertNotEquals(player.getMaxHp(), player.getHp());
     }
 
     @Test
     void testTrollSpecialAbility() {
-        troll.performeSpecialAbility(player);
+        troll.performSpecialAbility(player);
 
         assertNotEquals(player.getMaxHp(), player.getHp());
     }

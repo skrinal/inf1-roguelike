@@ -8,6 +8,9 @@ import model.enums.type.ItemType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Enum class representing all items that can be picked up by the player.
+ */
 public enum Items {
     //GENERAL POTIONS
     HEALTH_CHALICE("Health Chalice", ItemType.TREASURE, 100, null),
@@ -63,6 +66,9 @@ public enum Items {
         return available;
     }
 
+    /**
+     * Returns the item object.
+     */
     public Item getItem() {
         return this.item;
     }
