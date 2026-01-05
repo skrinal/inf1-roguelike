@@ -28,7 +28,7 @@ public class Mage extends Player {
     private final String utilityAbilityName = "Cloak of Shadows";
 
     private final int basicAbilityCost = 10;
-    private final int specialAbilityCost = 50;
+    private final int specialAbilityCost = 30;
     private final int utilityAbilityCost = 15;
 
     private final double basicAbilityMultiplayer = 1.3;
@@ -245,5 +245,10 @@ public class Mage extends Player {
      */
     public double getInvisibilityChance() {
         return this.invisibilityChance;
+    }
+
+    @Override
+    public boolean isUntargetable() {
+        return this.isInvisible;
     }
 }

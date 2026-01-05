@@ -84,6 +84,7 @@ public enum StatusEffects {
 
         @Override
         public void onRemove(Character target) {
+            target.print("Shield removed");
             target.setShield(0);
         }
     },

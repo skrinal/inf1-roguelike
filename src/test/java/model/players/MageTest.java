@@ -56,7 +56,7 @@ class MageTest {
 
         magePlayer.beforeTurn();
 
-        assertEquals(65, magePlayer.getPower());
+        assertEquals(85, magePlayer.getPower());
     }
 
     @Test
@@ -85,9 +85,9 @@ class MageTest {
         magePlayer.performSpecialAbility(enemy);
 
         assertEquals("Fireblast", magePlayer.getSpecialAbilityName());
-        assertEquals(50, magePlayer.getSpecialAbilityCost());
+        assertEquals(30, magePlayer.getSpecialAbilityCost());
 
-        assertEquals(50, magePlayer.getPower());
+        assertEquals(70, magePlayer.getPower());
         assertEquals(10, magePlayer.getBasicAbilityCost());
 
         assertNotEquals(enemy.getMaxHp(), enemy.getHp());

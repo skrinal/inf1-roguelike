@@ -56,7 +56,7 @@ public class Skeleton extends Enemy {
         int damage = target.takeDamage(this.getTotalAttack(), this);
         this.damageAbilitySystemOut(damage, false);
 
-        if (Utility.getRandomDouble() <= 0.3) {
+        if (Math.random() <= 0.3) {
             target.applyStatusEffect(StatusEffects.SKELETON_CURSE, 2);
 
         }

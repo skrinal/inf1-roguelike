@@ -157,7 +157,7 @@ public class CombatStrings {
         ui.append("╔").append("═".repeat(this.rightPanelWidth)).append("╗\n");
 
         // Name and type line
-        String nameType = "  " + enemy.getName().toUpperCase() + " [" + enemy.getCombatTag() + "]";
+        String nameType = "  " + enemy.getName().toUpperCase() + " [" + enemy.getCombatTag() + "]" + " Level " + enemy.getLevel();
         ui.append("║")
                 .append(this.padLine(nameType, this.rightPanelWidth))
                 .append("║\n");

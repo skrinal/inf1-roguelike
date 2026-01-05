@@ -1,12 +1,28 @@
 package utility;
-import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * The Utility class provides static helper methods for user input handling,
+ * generating random values, and other general utility functions that can be
+ * used throughout the application.
+ */
 public class Utility {
 
     private static final Scanner INPUT = new Scanner(System.in);
-    private static final Random RANDOM = new Random();
 
+    private Utility() {
+
+    }
+
+    /**
+     * Handles user input by prompting for a decision within a specified range.
+     * The method continuously prompts the user until a valid integer within the
+     * range [min, max] is entered.
+     *
+     * @param min the minimum valid value the user can select
+     * @param max the maximum valid value the user can select
+     * @return the user's valid selection as an integer within the range [min, max]
+     */
     public static int handleDecision(int min, int max) {
         while (true) {
             System.out.print("Select: ");
@@ -26,16 +42,15 @@ public class Utility {
         }
     }
 
+    /**
+     * Prompts the user to press the enter key to continue.
+     * This method pauses the program execution until the user presses the enter key.
+     * Typically used to create pauses in console-based workflows, such as waiting
+     * for user acknowledgment before proceeding.
+     */
     public static void enterToContinue() {
         System.out.println("Press enter to continue...");
         INPUT.nextLine();
     }
 
-    public static double getRandomDouble() {
-        return RANDOM.nextDouble();
-    }
-
-    public static Random getRandom() {
-        return RANDOM;
-    }
 }

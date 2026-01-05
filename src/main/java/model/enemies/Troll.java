@@ -56,7 +56,7 @@ public class Troll extends Enemy {
 
     @Override
     public void performSpecialAbility(Character target) {
-        if (Utility.getRandomDouble() <= 0.4) {
+        if (Math.random() <= 0.4) {
             int damage = target.takeTrueDamage((int)(this.getTotalAttack() * 1.2));
             this.damageAbilitySystemOut(damage, false);
         } else {

@@ -12,6 +12,8 @@ import model.enums.type.EnemyType;
 import model.interfaces.Boss;
 import utility.Utility;
 
+import java.util.Random;
+
 /**
  * Represents the Demon Lord, a boss-type enemy in a combat system. The Demon Lord
  * features unique combat behaviors, including multiple phases, random dice-based abilities,
@@ -89,7 +91,9 @@ public class DemonLord extends Enemy implements Boss {
      */
     @Override
     public void performSpecialAbility(Character target) {
-        int diceRoll = Utility.getRandom().nextInt(6) + 1;
+        Random random = new Random();
+        int diceRoll = random.nextInt(6) + 1;
+
         switch (diceRoll) {
             case 1, 3 -> {
                 this.takeTrueDamage(10);
