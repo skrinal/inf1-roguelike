@@ -11,10 +11,19 @@ import model.strings.MenuStrings;
 
 import static utility.Utility.handleDecision;
 
+/**
+ * The GameLogic class controls the flow of the game, managing interactions between
+ * the player and the game system.
+ * It manages the main game logic, dungeon navigation, and connects the combat and room systems.
+ */
 public class GameLogic {
     private final RoomFactory roomFactory = new RoomFactory();
     private final CombatSystem combat = new CombatSystem();
 
+    /**
+     * Handles the game flow based on the player's choice.
+     * @return
+     */
     public GameState handleGame() {
         int choice = this.showGameMenu();
         return switch (choice) {
@@ -25,6 +34,11 @@ public class GameLogic {
         };
     }
 
+    /**
+     * Handles the dungeon flow based on the player's choice.
+     * @param player
+     * @return
+     */
     public GameState handleDungeon(Player player) {
         System.out.println(MenuStrings.DUNGEON_TITLE.getText());
         GameState result = this.showGameMap(player);

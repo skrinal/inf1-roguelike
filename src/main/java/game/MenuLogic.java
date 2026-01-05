@@ -12,8 +12,16 @@ import java.util.Scanner;
 
 import static utility.Utility.handleDecision;
 
+/**
+ * Handles the main menu and character creation.
+ */
 public class MenuLogic {
 
+    /**
+     * Handles the main menu and returns the next state of the game.
+     * @param player
+     * @return
+     */
     public GameState handleMenu(Player player) {
         int choice = this.showMainMenu();
         return switch (choice) {
@@ -24,6 +32,11 @@ public class MenuLogic {
         };
     }
 
+    /**
+     * Handles the character creation flow.
+     * @param input
+     * @return
+     */
     public Player handleCharacterCreation(Scanner input) {
         System.out.println(MenuStrings.CHARACTER_CREATION.getText());
         System.out.print("Name your character: ");
@@ -39,8 +52,6 @@ public class MenuLogic {
 
         return handleDecision(0, 3);
     }
-
-    //TODO : showInventoryMenu, handleItemDetail, dropItem, equipItem
 
     private Player createCharacter(CombatTag combatTag, String name) {
         return switch (combatTag) {

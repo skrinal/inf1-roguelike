@@ -9,10 +9,17 @@ import model.enums.room.RoomType;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class RoomFactory {
     public RoomFactory() {
-
+        // x
     }
+
+    /**
+     * This method creates a room based on the roomType parameter.
+     */
     public Room createRoom(RoomType roomType, Player player, CombatSystem combat) {
         EnemyDatabase db = EnemyDatabase.getInstance();
 
