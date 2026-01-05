@@ -1,5 +1,10 @@
 package model.strings;
 
+/**
+ * The MenuStrings enum contains predefined ASCII art or textual representations for
+ * different menu states in the game. Each constant represents a specific menu or
+ * a message text used within the game menus.
+ */
 public enum MenuStrings {
 
     GAME_TITLE_MENU("""
@@ -85,6 +90,11 @@ public enum MenuStrings {
         this.text = text;
     }
 
+    /**
+     * Returns the text associated with this Enum constant.
+     *
+     * @return the text value of this Enum constant
+     */
     public String getText() {
         return this.text;
     }
